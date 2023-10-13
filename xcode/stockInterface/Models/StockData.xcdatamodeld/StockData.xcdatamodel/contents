@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21513" systemVersion="21G115" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Candle" representedClassName="Candle" syncable="YES" codeGenerationType="class">
+        <attribute name="close" attributeType="Float" usesScalarValueType="YES"/>
+        <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="high" attributeType="Float" usesScalarValueType="YES"/>
+        <attribute name="low" attributeType="Float" usesScalarValueType="YES"/>
+        <attribute name="open" attributeType="Float" usesScalarValueType="YES"/>
+        <attribute name="transactionCount" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="volume" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="volumeWeighted" attributeType="Float" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="stockAggregate" maxCount="1" deletionRule="Nullify" destinationEntity="StockAggregate" inverseName="candles" inverseEntity="StockAggregate"/>
+    </entity>
+    <entity name="StockAggregate" representedClassName="StockAggregate" syncable="YES" codeGenerationType="class">
+        <attribute name="savedType" attributeType="Integer 16" usesScalarValueType="YES"/>
+        <attribute name="ticker" attributeType="String"/>
+        <relationship name="candles" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Candle" inverseName="stockAggregate" inverseEntity="Candle"/>
+    </entity>
+</model>
