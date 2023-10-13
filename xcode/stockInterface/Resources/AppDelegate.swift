@@ -20,7 +20,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         NSApp.setActivationPolicy(.regular)
 
-        var contentRect = NSRect(x: 0, y: 0, width: NSScreen.main!.frame.width / 3, height: NSScreen.main!.frame.height / 2)
+        let contentRect = NSRect(x: 0, y: 0, width: 1400, height: 800)
 //        window = NSWindow(contentRect: contentRect, styleMask: [.borderless, .resizable], backing: .buffered, defer: false)
         window = NSWindow(contentRect: contentRect, styleMask: [.titled, .resizable], backing: .buffered, defer: false)
         window.hasShadow = true
@@ -29,7 +29,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         window.isOpaque = false
 //        window.isZoomable = true
 //        window.set
-        window.contentView = ContentView()
+        window.contentView = LayoutManager.shared.getCelledMasterView()
 //        let contentRect = NSRect(x: 0, y: 0, width: NSScreen.main!.frame.width / 3, height: NSScreen.main!.frame.height - window.titlebarHeight)
 //        window.setFrame(contentRect, display: true)
         window.backgroundColor = .clear

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B6D622D2AD9F265003B1D3A /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6D622C2AD9F265003B1D3A /* Style.swift */; };
+		5B6D622F2AD9F2B9003B1D3A /* LayoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6D622E2AD9F2B9003B1D3A /* LayoutManager.swift */; };
+		5B6D62312AD9F328003B1D3A /* CelledMasterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6D62302AD9F328003B1D3A /* CelledMasterView.swift */; };
 		FC82F9E72AC6910C00642210 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC82F9E62AC6910C00642210 /* AppDelegate.swift */; };
 		FC82F9EB2AC6910C00642210 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC82F9EA2AC6910C00642210 /* Assets.xcassets */; };
 		FC82F9F92AC6976A00642210 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC82F9F82AC6976A00642210 /* main.swift */; };
@@ -27,6 +30,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5B6D622C2AD9F265003B1D3A /* Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Style.swift; sourceTree = "<group>"; };
+		5B6D622E2AD9F2B9003B1D3A /* LayoutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutManager.swift; sourceTree = "<group>"; };
+		5B6D62302AD9F328003B1D3A /* CelledMasterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CelledMasterView.swift; sourceTree = "<group>"; };
 		FC82F9E32AC6910C00642210 /* stockInterface.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = stockInterface.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC82F9E62AC6910C00642210 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FC82F9EA2AC6910C00642210 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -102,6 +108,7 @@
 		FC82FA372AC6C0D800642210 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5B6D62302AD9F328003B1D3A /* CelledMasterView.swift */,
 				FC82FA322AC6AE4800642210 /* ContentView.swift */,
 				FC82FA342AC6B46200642210 /* CircleView.swift */,
 				FC82FA542AC6F90500642210 /* StockView */,
@@ -113,6 +120,8 @@
 			isa = PBXGroup;
 			children = (
 				FC82FA3B2AC6C12600642210 /* TickerDownload.swift */,
+				5B6D622C2AD9F265003B1D3A /* Style.swift */,
+				5B6D622E2AD9F2B9003B1D3A /* LayoutManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -176,7 +185,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1420;
-				LastUpgradeCheck = 1420;
+				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					FC82F9E22AC6910C00642210 = {
 						CreatedOnToolsVersion = 14.2;
@@ -221,10 +230,13 @@
 				FC82FA4F2AC6EA9F00642210 /* DateFormatter.swift in Sources */,
 				FC82FA562AC6F97F00642210 /* Draw.swift in Sources */,
 				FC82FA4A2AC6DD6400642210 /* StockData.xcdatamodeld in Sources */,
+				5B6D62312AD9F328003B1D3A /* CelledMasterView.swift in Sources */,
+				5B6D622F2AD9F2B9003B1D3A /* LayoutManager.swift in Sources */,
 				FC82FA452AC6DCAC00642210 /* StockSavedType.swift in Sources */,
 				FC82FA352AC6B46200642210 /* CircleView.swift in Sources */,
 				FCD1D5072ACBDB2200700D4C /* NSWindow.swift in Sources */,
 				FC82FA332AC6AE4800642210 /* ContentView.swift in Sources */,
+				5B6D622D2AD9F265003B1D3A /* Style.swift in Sources */,
 				FC82FA472AC6DD2E00642210 /* CoreDataStack.swift in Sources */,
 				FC82FA512AC6EB9200642210 /* Candle.swift in Sources */,
 				FC82FA582AC6FA4600642210 /* Calculate.swift in Sources */,
@@ -272,9 +284,11 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -332,9 +346,11 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -361,6 +377,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 2WP5X762NJ;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -387,6 +404,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 2WP5X762NJ;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
