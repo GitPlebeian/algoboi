@@ -29,8 +29,8 @@ class DQNAgent:
         model.compile(loss='mse', optimizer=Adam(learning_rate=self.learning_rate))
         return model
 
-#     def remember(self, state, action, reward, next_state, done):
-#         self.memory.append((state, action, reward, next_state, done))
+    def remember(self, state, action, reward, next_state, done):
+        self.memory.append((state, action, reward, next_state, done))
 
     def act(self, state):
         # if np.random.rand() <= self.epsilon:
@@ -64,40 +64,51 @@ class TradingEnvironment:
         self.data = self.data.iloc[data['minimumStartIndex']:]
         self.data = self.data.reset_index(drop=True)
         self.current_step = 0
+
         self.current_average_price = None  # None means not holding, otherwise it's the purchase price
         self.purchased_state = None
+        self.buy_next_state = None
 
     def reset(self):
         self.current_step = 0
         self.current_average_price = None
         self.purchased_state = None
+        self.buy_next_state = None
         return self.data.iloc[self.current_step].values[1:]  # return the initial state
 
     def step(self, action):
         # action = 0 (Hold), 1 (Buy), 2 (Sell)
         reward = None
+        buy_return = None
         if action == 1 and self.current_average_price == None: # Buy the stock:
             current_average_price = self.data.iloc[self.current_step].values[0]
             purchased_state = self.data.iloc[self.current_step].values[1:]
+            buy_next_state = self.data.iloc[self.current_step + 1].values[1:]
             print("Purchasing Stock At Price: ", current_average_price)
         elif action == 2 and self.current_average_price != None: # Sell the stock and assign reward
             percentage_change = (self.data.iloc[self.current_step].values[0] - self.current_average_price) / self.current_average_price * 100
+
             reward = percentage_change
+            buy_return = {
+                state: purchased_state,
+                next_state: buy_next_state,
+                reward: purchased_state,
+                done: false
+            }
+            
             self.current_average_price = None
+            self.purchased_state = None
+            self.buy_next_state = None
             print("Selling Stock For Change Of ", percentage_change)
+        else:
+            reward = 0
+            print("Doing nothing")
 
-
-
-        if action == 1 and self.current_position is None:  # Buy
-            self.current_position = self.data.iloc[self.current_step]['price']
-        elif action == 2 and self.current_position is not None:  # Sell
-            reward = self.data.iloc[self.current_step]['price'] - self.current_position
-            self.current_position = None
         
         self.current_step += 1
         done = self.current_step >= len(self.data) - 1
-        next_state = self.data.iloc[self.current_step].values[:3]
-        return next_state, reward, done
+        next_state = self.data.iloc[self.current_step].values[1:]
+        return next_state, reward, done, buy_return
 
     def action_space(self):
         return 3
@@ -129,7 +140,13 @@ for e in range(episodes):
     state = np.reshape(state, [1, state_size])
     for candle in range(len(env.data)):
         action = agent.act(state)
-        # next_state, reward
+        next_state, reward, done, buy_return = env.step(action)
+        print(next_state)
+        next_state = np.reshape(next_state, [1, state_size])
+        agent.remember(state, action, reward, next_state, done)
+        if buy_return != None:
+            buy_return.next_state = np.reshape(next_state, [1, state_size])
+            agent.remember(buy_return.state, 1, buy_return.reward, buy_return.next_state, buy_return.done)
 
 # if __name__ == "__main__":
 
