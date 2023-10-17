@@ -34,7 +34,8 @@ class ContentView: NSView {
                 guard let stockAggregate = stockAggregate else {return}
                 self.stockView.stockAggregate = stockAggregate
                 
-                FileManager.shared.writeStockAggregateToSharedFoler(entity: stockAggregate)
+//                FileManager.shared.writeStockAggregateToSharedFoler(entity: stockAggregate)
+                SharedFileManager.shared.writeStockAggregateToTestFile(stockAggregate)
             }
         }
     }

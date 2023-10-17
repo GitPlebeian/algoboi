@@ -25,12 +25,12 @@ extension StockView {
     
     func setVisibleCandleToMax() {
         guard let stockAggregate = stockAggregate else {return}
-        endingCandleIndex = stockAggregate.candles!.count - 1
+        endingCandleIndex = stockAggregate.candles.count - 1
     }
     
     func setMinimumCandleWidth() {
         guard let stockAggregate = stockAggregate else {return}
-        minimumCandleWidth = bounds.width / CGFloat(stockAggregate.candles!.count)
+        minimumCandleWidth = bounds.width / CGFloat(stockAggregate.candles.count)
     }
     
     func setVisibleCandleCount() {
@@ -48,7 +48,7 @@ extension StockView {
     
     func getMinMaxRange() {
         guard let stockAggregate = stockAggregate else {return}
-        let candlesCount = stockAggregate.candles!.count
+        let candlesCount = stockAggregate.candles.count
         
         maxValue = -.infinity
         minValue = .infinity
@@ -56,7 +56,7 @@ extension StockView {
         for index in startingCandleIndex...endingCandleIndex {
             if index < 0 {continue}
             if index >= candlesCount {break}
-            let candle = stockAggregate.candles!.object(at: index) as! Candle
+            let candle = stockAggregate.candles[index]
             if candle.low < minValue {minValue = candle.low}
             if candle.high > maxValue {maxValue = candle.high}
         }

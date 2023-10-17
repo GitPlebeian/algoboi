@@ -64,6 +64,8 @@ class TickerDownload {
         }.resume()
     }
     
+    // MARK: Get Minute Interval
+    
     func getAlpacaStockMinuteInterval(runInBulk: Bool = false,
                                       ticker: String,
                                       date: (Int, Int, Int),
@@ -80,8 +82,8 @@ class TickerDownload {
             return
         }
         let endDate = Calendar.current.date(byAdding: DateComponents(hour: 6, minute: 29), to: startDate)!
-        print(startDate, endDate)
-        print(dateFormatter.string(from: startDate), dateFormatter.string(from: endDate))
+//        print(startDate, endDate)
+//        print(dateFormatter.string(from: startDate), dateFormatter.string(from: endDate))
 //        let urlString = "https://data.alpaca.markets/v2/stocks/\(ticker.uppercased())/bars?timeframe=1Min&adjustment=all&start=\(dateFormatter.string(from: startDate))&end=\(dateFormatter.string(from: endDate))&limit=5000"
         let urlString = "https://data.alpaca.markets/v2/stocks/\(ticker.uppercased())/bars?timeframe=1Min&adjustment=all&start=\(dateFormatter.string(from: startDate))&end=\(dateFormatter.string(from: endDate))&limit=5000"
 //        let urlString = "https://data.alpaca.markets/v2/stocks/\(ticker.uppercased())/bars?timeframe=1Min&adjustment=all&limit=5000"

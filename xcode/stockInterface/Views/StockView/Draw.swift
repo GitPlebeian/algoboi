@@ -11,7 +11,7 @@ extension StockView {
     
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
-        guard let stockAggregate = self.stockAggregate else {return}
+        if stockAggregate == nil {return}
         guard let context = NSGraphicsContext.current?.cgContext else { return }
         context.setShouldAntialias(false)
         updateAllPropertyValues()
@@ -29,8 +29,8 @@ extension StockView {
         
         for index in 0..<visibleCandles {
             let candleToIndex = index + startingCandleIndex
-            if candleToIndex < 0 || candleToIndex >= stockAggregate!.candles!.count {continue}
-            let candle = stockAggregate!.candles!.object(at: index + startingCandleIndex) as! Candle
+            if candleToIndex < 0 || candleToIndex >= stockAggregate!.candles.count {continue}
+            let candle = stockAggregate!.candles[index + startingCandleIndex]
             var candleBodyYPos: Float
             if candle.open > candle.close {
                 candleBodyYPos = 1 - ((maxValue - candle.close) / range)
@@ -76,8 +76,8 @@ extension StockView {
     }
     
     func drawSpecificCandle(candleToIndex: Int, positionIndex: Int) {
-        if candleToIndex < 0 || candleToIndex >= stockAggregate!.candles!.count {return}
-        let candle = stockAggregate!.candles!.object(at: candleToIndex) as! Candle
+        if candleToIndex < 0 || candleToIndex >= stockAggregate!.candles.count {return}
+        let candle = stockAggregate!.candles[candleToIndex]
         var candleBodyYPos: Float
         if candle.open > candle.close {
             candleBodyYPos = 1 - ((maxValue - candle.close) / range)
@@ -117,7 +117,7 @@ extension StockView {
         guard let hoveringCandleIndex = currentHoveringCandle else {
             return
         }
-        if hoveringCandleIndex < 0 || hoveringCandleIndex >= stockAggregate!.candles!.count {
+        if hoveringCandleIndex < 0 || hoveringCandleIndex >= stockAggregate!.candles.count {
             return
         }
         if hoveringCandleIndex < startingCandleIndex || hoveringCandleIndex > endingCandleIndex {

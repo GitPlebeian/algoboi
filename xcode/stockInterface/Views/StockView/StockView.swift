@@ -119,8 +119,8 @@ class StockView: NSView {
             endingCandleIndex -= candleScrollAmount
         } else if panDistance <= -candleWidth {
             let candleScrollAmount = Int(abs(panDistance) / candleWidth)
-            if (endingCandleIndex + candleScrollAmount) - visibleCandles + 1 >= stockAggregate.candles!.count {
-                endingCandleIndex = stockAggregate.candles!.count + visibleCandles - 2
+            if (endingCandleIndex + candleScrollAmount) - visibleCandles + 1 >= stockAggregate.candles.count {
+                endingCandleIndex = stockAggregate.candles.count + visibleCandles - 2
                 panDistance = 0
                 updateForCurrentMousePosition()
                 setNeedsDisplay(bounds)
@@ -129,7 +129,7 @@ class StockView: NSView {
             panDistance = panDistance.truncatingRemainder(dividingBy: candleWidth)
             endingCandleIndex += candleScrollAmount
         }
-        if endingCandleIndex == stockAggregate.candles!.count + visibleCandles - 2 && panDistance < 0 {
+        if endingCandleIndex == stockAggregate.candles.count + visibleCandles - 2 && panDistance < 0 {
             panDistance = 0
             return
         } else if endingCandleIndex == 0 && panDistance > 0 {
@@ -183,6 +183,7 @@ class StockView: NSView {
     private func setupView() {
         self.wantsLayer = true
         self.layer?.backgroundColor = .CelledBackground
+        self.layer?.masksToBounds = true
         pinchGesture = NSMagnificationGestureRecognizer(target: self, action: #selector(pinched))
         self.addGestureRecognizer(pinchGesture)
         

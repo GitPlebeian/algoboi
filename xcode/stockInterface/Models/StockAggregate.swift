@@ -6,19 +6,18 @@
 //
 
 import Foundation
-import CoreData
 
-extension StockAggregate {
+struct StockAggregate: Codable {
     
-    @discardableResult
-    convenience init(ticker: String, candles: [Candle], context: NSManagedObjectContext = CoreDataStack.TempContext) {
-        self.init(context: context)
-        self.ticker    = ticker
-        self.candles   = NSOrderedSet(array: candles)
+    let symbol: String
+    var candles: [Candle] = []
+    
+    init(symbol: String, candles: [Candle]) {
+        self.symbol = symbol
+        self.candles = candles
     }
     
-    @discardableResult
-    convenience init?(data: Data, context: NSManagedObjectContext = CoreDataStack.TempContext) {
+    init?(data: Data) {
         do {
             if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
                 guard let symbol = json["symbol"] as? String else {return nil}
@@ -43,7 +42,7 @@ extension StockAggregate {
                                         low: Float(low))
                     candles.append(candle)
                 }
-                self.init(ticker: symbol, candles: candles)
+                self.init(symbol: symbol, candles: candles)
             } else {
                 return nil
             }
@@ -51,10 +50,5 @@ extension StockAggregate {
             print("Error: \(e)")
             return nil
         }
-    }
-    
-    /// Call CoreDataStack.saveToPersistentStore to finally save the model to disk
-    func insertToMainContext() {
-        CoreDataStack.Context.insert(self)
     }
 }

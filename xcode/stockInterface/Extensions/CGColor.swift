@@ -36,7 +36,6 @@ extension CGColor {
         fatalError("Invalid Hex")
     }
     
-    static let CelledBackground = FromHex("1f1f1f")
+    static let CelledBackground = FromHex("030303")
     
-//    static let CelledBackground = CGColor(red: <#T##CGFloat#>, green: <#T##CGFloat#>, blue: <#T##CGFloat#>, alpha: <#T##CGFloat#>)
 }
