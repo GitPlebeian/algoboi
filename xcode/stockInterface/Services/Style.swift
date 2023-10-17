@@ -9,7 +9,10 @@ import Cocoa
 
 class Style {
     
-    static let windowPadding: CGFloat = 100
+    static let WindowPadding: CGFloat = 100
     
+    static var CellWidth: CGFloat = 50
+    static var CellHeight: CGFloat = 50
+    static var CellSpacing: CGFloat = 8
 }
 

@@ -32,7 +32,7 @@ class CelledMasterView: NSView {
     override func layout() {
         super.layout()
         frostedGlassEffect.frame = frame
-        LayoutManager.shared.didUpdateMasterViewFrame(newFrame: frame)
+//        LayoutManager.shared.didUpdateMasterViewFrame(newFrame: frame)
     }
     
     // MARK: Setup Views
