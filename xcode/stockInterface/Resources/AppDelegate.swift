@@ -29,7 +29,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         window.isOpaque = false
 //        window.isZoomable = true
 //        window.set
-        window.contentView = LayoutManager.shared.getCelledMasterView()
+//        window.contentView = LayoutManager.shared.getCelledMasterView()
+        window.contentView = ContentView()
 //        let contentRect = NSRect(x: 0, y: 0, width: NSScreen.main!.frame.width / 3, height: NSScreen.main!.frame.height - window.titlebarHeight)
 //        window.setFrame(contentRect, display: true)
         window.backgroundColor = .clear

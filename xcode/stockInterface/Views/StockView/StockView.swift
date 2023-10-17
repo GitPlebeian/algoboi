@@ -182,7 +182,7 @@ class StockView: NSView {
     
     private func setupView() {
         self.wantsLayer = true
-        self.layer?.backgroundColor = .black
+        self.layer?.backgroundColor = .CelledBackground
         pinchGesture = NSMagnificationGestureRecognizer(target: self, action: #selector(pinched))
         self.addGestureRecognizer(pinchGesture)
         

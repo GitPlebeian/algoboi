@@ -33,6 +33,8 @@ class ContentView: NSView {
             DispatchQueue.main.async {
                 guard let stockAggregate = stockAggregate else {return}
                 self.stockView.stockAggregate = stockAggregate
+                
+                FileManager.shared.writeStockAggregateToSharedFoler(entity: stockAggregate)
             }
         }
     }

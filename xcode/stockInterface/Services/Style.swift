@@ -11,8 +11,7 @@ class Style {
     
     static let WindowPadding: CGFloat = 100
     
-    static var CellWidth: CGFloat = 50
-    static var CellHeight: CGFloat = 50
-    static var CellSpacing: CGFloat = 8
+    static let CellPadding: CGFloat = 16
+    static let CellCornerRadius: CGFloat = 16
 }
 

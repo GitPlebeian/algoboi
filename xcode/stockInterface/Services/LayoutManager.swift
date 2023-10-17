@@ -13,20 +13,13 @@ class LayoutManager {
     
     // MARK: Properties
     
-    var celledMasterView: CelledMasterView!
-    
-    
-    
     // MARK: Init
     
     init() {
-        self.celledMasterView = CelledMasterView()
+        
     }
     
     // MARK: Getters Setters
-    
-    // Used when initializing window
-    func getCelledMasterView() -> NSView { return celledMasterView }
     
     // MARK: TBD
     

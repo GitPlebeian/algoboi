@@ -9,14 +9,11 @@
 /* Begin PBXBuildFile section */
 		5B6D622D2AD9F265003B1D3A /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6D622C2AD9F265003B1D3A /* Style.swift */; };
 		5B6D622F2AD9F2B9003B1D3A /* LayoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6D622E2AD9F2B9003B1D3A /* LayoutManager.swift */; };
-		5B6D62312AD9F328003B1D3A /* CelledMasterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6D62302AD9F328003B1D3A /* CelledMasterView.swift */; };
-		5B6D62332ADA024D003B1D3A /* CelledView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6D62322ADA024D003B1D3A /* CelledView.swift */; };
 		FC82F9E72AC6910C00642210 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC82F9E62AC6910C00642210 /* AppDelegate.swift */; };
 		FC82F9EB2AC6910C00642210 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC82F9EA2AC6910C00642210 /* Assets.xcassets */; };
 		FC82F9F92AC6976A00642210 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC82F9F82AC6976A00642210 /* main.swift */; };
 		FC82FA2F2AC69D8A00642210 /* info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FC82FA2E2AC69D8A00642210 /* info.plist */; };
 		FC82FA332AC6AE4800642210 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC82FA322AC6AE4800642210 /* ContentView.swift */; };
-		FC82FA352AC6B46200642210 /* CircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC82FA342AC6B46200642210 /* CircleView.swift */; };
 		FC82FA3C2AC6C12600642210 /* TickerDownload.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC82FA3B2AC6C12600642210 /* TickerDownload.swift */; };
 		FC82FA452AC6DCAC00642210 /* StockSavedType.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC82FA442AC6DCAC00642210 /* StockSavedType.swift */; };
 		FC82FA472AC6DD2E00642210 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC82FA462AC6DD2E00642210 /* CoreDataStack.swift */; };
@@ -27,14 +24,14 @@
 		FC82FA532AC6F79200642210 /* StockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC82FA522AC6F79200642210 /* StockView.swift */; };
 		FC82FA562AC6F97F00642210 /* Draw.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC82FA552AC6F97F00642210 /* Draw.swift */; };
 		FC82FA582AC6FA4600642210 /* Calculate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC82FA572AC6FA4600642210 /* Calculate.swift */; };
+		FCBAF4242ADE497F0075ABEF /* CGColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBAF4232ADE497F0075ABEF /* CGColor.swift */; };
+		FCBAF4262ADE50610075ABEF /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBAF4252ADE50610075ABEF /* FileManager.swift */; };
 		FCD1D5072ACBDB2200700D4C /* NSWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD1D5062ACBDB2200700D4C /* NSWindow.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		5B6D622C2AD9F265003B1D3A /* Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Style.swift; sourceTree = "<group>"; };
 		5B6D622E2AD9F2B9003B1D3A /* LayoutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutManager.swift; sourceTree = "<group>"; };
-		5B6D62302AD9F328003B1D3A /* CelledMasterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CelledMasterView.swift; sourceTree = "<group>"; };
-		5B6D62322ADA024D003B1D3A /* CelledView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CelledView.swift; sourceTree = "<group>"; };
 		FC82F9E32AC6910C00642210 /* stockInterface.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = stockInterface.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC82F9E62AC6910C00642210 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FC82F9EA2AC6910C00642210 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -42,7 +39,6 @@
 		FC82F9F82AC6976A00642210 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		FC82FA2E2AC69D8A00642210 /* info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = info.plist; sourceTree = "<group>"; };
 		FC82FA322AC6AE4800642210 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		FC82FA342AC6B46200642210 /* CircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleView.swift; sourceTree = "<group>"; };
 		FC82FA3B2AC6C12600642210 /* TickerDownload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickerDownload.swift; sourceTree = "<group>"; };
 		FC82FA442AC6DCAC00642210 /* StockSavedType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockSavedType.swift; sourceTree = "<group>"; };
 		FC82FA462AC6DD2E00642210 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
@@ -53,6 +49,8 @@
 		FC82FA522AC6F79200642210 /* StockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockView.swift; sourceTree = "<group>"; };
 		FC82FA552AC6F97F00642210 /* Draw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Draw.swift; sourceTree = "<group>"; };
 		FC82FA572AC6FA4600642210 /* Calculate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calculate.swift; sourceTree = "<group>"; };
+		FCBAF4232ADE497F0075ABEF /* CGColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGColor.swift; sourceTree = "<group>"; };
+		FCBAF4252ADE50610075ABEF /* FileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
 		FCD1D5062ACBDB2200700D4C /* NSWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSWindow.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -110,10 +108,7 @@
 		FC82FA372AC6C0D800642210 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				5B6D62302AD9F328003B1D3A /* CelledMasterView.swift */,
-				5B6D62322ADA024D003B1D3A /* CelledView.swift */,
 				FC82FA322AC6AE4800642210 /* ContentView.swift */,
-				FC82FA342AC6B46200642210 /* CircleView.swift */,
 				FC82FA542AC6F90500642210 /* StockView */,
 			);
 			path = Views;
@@ -125,6 +120,7 @@
 				FC82FA3B2AC6C12600642210 /* TickerDownload.swift */,
 				5B6D622C2AD9F265003B1D3A /* Style.swift */,
 				5B6D622E2AD9F2B9003B1D3A /* LayoutManager.swift */,
+				FCBAF4252ADE50610075ABEF /* FileManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -146,6 +142,7 @@
 				FC82FA4C2AC6E20000642210 /* StockAggregate.swift */,
 				FC82FA502AC6EB9200642210 /* Candle.swift */,
 				FCD1D5062ACBDB2200700D4C /* NSWindow.swift */,
+				FCBAF4232ADE497F0075ABEF /* CGColor.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -233,20 +230,19 @@
 				FC82FA4F2AC6EA9F00642210 /* DateFormatter.swift in Sources */,
 				FC82FA562AC6F97F00642210 /* Draw.swift in Sources */,
 				FC82FA4A2AC6DD6400642210 /* StockData.xcdatamodeld in Sources */,
-				5B6D62312AD9F328003B1D3A /* CelledMasterView.swift in Sources */,
 				5B6D622F2AD9F2B9003B1D3A /* LayoutManager.swift in Sources */,
 				FC82FA452AC6DCAC00642210 /* StockSavedType.swift in Sources */,
-				FC82FA352AC6B46200642210 /* CircleView.swift in Sources */,
 				FCD1D5072ACBDB2200700D4C /* NSWindow.swift in Sources */,
 				FC82FA332AC6AE4800642210 /* ContentView.swift in Sources */,
 				5B6D622D2AD9F265003B1D3A /* Style.swift in Sources */,
 				FC82FA472AC6DD2E00642210 /* CoreDataStack.swift in Sources */,
-				5B6D62332ADA024D003B1D3A /* CelledView.swift in Sources */,
 				FC82FA512AC6EB9200642210 /* Candle.swift in Sources */,
 				FC82FA582AC6FA4600642210 /* Calculate.swift in Sources */,
 				FC82F9E72AC6910C00642210 /* AppDelegate.swift in Sources */,
 				FC82F9F92AC6976A00642210 /* main.swift in Sources */,
 				FC82FA532AC6F79200642210 /* StockView.swift in Sources */,
+				FCBAF4242ADE497F0075ABEF /* CGColor.swift in Sources */,
+				FCBAF4262ADE50610075ABEF /* FileManager.swift in Sources */,
 				FC82FA3C2AC6C12600642210 /* TickerDownload.swift in Sources */,
 				FC82FA4D2AC6E20000642210 /* StockAggregate.swift in Sources */,
 			);
