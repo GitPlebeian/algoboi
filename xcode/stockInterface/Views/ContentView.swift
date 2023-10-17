@@ -22,22 +22,22 @@ class ContentView: NSView {
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
         setupView()
-//        TickerDownload.shared.getAlpacaStock(ticker: "AAPL", year: 2) { messageReturn, model in
-//            DispatchQueue.main.async {
-//                guard let stock = model else {return}
-//
-//                self.stockView.stockAggregate = stock
-//            }
-//        }
-        TickerDownload.shared.getAlpacaStockMinuteInterval(ticker: "fngr", date: (10,3,2023)) { _, stockAggregate in
+        TickerDownload.shared.getAlpacaStock(ticker: "AAPL", year: 3) { messageReturn, stockAggregate in
             DispatchQueue.main.async {
                 guard let stockAggregate = stockAggregate else {return}
                 self.stockView.stockAggregate = stockAggregate
                 
-//                FileManager.shared.writeStockAggregateToSharedFoler(entity: stockAggregate)
-                SharedFileManager.shared.writeStockAggregateToTestFile(stockAggregate)
+                SharedFileManager.shared.writeMLTrainingDataToFile(StockCalculations.ConvertStockAggregateToMLTrainingData(stockAggregate))
             }
         }
+//        TickerDownload.shared.getAlpacaStockMinuteInterval(ticker: "TPST", date: (10,16,2023)) { _, stockAggregate in
+//            DispatchQueue.main.async {
+//                guard let stockAggregate = stockAggregate else {return}
+//                self.stockView.stockAggregate = stockAggregate
+//
+//                SharedFileManager.shared.writeMLTrainingDataToFile(StockCalculations.ConvertStockAggregateToMLTrainingData(stockAggregate))
+//            }
+//        }
     }
     
     required init?(coder: NSCoder) {

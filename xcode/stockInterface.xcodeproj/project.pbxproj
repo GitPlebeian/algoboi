@@ -10,6 +10,7 @@
 		5B0C78B22ADE5A3500E0EEEB /* SharedFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0C78B12ADE5A3500E0EEEB /* SharedFileManager.swift */; };
 		5B6D622D2AD9F265003B1D3A /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6D622C2AD9F265003B1D3A /* Style.swift */; };
 		5B6D622F2AD9F2B9003B1D3A /* LayoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6D622E2AD9F2B9003B1D3A /* LayoutManager.swift */; };
+		FC55C3182ADE74B800564D3C /* MLTrainingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC55C3172ADE74B800564D3C /* MLTrainingData.swift */; };
 		FC82F9E72AC6910C00642210 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC82F9E62AC6910C00642210 /* AppDelegate.swift */; };
 		FC82F9EB2AC6910C00642210 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC82F9EA2AC6910C00642210 /* Assets.xcassets */; };
 		FC82F9F92AC6976A00642210 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC82F9F82AC6976A00642210 /* main.swift */; };
@@ -24,6 +25,8 @@
 		FC82FA582AC6FA4600642210 /* Calculate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC82FA572AC6FA4600642210 /* Calculate.swift */; };
 		FCBAF4242ADE497F0075ABEF /* CGColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBAF4232ADE497F0075ABEF /* CGColor.swift */; };
 		FCBAF4262ADE50610075ABEF /* StockAggregateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBAF4252ADE50610075ABEF /* StockAggregateManager.swift */; };
+		FCBAF4282ADE72D20075ABEF /* StockCalculations.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBAF4272ADE72D20075ABEF /* StockCalculations.swift */; };
+		FCBAF42A2ADE73900075ABEF /* FloatingPointArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBAF4292ADE73900075ABEF /* FloatingPointArray.swift */; };
 		FCD1D5072ACBDB2200700D4C /* NSWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD1D5062ACBDB2200700D4C /* NSWindow.swift */; };
 /* End PBXBuildFile section */
 
@@ -31,6 +34,7 @@
 		5B0C78B12ADE5A3500E0EEEB /* SharedFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedFileManager.swift; sourceTree = "<group>"; };
 		5B6D622C2AD9F265003B1D3A /* Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Style.swift; sourceTree = "<group>"; };
 		5B6D622E2AD9F2B9003B1D3A /* LayoutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutManager.swift; sourceTree = "<group>"; };
+		FC55C3172ADE74B800564D3C /* MLTrainingData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLTrainingData.swift; sourceTree = "<group>"; };
 		FC82F9E32AC6910C00642210 /* stockInterface.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = stockInterface.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC82F9E62AC6910C00642210 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FC82F9EA2AC6910C00642210 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -47,6 +51,8 @@
 		FC82FA572AC6FA4600642210 /* Calculate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calculate.swift; sourceTree = "<group>"; };
 		FCBAF4232ADE497F0075ABEF /* CGColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGColor.swift; sourceTree = "<group>"; };
 		FCBAF4252ADE50610075ABEF /* StockAggregateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockAggregateManager.swift; sourceTree = "<group>"; };
+		FCBAF4272ADE72D20075ABEF /* StockCalculations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockCalculations.swift; sourceTree = "<group>"; };
+		FCBAF4292ADE73900075ABEF /* FloatingPointArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingPointArray.swift; sourceTree = "<group>"; };
 		FCD1D5062ACBDB2200700D4C /* NSWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSWindow.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -118,6 +124,7 @@
 				5B6D622E2AD9F2B9003B1D3A /* LayoutManager.swift */,
 				FCBAF4252ADE50610075ABEF /* StockAggregateManager.swift */,
 				5B0C78B12ADE5A3500E0EEEB /* SharedFileManager.swift */,
+				FCBAF4272ADE72D20075ABEF /* StockCalculations.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -127,6 +134,7 @@
 			children = (
 				FC82FA4C2AC6E20000642210 /* StockAggregate.swift */,
 				FC82FA502AC6EB9200642210 /* Candle.swift */,
+				FC55C3172ADE74B800564D3C /* MLTrainingData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -137,6 +145,7 @@
 				FC82FA4E2AC6EA9F00642210 /* DateFormatter.swift */,
 				FCD1D5062ACBDB2200700D4C /* NSWindow.swift */,
 				FCBAF4232ADE497F0075ABEF /* CGColor.swift */,
+				FCBAF4292ADE73900075ABEF /* FloatingPointArray.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -225,13 +234,16 @@
 				FC82FA562AC6F97F00642210 /* Draw.swift in Sources */,
 				5B6D622F2AD9F2B9003B1D3A /* LayoutManager.swift in Sources */,
 				FCD1D5072ACBDB2200700D4C /* NSWindow.swift in Sources */,
+				FC55C3182ADE74B800564D3C /* MLTrainingData.swift in Sources */,
 				5B0C78B22ADE5A3500E0EEEB /* SharedFileManager.swift in Sources */,
 				FC82FA332AC6AE4800642210 /* ContentView.swift in Sources */,
 				5B6D622D2AD9F265003B1D3A /* Style.swift in Sources */,
 				FC82FA512AC6EB9200642210 /* Candle.swift in Sources */,
 				FC82FA582AC6FA4600642210 /* Calculate.swift in Sources */,
+				FCBAF42A2ADE73900075ABEF /* FloatingPointArray.swift in Sources */,
 				FC82F9E72AC6910C00642210 /* AppDelegate.swift in Sources */,
 				FC82F9F92AC6976A00642210 /* main.swift in Sources */,
+				FCBAF4282ADE72D20075ABEF /* StockCalculations.swift in Sources */,
 				FC82FA532AC6F79200642210 /* StockView.swift in Sources */,
 				FCBAF4242ADE497F0075ABEF /* CGColor.swift in Sources */,
 				FCBAF4262ADE50610075ABEF /* StockAggregateManager.swift in Sources */,

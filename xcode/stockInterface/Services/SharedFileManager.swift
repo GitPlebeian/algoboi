@@ -14,7 +14,7 @@ class SharedFileManager {
     func writeDataToFileName(data: Data, fileName: String) {
         
         var url = FileManager.default.urls(for: .desktopDirectory, in: .userDomainMask).first!
-        url = url.appendingPathComponent("/algoboi/shared/\(fileName).json")
+        url = url.appendingPathComponent("/algoboi/shared/\(fileName)")
         
         do {
             try data.write(to: url)
@@ -23,13 +23,13 @@ class SharedFileManager {
         }
     }
     
-    func writeStockAggregateToTestFile(_ model: StockAggregate) {
+    func writeMLTrainingDataToFile(_ model: MLTrainingData) {
         let encoder = JSONEncoder()
         encoder.outputFormatting = .prettyPrinted
         
         do {
             let data = try encoder.encode(model)
-            writeDataToFileName(data: data, fileName: "bob")
+            writeDataToFileName(data: data, fileName: "test.json")
         } catch let e {
             fatalError("Error encoding stock Aggregate: \(e)")
         }

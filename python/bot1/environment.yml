@@ -1,0 +1,18 @@
+name: bot1
+channels:
+  - defaults
+  - conda-forge
+  - apple
+dependencies:
+  - python=3.8  # Adjust to the version you need.
+  - numpy
+  - keras
+  # - tensorflow-deps
+  - h5py  # sometimes required by Keras for saving/loading models
+  - json5  # assuming you want enhanced JSON
+  - pip
+  - pip:
+    - random2  # enhanced 'random' library, if required
+    - tensorflow
+    - tensorflow-metal
+    - pandas

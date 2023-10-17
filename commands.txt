@@ -1,0 +1,4 @@
+conda env create -f environment.yml
+
+
+conda env update --name bot1 --file environment.yml --prune
