@@ -1,6 +1,7 @@
 
 import numpy as np
 import random
+import tensorflow as tf
 from collections import deque
 from keras.models import Sequential
 from keras.layers import Dense
@@ -8,6 +9,13 @@ from keras.optimizers.legacy import Adam
 import json
 import os
 import pandas as pd
+
+# os.environ["CUDA_VISIBLE_DEVICES"]="0"
+print(tf.__version__)
+print('A: ', tf.test.is_built_with_cuda)
+print('B: ', tf.test.gpu_device_name())
+tf.compat.v1.disable_eager_execution()
+print(tf.executing_eagerly())  # True
 
 class DQNAgent:
     def __init__(self, state_size, action_size):
@@ -23,8 +31,8 @@ class DQNAgent:
 
     def _build_model(self):
         model = Sequential()
-        model.add(Dense(24, input_dim=self.state_size, activation='relu'))
-        model.add(Dense(24, activation='relu'))
+        model.add(Dense(2, input_dim=self.state_size, activation='relu'))
+        model.add(Dense(2, activation='relu'))
         model.add(Dense(self.action_size, activation='linear'))
         model.compile(loss='mse', optimizer=Adam(learning_rate=self.learning_rate))
         return model
@@ -33,25 +41,28 @@ class DQNAgent:
         self.memory.append((state, action, reward, next_state, done))
 
     def act(self, state):
-        # if np.random.rand() <= self.epsilon:
-        #     random_value = random.randrange(self.action_size)
-        #     print("RANDOM", random_value)
-        #     return random_value
-        act_values = self.model.predict(state)
-        print("ACT VALUES", act_values)
+        # print("\n")
+        if np.random.rand() <= self.epsilon:
+            random_value = random.randrange(self.action_size)
+            # print("RANDOM", random_value)
+            return random_value
+        act_values = self.model.predict(state, verbose=1)
+        # print("ACT VALUES", act_values, state)
         return np.argmax(act_values[0])
 
-#     def replay(self, batch_size):
-#         minibatch = random.sample(self.memory, batch_size)
-#         for state, action, reward, next_state, done in minibatch:
-#             target = reward
-#             if not done:
-#                 target = reward + self.gamma * np.amax(self.model.predict(next_state)[0])
-#             target_f = self.model.predict(state)
-#             target_f[0][action] = target
-#             self.model.train_on_batch(state, target_f)
-#         if self.epsilon > self.epsilon_min:
-#             self.epsilon *= self.epsilon_decay
+    def replay(self, batch_size):
+        minibatch = random.sample(self.memory, len(self.memory))
+        # minibatch = random.sample(self.memory, batch_size)
+        for state, action, reward, next_state, done in minibatch:
+            target = reward
+            if not done:
+                target = reward + self.gamma * np.amax(self.model.predict(next_state, verbose=0)[0])
+            # print("State: ", state, " Reward ", reward)
+            target_f = self.model.predict(state, verbose=0)
+            target_f[0][action] = target
+            self.model.train_on_batch(state, target_f)
+        if self.epsilon > self.epsilon_min:
+            self.epsilon *= self.epsilon_decay
 
 
 class TradingEnvironment:
@@ -68,41 +79,47 @@ class TradingEnvironment:
         self.current_average_price = None  # None means not holding, otherwise it's the purchase price
         self.purchased_state = None
         self.buy_next_state = None
+        self.current_score = 0
 
     def reset(self):
         self.current_step = 0
         self.current_average_price = None
         self.purchased_state = None
         self.buy_next_state = None
-        return self.data.iloc[self.current_step].values[1:]  # return the initial state
+        self.current_score = 0
+
+    def get_current_state(self):
+        return self.data.iloc[self.current_step].values[1:]
 
     def step(self, action):
         # action = 0 (Hold), 1 (Buy), 2 (Sell)
+        # print("Current Step", self.current_step, "Total", len(self.data))
         reward = None
         buy_return = None
         if action == 1 and self.current_average_price == None: # Buy the stock:
-            current_average_price = self.data.iloc[self.current_step].values[0]
-            purchased_state = self.data.iloc[self.current_step].values[1:]
-            buy_next_state = self.data.iloc[self.current_step + 1].values[1:]
-            print("Purchasing Stock At Price: ", current_average_price)
+            self.current_average_price = self.data.iloc[self.current_step].values[0]
+            self.purchased_state = self.data.iloc[self.current_step].values[1:]
+            self.buy_next_state = self.data.iloc[self.current_step + 1].values[1:]
+            # print("Purchasing Stock At Price: ", self.current_average_price, self.buy_next_state)
         elif action == 2 and self.current_average_price != None: # Sell the stock and assign reward
             percentage_change = (self.data.iloc[self.current_step].values[0] - self.current_average_price) / self.current_average_price * 100
 
             reward = percentage_change
+            # print(self.buy_next_state)
             buy_return = {
-                state: purchased_state,
-                next_state: buy_next_state,
-                reward: purchased_state,
-                done: false
+                'state': self.purchased_state,
+                'next_state': self.buy_next_state,
+                'reward': reward,
+                'done': False
             }
-            
+            self.current_score += percentage_change
+            # print("Selling Stock For Change Of ", percentage_change, self.current_average_price, self.data.iloc[self.current_step].values[0])
             self.current_average_price = None
             self.purchased_state = None
             self.buy_next_state = None
-            print("Selling Stock For Change Of ", percentage_change)
         else:
             reward = 0
-            print("Doing nothing")
+            # print("Doing nothing")
 
         
         self.current_step += 1
@@ -133,20 +150,33 @@ print("State Size: ", state_size)
 action_size = env.action_space()
 agent = DQNAgent(state_size, action_size)
 batch_size = 32
-episodes = 1
+episodes = 1000
 
 for e in range(episodes):
-    state = env.reset();
-    state = np.reshape(state, [1, state_size])
+    env.reset();
     for candle in range(len(env.data)):
+        state = env.get_current_state()
+        state = np.reshape(state, [1, state_size])
         action = agent.act(state)
+
         next_state, reward, done, buy_return = env.step(action)
-        print(next_state)
-        next_state = np.reshape(next_state, [1, state_size])
-        agent.remember(state, action, reward, next_state, done)
+        if action != 1:
+            next_state = np.reshape(next_state, [1, state_size])
+            agent.remember(state, action, reward, next_state, done)
         if buy_return != None:
-            buy_return.next_state = np.reshape(next_state, [1, state_size])
-            agent.remember(buy_return.state, 1, buy_return.reward, buy_return.next_state, buy_return.done)
+            buy_return['next_state'] = np.reshape(buy_return['next_state'], [1, state_size])
+            buy_return['state'] = np.reshape(buy_return['state'], [1, state_size])
+            agent.remember(buy_return['state'], 1, buy_return['reward'], buy_return['next_state'], buy_return['done'])
+        if done:
+            print(f"Episode: {e}/{episodes}, Total Score: {env.current_score}, Epsilon: {agent.epsilon:.2}")
+            # break
+            break
+            
+
+    if len(agent.memory) > batch_size:
+                agent.replay(batch_size)
+
+# print(agent.memory)
 
 # if __name__ == "__main__":
 

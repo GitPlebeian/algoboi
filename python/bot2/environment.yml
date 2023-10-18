@@ -7,7 +7,7 @@ dependencies:
   - python=3.8  # Adjust to the version you need.
   - numpy
   - keras
-  - tensorflow-deps
+  # - tensorflow-deps
   - h5py  # sometimes required by Keras for saving/loading models
   - json5  # assuming you want enhanced JSON
   - pip
