@@ -3,6 +3,8 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 import random
+import json
+import os
 
 # Hyperparameters
 GAMMA = 0.99
@@ -32,9 +34,13 @@ def select_action(state, policy_net, steps_done):
     eps_threshold = EPS_END + (EPS_START - EPS_END) * np.exp(-1. * steps_done / EPS_DECAY)
     if sample > eps_threshold:
         with torch.no_grad():
-            return policy_net(state).max(1)[1].view(1, 1)
+            value = policy_net(state).max(1)[1].view(1, 1)
+            print("Action value: ", value)
+            return value
     else:
-        return torch.tensor([[random.randrange(3)]], dtype=torch.long)
+        random_value = random.randrange(3)
+        print("Random Value: ", random_value)
+        return torch.tensor([[random_value]], dtype=torch.long)
 
 # Training loop
 def optimize_model(policy_net, target_net, optimizer, memory):
@@ -63,9 +69,21 @@ target_net.load_state_dict(policy_net.state_dict())
 optimizer = optim.Adam(policy_net.parameters(), lr=LEARNING_RATE)
 memory = []
 
+current_dir = os.path.dirname(os.path.abspath(__file__))
+
+# Construct the path to the test.json file
+json_path = os.path.join(current_dir, '..', '..', 'shared', 'test.json')
+
+# Read and load the JSON data
+with open(json_path, 'r') as f:
+    data = json.load(f)
+
+candles = list(zip(data["slopeOf9DayEMA"], data["slopeOf25DayEMA"], data["closes"]))
+
 steps_done = 0
 holding_price = None
-for episode in range(100):  # Number of episodes
+for episode in range(1):  # Number of episodes
+    score = 0
     for candle in candles:
         ema1, ema2, price = candle
         state = torch.tensor([ema1, ema2], dtype=torch.float32).unsqueeze(0)
@@ -81,14 +99,19 @@ for episode in range(100):  # Number of episodes
         elif action == 1 and holding_price is not None:  # Sell
             reward = (price - holding_price) / holding_price
             holding_price = None
+            # print("Appending reward", reward)
         else:
             reward = 0
+
+        score += reward
 
         reward = torch.tensor([reward], dtype=torch.float32)
         memory.append((state, action, reward))
         
         # Optimize model
         optimize_model(policy_net, target_net, optimizer, memory)
+
+    print(f"Episode: {episode} Score: {score}")
 
     if episode % TARGET_UPDATE == 0:
         target_net.load_state_dict(policy_net.state_dict())
