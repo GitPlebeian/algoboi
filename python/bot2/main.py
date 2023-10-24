@@ -8,12 +8,15 @@ import os
 
 # Hyperparameters
 GAMMA = 0.99
-EPS_START = 0.9
-EPS_END = 0.05
-EPS_DECAY = 200
+EPS_START = 1
+EPS_MIN = 0.01
+EPS_DECAY = 0.97
 BATCH_SIZE = 64
 LEARNING_RATE = 0.001
 TARGET_UPDATE = 10
+
+current_eps = EPS_START
+total_explorations = 0
 
 # Q-network
 class DQN(nn.Module):
@@ -29,17 +32,20 @@ class DQN(nn.Module):
         return self.fc(x)
 
 # Select action
-def select_action(state, policy_net, steps_done):
+def select_action(state, policy_net):
     sample = random.random()
-    eps_threshold = EPS_END + (EPS_START - EPS_END) * np.exp(-1. * steps_done / EPS_DECAY)
-    if sample > eps_threshold:
+    # print("Sample", sample)
+
+    if sample > current_eps:
         with torch.no_grad():
             value = policy_net(state).max(1)[1].view(1, 1)
-            print("Action value: ", value)
+            # print("Action value: ", value)
             return value
     else:
+        global total_explorations
         random_value = random.randrange(3)
-        print("Random Value: ", random_value)
+        total_explorations = total_explorations + 1
+        # print("Random Value: ", random_value)
         return torch.tensor([[random_value]], dtype=torch.long)
 
 # Training loop
@@ -82,14 +88,16 @@ candles = list(zip(data["slopeOf9DayEMA"], data["slopeOf25DayEMA"], data["closes
 
 steps_done = 0
 holding_price = None
-for episode in range(1):  # Number of episodes
+for episode in range(120):  # Number of episodes
     score = 0
+    total_explorations = 0
+    # print("Current EPS: ", current_eps)
     for candle in candles:
         ema1, ema2, price = candle
         state = torch.tensor([ema1, ema2], dtype=torch.float32).unsqueeze(0)
 
         # Decide action
-        action = select_action(state, policy_net, steps_done)
+        action = select_action(state, policy_net)
         steps_done += 1
 
         # Get reward
@@ -111,7 +119,12 @@ for episode in range(1):  # Number of episodes
         # Optimize model
         optimize_model(policy_net, target_net, optimizer, memory)
 
-    print(f"Episode: {episode} Score: {score}")
+        if episode % TARGET_UPDATE == 0:
+            target_net.load_state_dict(policy_net.state_dict())
 
-    if episode % TARGET_UPDATE == 0:
-        target_net.load_state_dict(policy_net.state_dict())
+    print(f"Episode: {episode} Score: {score} Total Explorations: {total_explorations} Current EPS: {current_eps}")
+
+    if current_eps * EPS_DECAY >= EPS_MIN:
+        current_eps = current_eps * EPS_DECAY
+    else:
+        current_eps = EPS_MIN
