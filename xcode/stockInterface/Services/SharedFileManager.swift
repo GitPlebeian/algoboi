@@ -28,7 +28,7 @@ class SharedFileManager {
         encoder.outputFormatting = .prettyPrinted
         
         do {
-            let data = try encoder.encode(model)
+            let data = try encoder.encode(model.toNestedArray())
             writeDataToFileName(data: data, fileName: "test.json")
         } catch let e {
             fatalError("Error encoding stock Aggregate: \(e)")

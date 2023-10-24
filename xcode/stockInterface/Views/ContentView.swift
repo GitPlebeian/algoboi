@@ -22,7 +22,7 @@ class ContentView: NSView {
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
         setupView()
-        TickerDownload.shared.getAlpacaStock(ticker: "AAPL", year: 3) { messageReturn, stockAggregate in
+        TickerDownload.shared.getAlpacaStock(ticker: "chwy", year: 4) { messageReturn, stockAggregate in
             DispatchQueue.main.async {
                 guard let stockAggregate = stockAggregate else {return}
                 self.stockView.stockAggregate = stockAggregate

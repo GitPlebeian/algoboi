@@ -53,6 +53,6 @@ class StockCalculations {
         let ema25 = GetEMASFor(for: closes, period: 25)
         let ema9Slopes = GetAngleBetweenTwoPoints(arr: ema9)
         let ema25Slopes = GetAngleBetweenTwoPoints(arr: ema25)
-        return MLTrainingData(slopeOf9DayEMA: ema9Slopes, slopeOf25DayEMA: ema25Slopes, closes: closes)
+        return MLTrainingData(closes: closes, slopeOf9DayEMA: ema9Slopes, slopeOf25DayEMA: ema25Slopes)
     }
 }

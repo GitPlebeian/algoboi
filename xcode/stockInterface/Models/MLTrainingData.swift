@@ -9,8 +9,38 @@ import Foundation
 
 struct MLTrainingData: Codable {
     
+    var closes: [Float]
     var slopeOf9DayEMA: [Float]
     var slopeOf25DayEMA: [Float]
-    var closes: [Float]
-    var minimumStartIndex: Int = 25
+    var startAtElement: Int = 25
+    
+    func toNestedArray() -> [[Float]] {
+        // Use Mirror to reflect the properties of the struct
+        let mirror = Mirror(reflecting: self)
+        
+        // Create an array to hold the final nested array
+        var result = [[Float]]()
+        
+        // Get the first value from each property to determine the count
+        guard let firstProperty = mirror.children.first?.value as? [Float],
+              !firstProperty.isEmpty else {
+            return result
+        }
+        
+        for i in 0..<firstProperty.count {
+            var currentRow: [Float] = []
+            
+            // Iterate over each property and append the i'th value to currentRow
+            for case let (_, value) in mirror.children {
+                if let arrayValue = value as? [Float], arrayValue.indices.contains(i) {
+                    currentRow.append(arrayValue[i])
+                }
+            }
+            
+            // Append the currentRow to the result
+            result.append(currentRow)
+        }
+        
+        return Array(result[(startAtElement - 1)...])
+    }
 }
