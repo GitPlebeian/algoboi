@@ -22,14 +22,14 @@ class ContentView: NSView {
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
         setupView()
-        TickerDownload.shared.getAlpacaStock(ticker: "chwy", year: 4) { messageReturn, stockAggregate in
-            DispatchQueue.main.async {
-                guard let stockAggregate = stockAggregate else {return}
-                self.stockView.stockAggregate = stockAggregate
-                
-                SharedFileManager.shared.writeMLTrainingDataToFile(StockCalculations.ConvertStockAggregateToMLTrainingData(stockAggregate))
-            }
-        }
+//        TickerDownload.shared.getAlpacaStock(ticker: "chwy", year: 4) { messageReturn, stockAggregate in
+//            DispatchQueue.main.async {
+//                guard let stockAggregate = stockAggregate else {return}
+//                self.stockView.stockAggregate = stockAggregate
+//                
+//                SharedFileManager.shared.writeMLTrainingDataToFile(StockCalculations.ConvertStockAggregateToMLTrainingData(stockAggregate))
+//            }
+//        }
 //        TickerDownload.shared.getAlpacaStockMinuteInterval(ticker: "TPST", date: (10,16,2023)) { _, stockAggregate in
 //            DispatchQueue.main.async {
 //                guard let stockAggregate = stockAggregate else {return}
@@ -38,6 +38,10 @@ class ContentView: NSView {
 //                SharedFileManager.shared.writeMLTrainingDataToFile(StockCalculations.ConvertStockAggregateToMLTrainingData(stockAggregate))
 //            }
 //        }
+        let fileNames = SharedFileManager.shared.getFileNamesFromPlaybackFolder()!
+        guard let data = SharedFileManager.shared.getDataFromPlaybackFile(fileNames[0]) else {return}
+        
+        print(data)
     }
     
     required init?(coder: NSCoder) {

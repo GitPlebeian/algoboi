@@ -27,6 +27,7 @@
 		FCBAF4262ADE50610075ABEF /* StockAggregateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBAF4252ADE50610075ABEF /* StockAggregateManager.swift */; };
 		FCBAF4282ADE72D20075ABEF /* StockCalculations.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBAF4272ADE72D20075ABEF /* StockCalculations.swift */; };
 		FCBAF42A2ADE73900075ABEF /* FloatingPointArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBAF4292ADE73900075ABEF /* FloatingPointArray.swift */; };
+		FCC8D86D2AE87637004D10F0 /* MLPlayback.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC8D86C2AE87637004D10F0 /* MLPlayback.swift */; };
 		FCD1D5072ACBDB2200700D4C /* NSWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD1D5062ACBDB2200700D4C /* NSWindow.swift */; };
 /* End PBXBuildFile section */
 
@@ -53,6 +54,7 @@
 		FCBAF4252ADE50610075ABEF /* StockAggregateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockAggregateManager.swift; sourceTree = "<group>"; };
 		FCBAF4272ADE72D20075ABEF /* StockCalculations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockCalculations.swift; sourceTree = "<group>"; };
 		FCBAF4292ADE73900075ABEF /* FloatingPointArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingPointArray.swift; sourceTree = "<group>"; };
+		FCC8D86C2AE87637004D10F0 /* MLPlayback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLPlayback.swift; sourceTree = "<group>"; };
 		FCD1D5062ACBDB2200700D4C /* NSWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSWindow.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -135,6 +137,7 @@
 				FC82FA4C2AC6E20000642210 /* StockAggregate.swift */,
 				FC82FA502AC6EB9200642210 /* Candle.swift */,
 				FC55C3172ADE74B800564D3C /* MLTrainingData.swift */,
+				FCC8D86C2AE87637004D10F0 /* MLPlayback.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -235,6 +238,7 @@
 				5B6D622F2AD9F2B9003B1D3A /* LayoutManager.swift in Sources */,
 				FCD1D5072ACBDB2200700D4C /* NSWindow.swift in Sources */,
 				FC55C3182ADE74B800564D3C /* MLTrainingData.swift in Sources */,
+				FCC8D86D2AE87637004D10F0 /* MLPlayback.swift in Sources */,
 				5B0C78B22ADE5A3500E0EEEB /* SharedFileManager.swift in Sources */,
 				FC82FA332AC6AE4800642210 /* ContentView.swift in Sources */,
 				5B6D622D2AD9F265003B1D3A /* Style.swift in Sources */,

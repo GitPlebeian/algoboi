@@ -33,7 +33,32 @@ class SharedFileManager {
         } catch let e {
             fatalError("Error encoding stock Aggregate: \(e)")
         }
+    }
+    
+    func getFileNamesFromPlaybackFolder() -> [String]? {
+        do {
+            var url = FileManager.default.urls(for: .desktopDirectory, in: .userDomainMask).first!
+            url = url.appendingPathComponent("algoboi/shared/")
+            var fileNames = try FileManager.default.contentsOfDirectory(atPath: "/Users/\(NSFullUserName())/Desktop/algoboi/shared/playback")
+            fileNames = fileNames.filter { $0.hasSuffix(".json") }
+            return fileNames
+        } catch {
+            print("Error retrieving file names: \(error)")
+            return nil
+        }
+    }
+    
+    func getDataFromPlaybackFile(_ fileName: String) -> Data? {
+        let urlString = "/Users/\(NSFullUserName())/Desktop/algoboi/shared/playback/\(fileName)"
+        let fileURL = URL(string: urlString)!
+        print(fileURL)
         
-//        let data = encoder.json
+        do {
+            let data = try Data(contentsOf: fileURL)
+            return data
+        } catch let e {
+            print(e)
+        }
+        return nil
     }
 }

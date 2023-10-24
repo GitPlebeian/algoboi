@@ -55,7 +55,7 @@ loss_fn = nn.MSELoss()
 
 # Environment Parameters
 epsilon = 1.0  # exploration rate
-epsilon_min = 0.01
+epsilon_min = 0.005
 epsilon_decay = 0.995
 starting_portfolio = 100
 
@@ -82,7 +82,10 @@ def select_action(state):
             action_value = network(torch.tensor(state)).argmax().item()
     return action_value
 
-num_episodes = 1500
+num_episodes = 2000
+
+playback_buys = []
+playback_sells = []
 
 
 for episode in range(num_episodes):
@@ -93,18 +96,21 @@ for episode in range(num_episodes):
     actions = []
     random_action_count = 0
     buffer.reset(CAPACITY)
+    playback_buys.append([])
+    playback_sells.append([])
     for index, state in enumerate(states):
         action = select_action(state[1:])
         actions.append(action)
         if action == 0 and current_buy_price == None: # Buy Stock
             current_buy_price = state[0]
-
+            playback_buys[episode].append(index)
             # print(f"{index} Buying at price: {current_buy_price}")
         elif action == 1 and current_buy_price != None: # Sell Stock
             closing_price = state[0]
             percentage_change = (closing_price - current_buy_price) / current_buy_price
             portfolio_value = portfolio_value * (percentage_change + 1)
             current_buy_price = None
+            playback_sells[episode].append(index)
             # print(f"{index} Selling {percentage_change * 100}% | ${portfolio_value}")
 
     total_reward = (portfolio_value - starting_portfolio) / starting_portfolio
@@ -134,3 +140,17 @@ for episode in range(num_episodes):
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+
+# Construct the path to the test.json file
+json_path = os.path.join(current_dir, '..', '..', 'shared', 'playback', 'playback.json')
+
+playback_data = {
+    "purchaseIndexs" : playback_buys,
+    "sellIndexs" : playback_sells
+}
+# print(playback_data)
+
+with open(json_path, 'w') as json_file:
+    json.dump(playback_data, json_file)
