@@ -22,7 +22,7 @@ class ContentView: NSView {
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
         setupView()
-//        TickerDownload.shared.getAlpacaStock(ticker: "chwy", year: 4) { messageReturn, stockAggregate in
+//        TickerDownload.shared.getAlpacaStock(ticker: "aapl", year: 4) { messageReturn, stockAggregate in
 //            DispatchQueue.main.async {
 //                guard let stockAggregate = stockAggregate else {return}
 //                self.stockView.stockAggregate = stockAggregate
@@ -40,8 +40,10 @@ class ContentView: NSView {
 //        }
         let fileNames = SharedFileManager.shared.getFileNamesFromPlaybackFolder()!
         guard let data = SharedFileManager.shared.getDataFromPlaybackFile(fileNames[0]) else {return}
-        
-        print(data)
+        let decoder = JSONDecoder()
+        let b = try! decoder.decode(MLPlayback.self, from: data)
+        print(b)
+//        let b = MLPlayback(from: decoder)
     }
     
     required init?(coder: NSCoder) {

@@ -39,7 +39,8 @@ class SharedFileManager {
         do {
             var url = FileManager.default.urls(for: .desktopDirectory, in: .userDomainMask).first!
             url = url.appendingPathComponent("algoboi/shared/")
-            var fileNames = try FileManager.default.contentsOfDirectory(atPath: "/Users/\(NSFullUserName())/Desktop/algoboi/shared/playback")
+            let username = NSUserName()
+            var fileNames = try FileManager.default.contentsOfDirectory(atPath: "/Users/\(username)/Desktop/algoboi/shared/playback")
             fileNames = fileNames.filter { $0.hasSuffix(".json") }
             return fileNames
         } catch {
@@ -49,10 +50,8 @@ class SharedFileManager {
     }
     
     func getDataFromPlaybackFile(_ fileName: String) -> Data? {
-        let urlString = "/Users/\(NSFullUserName())/Desktop/algoboi/shared/playback/\(fileName)"
-        let fileURL = URL(string: urlString)!
-        print(fileURL)
-        
+        let urlString = "/Users/\(NSUserName())/Desktop/algoboi/shared/playback/\(fileName)"
+        let fileURL = URL(filePath: urlString)
         do {
             let data = try Data(contentsOf: fileURL)
             return data

@@ -43,8 +43,8 @@ class ReplayBuffer:
 # Parameters
 STATE_SIZE = 2  # Excluding the closing price
 ACTION_SIZE = 3  # buy, sell, hold
-BATCH_SIZE = 980
-LEARNING_RATE = 0.0005
+BATCH_SIZE = 2000
+LEARNING_RATE = 0.0001
 CAPACITY = 10000  # Experience replay buffer capacity
 
 # Initialize network, optimizer, and buffer
@@ -82,7 +82,7 @@ def select_action(state):
             action_value = network(torch.tensor(state)).argmax().item()
     return action_value
 
-num_episodes = 2000
+num_episodes = 100
 
 playback_buys = []
 playback_sells = []
@@ -95,7 +95,7 @@ for episode in range(num_episodes):
     total_reward = None
     actions = []
     random_action_count = 0
-    buffer.reset(CAPACITY)
+    # buffer.reset(CAPACITY)
     playback_buys.append([])
     playback_sells.append([])
     for index, state in enumerate(states):
@@ -148,7 +148,8 @@ json_path = os.path.join(current_dir, '..', '..', 'shared', 'playback', 'playbac
 
 playback_data = {
     "purchaseIndexs" : playback_buys,
-    "sellIndexs" : playback_sells
+    "sellIndexs" : playback_sells,
+    "length" : len(states)
 }
 # print(playback_data)
 
