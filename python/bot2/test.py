@@ -43,7 +43,7 @@ class ReplayBuffer:
 # Parameters
 STATE_SIZE = 2  # Excluding the closing price
 ACTION_SIZE = 3  # buy, sell, hold
-BATCH_SIZE = 700
+BATCH_SIZE = 980
 LEARNING_RATE = 0.0005
 CAPACITY = 10000  # Experience replay buffer capacity
 
@@ -117,6 +117,8 @@ for episode in range(num_episodes):
 
     for index, state in enumerate(states):
         buffer.push(state[1:], actions[index], total_reward)
+
+    # print(buffer.__len__())
 
     if len(buffer) >= BATCH_SIZE:
         sampled_states, sampled_actions, sampled_rewards = buffer.sample(BATCH_SIZE)
