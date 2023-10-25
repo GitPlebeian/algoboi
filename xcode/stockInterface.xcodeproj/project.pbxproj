@@ -14,7 +14,6 @@
 		FC82F9E72AC6910C00642210 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC82F9E62AC6910C00642210 /* AppDelegate.swift */; };
 		FC82F9EB2AC6910C00642210 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC82F9EA2AC6910C00642210 /* Assets.xcassets */; };
 		FC82F9F92AC6976A00642210 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC82F9F82AC6976A00642210 /* main.swift */; };
-		FC82FA2F2AC69D8A00642210 /* info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FC82FA2E2AC69D8A00642210 /* info.plist */; };
 		FC82FA332AC6AE4800642210 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC82FA322AC6AE4800642210 /* ContentView.swift */; };
 		FC82FA3C2AC6C12600642210 /* TickerDownload.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC82FA3B2AC6C12600642210 /* TickerDownload.swift */; };
 		FC82FA4D2AC6E20000642210 /* StockAggregate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC82FA4C2AC6E20000642210 /* StockAggregate.swift */; };
@@ -23,6 +22,9 @@
 		FC82FA532AC6F79200642210 /* StockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC82FA522AC6F79200642210 /* StockView.swift */; };
 		FC82FA562AC6F97F00642210 /* Draw.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC82FA552AC6F97F00642210 /* Draw.swift */; };
 		FC82FA582AC6FA4600642210 /* Calculate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC82FA572AC6FA4600642210 /* Calculate.swift */; };
+		FC8B8CAA2AE8972D0053F5CF /* ScrollingTerminalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC8B8CA92AE8972D0053F5CF /* ScrollingTerminalView.swift */; };
+		FC8B8CAE2AE89D360053F5CF /* BrassMono-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FC8B8CAC2AE89D360053F5CF /* BrassMono-Bold.ttf */; };
+		FC8B8CAF2AE89D360053F5CF /* BrassMono-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FC8B8CAD2AE89D360053F5CF /* BrassMono-Regular.ttf */; };
 		FCBAF4242ADE497F0075ABEF /* CGColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBAF4232ADE497F0075ABEF /* CGColor.swift */; };
 		FCBAF4262ADE50610075ABEF /* StockAggregateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBAF4252ADE50610075ABEF /* StockAggregateManager.swift */; };
 		FCBAF4282ADE72D20075ABEF /* StockCalculations.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBAF4272ADE72D20075ABEF /* StockCalculations.swift */; };
@@ -41,7 +43,6 @@
 		FC82F9EA2AC6910C00642210 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FC82F9EF2AC6910C00642210 /* stockInterface.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = stockInterface.entitlements; sourceTree = "<group>"; };
 		FC82F9F82AC6976A00642210 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		FC82FA2E2AC69D8A00642210 /* info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = info.plist; sourceTree = "<group>"; };
 		FC82FA322AC6AE4800642210 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		FC82FA3B2AC6C12600642210 /* TickerDownload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickerDownload.swift; sourceTree = "<group>"; };
 		FC82FA4C2AC6E20000642210 /* StockAggregate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockAggregate.swift; sourceTree = "<group>"; };
@@ -50,6 +51,9 @@
 		FC82FA522AC6F79200642210 /* StockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockView.swift; sourceTree = "<group>"; };
 		FC82FA552AC6F97F00642210 /* Draw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Draw.swift; sourceTree = "<group>"; };
 		FC82FA572AC6FA4600642210 /* Calculate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calculate.swift; sourceTree = "<group>"; };
+		FC8B8CA92AE8972D0053F5CF /* ScrollingTerminalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollingTerminalView.swift; sourceTree = "<group>"; };
+		FC8B8CAC2AE89D360053F5CF /* BrassMono-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BrassMono-Bold.ttf"; sourceTree = "<group>"; };
+		FC8B8CAD2AE89D360053F5CF /* BrassMono-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BrassMono-Regular.ttf"; sourceTree = "<group>"; };
 		FCBAF4232ADE497F0075ABEF /* CGColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGColor.swift; sourceTree = "<group>"; };
 		FCBAF4252ADE50610075ABEF /* StockAggregateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockAggregateManager.swift; sourceTree = "<group>"; };
 		FCBAF4272ADE72D20075ABEF /* StockCalculations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockCalculations.swift; sourceTree = "<group>"; };
@@ -100,11 +104,11 @@
 		FC82FA362AC6C07600642210 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				FC8B8CAB2AE89D280053F5CF /* Fonts */,
 				FC82F9E62AC6910C00642210 /* AppDelegate.swift */,
 				FC82F9EA2AC6910C00642210 /* Assets.xcassets */,
 				FC82F9EF2AC6910C00642210 /* stockInterface.entitlements */,
 				FC82F9F82AC6976A00642210 /* main.swift */,
-				FC82FA2E2AC69D8A00642210 /* info.plist */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -114,6 +118,7 @@
 			children = (
 				FC82FA322AC6AE4800642210 /* ContentView.swift */,
 				FC82FA542AC6F90500642210 /* StockView */,
+				FC8B8CA92AE8972D0053F5CF /* ScrollingTerminalView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -161,6 +166,15 @@
 				FC82FA572AC6FA4600642210 /* Calculate.swift */,
 			);
 			path = StockView;
+			sourceTree = "<group>";
+		};
+		FC8B8CAB2AE89D280053F5CF /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				FC8B8CAC2AE89D360053F5CF /* BrassMono-Bold.ttf */,
+				FC8B8CAD2AE89D360053F5CF /* BrassMono-Regular.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -221,7 +235,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FC82FA2F2AC69D8A00642210 /* info.plist in Resources */,
+				FC8B8CAF2AE89D360053F5CF /* BrassMono-Regular.ttf in Resources */,
+				FC8B8CAE2AE89D360053F5CF /* BrassMono-Bold.ttf in Resources */,
 				FC82F9EB2AC6910C00642210 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -244,6 +259,7 @@
 				5B6D622D2AD9F265003B1D3A /* Style.swift in Sources */,
 				FC82FA512AC6EB9200642210 /* Candle.swift in Sources */,
 				FC82FA582AC6FA4600642210 /* Calculate.swift in Sources */,
+				FC8B8CAA2AE8972D0053F5CF /* ScrollingTerminalView.swift in Sources */,
 				FCBAF42A2ADE73900075ABEF /* FloatingPointArray.swift in Sources */,
 				FC82F9E72AC6910C00642210 /* AppDelegate.swift in Sources */,
 				FC82F9F92AC6976A00642210 /* main.swift in Sources */,
@@ -395,7 +411,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = jax.stockInterface;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -423,7 +439,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = jax.stockInterface;
 				PRODUCT_NAME = "$(TARGET_NAME)";

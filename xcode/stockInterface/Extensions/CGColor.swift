@@ -37,5 +37,6 @@ extension CGColor {
     }
     
     static let CelledBackground = FromHex("030303")
+    static let InputBackground  = FromHex("131313")
     
 }

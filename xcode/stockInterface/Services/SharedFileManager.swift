@@ -51,7 +51,12 @@ class SharedFileManager {
     
     func getDataFromPlaybackFile(_ fileName: String) -> Data? {
         let urlString = "/Users/\(NSUserName())/Desktop/algoboi/shared/playback/\(fileName)"
-        let fileURL = URL(filePath: urlString)
+        var fileURL: URL
+        if #available(macOS 13.0, *) {
+            fileURL = URL(filePath: urlString)
+        } else {
+            fileURL = URL(fileURLWithPath: urlString)
+        }
         do {
             let data = try Data(contentsOf: fileURL)
             return data
