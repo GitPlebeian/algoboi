@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		5B0C78B22ADE5A3500E0EEEB /* SharedFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0C78B12ADE5A3500E0EEEB /* SharedFileManager.swift */; };
-		5B458ADD2AE91914008A4222 /* info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5B458ADC2AE91914008A4222 /* info.plist */; };
 		5B6D622D2AD9F265003B1D3A /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6D622C2AD9F265003B1D3A /* Style.swift */; };
 		5B6D622F2AD9F2B9003B1D3A /* LayoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6D622E2AD9F2B9003B1D3A /* LayoutManager.swift */; };
 		FC55C3182ADE74B800564D3C /* MLTrainingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC55C3172ADE74B800564D3C /* MLTrainingData.swift */; };
@@ -24,8 +23,8 @@
 		FC82FA562AC6F97F00642210 /* Draw.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC82FA552AC6F97F00642210 /* Draw.swift */; };
 		FC82FA582AC6FA4600642210 /* Calculate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC82FA572AC6FA4600642210 /* Calculate.swift */; };
 		FC8B8CAA2AE8972D0053F5CF /* ScrollingTerminalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC8B8CA92AE8972D0053F5CF /* ScrollingTerminalView.swift */; };
-		FC8B8CAE2AE89D360053F5CF /* BrassMono-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FC8B8CAC2AE89D360053F5CF /* BrassMono-Bold.ttf */; };
-		FC8B8CAF2AE89D360053F5CF /* BrassMono-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FC8B8CAD2AE89D360053F5CF /* BrassMono-Regular.ttf */; };
+		FC8B8CAE2AE89D360053F5CF /* BrassMono-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FC8B8CAC2AE89D360053F5CF /* BrassMono-Bold.ttf */; settings = {ASSET_TAGS = (New, ); }; };
+		FC8B8CAF2AE89D360053F5CF /* BrassMono-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FC8B8CAD2AE89D360053F5CF /* BrassMono-Regular.ttf */; settings = {ASSET_TAGS = (New, ); }; };
 		FCBAF4242ADE497F0075ABEF /* CGColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBAF4232ADE497F0075ABEF /* CGColor.swift */; };
 		FCBAF4262ADE50610075ABEF /* StockAggregateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBAF4252ADE50610075ABEF /* StockAggregateManager.swift */; };
 		FCBAF4282ADE72D20075ABEF /* StockCalculations.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBAF4272ADE72D20075ABEF /* StockCalculations.swift */; };
@@ -36,10 +35,10 @@
 
 /* Begin PBXFileReference section */
 		5B0C78B12ADE5A3500E0EEEB /* SharedFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedFileManager.swift; sourceTree = "<group>"; };
-		5B458ADC2AE91914008A4222 /* info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = info.plist; sourceTree = "<group>"; };
 		5B6D622C2AD9F265003B1D3A /* Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Style.swift; sourceTree = "<group>"; };
 		5B6D622E2AD9F2B9003B1D3A /* LayoutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutManager.swift; sourceTree = "<group>"; };
 		FC55C3172ADE74B800564D3C /* MLTrainingData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLTrainingData.swift; sourceTree = "<group>"; };
+		FC64178B2AF285FB006EFC87 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		FC82F9E32AC6910C00642210 /* stockInterface.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = stockInterface.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC82F9E62AC6910C00642210 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FC82F9EA2AC6910C00642210 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -78,7 +77,6 @@
 		FC82F9DA2AC6910C00642210 = {
 			isa = PBXGroup;
 			children = (
-				5B458ADC2AE91914008A4222 /* info.plist */,
 				FC82F9E52AC6910C00642210 /* stockInterface */,
 				FC82F9E42AC6910C00642210 /* Products */,
 			);
@@ -95,6 +93,7 @@
 		FC82F9E52AC6910C00642210 /* stockInterface */ = {
 			isa = PBXGroup;
 			children = (
+				FC64178B2AF285FB006EFC87 /* Info.plist */,
 				FC82FA3A2AC6C10200642210 /* Services */,
 				FC82FA372AC6C0D800642210 /* Views */,
 				FC82FA3F2AC6C13F00642210 /* Models */,
@@ -207,6 +206,9 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
+				KnownAssetTags = (
+					New,
+				);
 				LastSwiftUpdateCheck = 1420;
 				LastUpgradeCheck = 1500;
 				TargetAttributes = {
@@ -238,7 +240,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5B458ADD2AE91914008A4222 /* info.plist in Resources */,
 				FC8B8CAF2AE89D360053F5CF /* BrassMono-Regular.ttf in Resources */,
 				FC8B8CAE2AE89D360053F5CF /* BrassMono-Bold.ttf in Resources */,
 				FC82F9EB2AC6910C00642210 /* Assets.xcassets in Resources */,
@@ -409,7 +410,7 @@
 				DEVELOPMENT_TEAM = 2WP5X762NJ;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = info.plist;
+				INFOPLIST_FILE = stockInterface/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -438,7 +439,7 @@
 				DEVELOPMENT_TEAM = 2WP5X762NJ;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = info.plist;
+				INFOPLIST_FILE = stockInterface/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
 				LD_RUNPATH_SEARCH_PATHS = (

@@ -34,7 +34,6 @@ class ScrollingTerminalView: NSView {
     private func setupView() {
         wantsLayer = true
         layer?.backgroundColor = .black
-//        userinteraction
         
         let inputParentView = NSView()
         inputParentView.wantsLayer = true
@@ -49,37 +48,39 @@ class ScrollingTerminalView: NSView {
         ])
         self.inputParentView = inputParentView
         
-//        let inputField = NSTextField(frame: NSRect(x: 0, y: 0, width: 50, height: 50))
         let inputField = NSTextField()
-        
-//        inputField.isBezeled = false
-//        inputField.placeholderString = "Bob is gay"
-//        inputField.font = NSFont(name: "BrassMono-Regular", size: 20)
-//        inputField.isEnabled = true
-//        inputField.isSelectable = true
-//        inputField.allowsEditingTextAttributes = true
-//        inputField.delegate = self
-//        inputField.stringValue = "Gay But Sex"
-//        inputField.contentType = .
-//        inputField.isEditable = true
+        inputField.placeholderString = "Enter Command"
+        inputField.font = NSFont(name: "BrassMono-Bold", size: 16)
+        inputField.focusRingType = .none
+        inputField.delegate = self
+        inputField.resignFirstResponder()
+        inputField.isBordered = false
+        inputField.backgroundColor = .clear
         inputField.translatesAutoresizingMaskIntoConstraints = false
         inputParentView.addSubview(inputField)
         NSLayoutConstraint.activate([
-            inputField.topAnchor.constraint(equalTo: inputParentView.topAnchor),
-            inputField.leadingAnchor.constraint(equalTo: inputParentView.leadingAnchor),
-            inputField.trailingAnchor.constraint(equalTo: inputParentView.trailingAnchor),
-            inputField.bottomAnchor.constraint(equalTo: inputParentView.bottomAnchor)
+            inputField.leadingAnchor.constraint(equalTo: inputParentView.leadingAnchor, constant: 10),
+            inputField.trailingAnchor.constraint(equalTo: inputParentView.trailingAnchor, constant: -10),
+            inputField.centerYAnchor.constraint(equalTo: inputParentView.centerYAnchor)
         ])
         self.inputField = inputField
-//        inputField.
-        
-        for family in NSFontManager.shared.availableFontFamilies {
-            print("\(family)")
-            for name in NSFontManager.shared.availableMembers(ofFontFamily: family) ?? [] {
-                print("   \(name[0])")
-            }
-        }
 
     }
-    
+}
+
+extension ScrollingTerminalView: NSTextFieldDelegate {
+    func control(_ control: NSControl, textView: NSTextView, doCommandBy commandSelector: Selector) -> Bool {
+        
+        if commandSelector == #selector(NSResponder.deleteBackward(_:)) {
+            var text = inputField.stringValue
+            text = String(text.dropLast())
+            inputField.stringValue = text
+        }
+        
+        if commandSelector == #selector(NSResponder.insertNewline(_:)) {
+            inputField.stringValue = ""
+        }
+        
+        return true
+    }
 }
