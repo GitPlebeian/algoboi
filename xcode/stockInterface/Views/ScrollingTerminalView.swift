@@ -73,18 +73,13 @@ class ScrollingTerminalView: NSView {
         self.inputField = inputField
 //        inputField.
         
-        let fontFamilyNames = NSFontManager.shared.availableFontFamilies
-
-        for fontFamilyName in fontFamilyNames {
-            print("Font Family Name: \(fontFamilyName)")
-            
-            // Get all available fonts for the current font family
-            let fontNames = NSFontManager.shared.availableMembers(ofFontFamily: fontFamilyName)!
-            
-            for fontName in fontNames {
-                print("  Font Name: \(fontName)")
+        for family in NSFontManager.shared.availableFontFamilies {
+            print("\(family)")
+            for name in NSFontManager.shared.availableMembers(ofFontFamily: family) ?? [] {
+                print("   \(name[0])")
             }
         }
+
     }
     
 }
