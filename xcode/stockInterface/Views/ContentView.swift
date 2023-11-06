@@ -61,6 +61,13 @@ class ContentView: NSView {
     // MARK: Setup Views
     
     private func setupView() {
+        
+        Timer.scheduledTimer(withTimeInterval: 0.3, repeats: true) { timer in
+            let arr = ["Boobs", "1\n2\n3\n4\n5\n6\n7", "The green man is not your friend in this world but I would like to meat him."]
+            let selectedText = arr[Int.random(in: 0..<arr.count)]
+            self.terminalView.addText(selectedText)
+        }
+        
         let frostedGlassEffect = NSVisualEffectView()
         frostedGlassEffect.appearance = .currentDrawing()
         frostedGlassEffect.blendingMode = .behindWindow

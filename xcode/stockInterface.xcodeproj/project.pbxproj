@@ -10,7 +10,9 @@
 		5B0C78B22ADE5A3500E0EEEB /* SharedFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0C78B12ADE5A3500E0EEEB /* SharedFileManager.swift */; };
 		5B6D622D2AD9F265003B1D3A /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6D622C2AD9F265003B1D3A /* Style.swift */; };
 		5B6D622F2AD9F2B9003B1D3A /* LayoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6D622E2AD9F2B9003B1D3A /* LayoutManager.swift */; };
+		FC38C5F52AF293D300E29029 /* ScrollingTerminalViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC38C5F42AF293D300E29029 /* ScrollingTerminalViewCell.swift */; };
 		FC55C3182ADE74B800564D3C /* MLTrainingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC55C3172ADE74B800564D3C /* MLTrainingData.swift */; };
+		FC583DBE2AF9A79000B7CAAC /* Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC583DBD2AF9A79000B7CAAC /* Text.swift */; };
 		FC82F9E72AC6910C00642210 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC82F9E62AC6910C00642210 /* AppDelegate.swift */; };
 		FC82F9EB2AC6910C00642210 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC82F9EA2AC6910C00642210 /* Assets.xcassets */; };
 		FC82F9F92AC6976A00642210 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC82F9F82AC6976A00642210 /* main.swift */; };
@@ -37,7 +39,9 @@
 		5B0C78B12ADE5A3500E0EEEB /* SharedFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedFileManager.swift; sourceTree = "<group>"; };
 		5B6D622C2AD9F265003B1D3A /* Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Style.swift; sourceTree = "<group>"; };
 		5B6D622E2AD9F2B9003B1D3A /* LayoutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutManager.swift; sourceTree = "<group>"; };
+		FC38C5F42AF293D300E29029 /* ScrollingTerminalViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollingTerminalViewCell.swift; sourceTree = "<group>"; };
 		FC55C3172ADE74B800564D3C /* MLTrainingData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLTrainingData.swift; sourceTree = "<group>"; };
+		FC583DBD2AF9A79000B7CAAC /* Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Text.swift; sourceTree = "<group>"; };
 		FC64178B2AF285FB006EFC87 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		FC82F9E32AC6910C00642210 /* stockInterface.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = stockInterface.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC82F9E62AC6910C00642210 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -74,6 +78,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FC38C5F32AF293BE00E29029 /* Scrolling Terminal */ = {
+			isa = PBXGroup;
+			children = (
+				FC8B8CA92AE8972D0053F5CF /* ScrollingTerminalView.swift */,
+				FC38C5F42AF293D300E29029 /* ScrollingTerminalViewCell.swift */,
+			);
+			path = "Scrolling Terminal";
+			sourceTree = "<group>";
+		};
 		FC82F9DA2AC6910C00642210 = {
 			isa = PBXGroup;
 			children = (
@@ -120,7 +133,7 @@
 			children = (
 				FC82FA322AC6AE4800642210 /* ContentView.swift */,
 				FC82FA542AC6F90500642210 /* StockView */,
-				FC8B8CA92AE8972D0053F5CF /* ScrollingTerminalView.swift */,
+				FC38C5F32AF293BE00E29029 /* Scrolling Terminal */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -156,6 +169,7 @@
 				FCD1D5062ACBDB2200700D4C /* NSWindow.swift */,
 				FCBAF4232ADE497F0075ABEF /* CGColor.swift */,
 				FCBAF4292ADE73900075ABEF /* FloatingPointArray.swift */,
+				FC583DBD2AF9A79000B7CAAC /* Text.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -257,6 +271,7 @@
 				FC82FA562AC6F97F00642210 /* Draw.swift in Sources */,
 				5B6D622F2AD9F2B9003B1D3A /* LayoutManager.swift in Sources */,
 				FCD1D5072ACBDB2200700D4C /* NSWindow.swift in Sources */,
+				FC38C5F52AF293D300E29029 /* ScrollingTerminalViewCell.swift in Sources */,
 				FC55C3182ADE74B800564D3C /* MLTrainingData.swift in Sources */,
 				FCC8D86D2AE87637004D10F0 /* MLPlayback.swift in Sources */,
 				5B0C78B22ADE5A3500E0EEEB /* SharedFileManager.swift in Sources */,
@@ -265,6 +280,7 @@
 				FC82FA512AC6EB9200642210 /* Candle.swift in Sources */,
 				FC82FA582AC6FA4600642210 /* Calculate.swift in Sources */,
 				FC8B8CAA2AE8972D0053F5CF /* ScrollingTerminalView.swift in Sources */,
+				FC583DBE2AF9A79000B7CAAC /* Text.swift in Sources */,
 				FCBAF42A2ADE73900075ABEF /* FloatingPointArray.swift in Sources */,
 				FC82F9E72AC6910C00642210 /* AppDelegate.swift in Sources */,
 				FC82F9F92AC6976A00642210 /* main.swift in Sources */,
