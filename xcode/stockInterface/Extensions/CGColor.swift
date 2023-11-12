@@ -36,7 +36,8 @@ extension CGColor {
         fatalError("Invalid Hex")
     }
     
-    static let CelledBackground = FromHex("030303")
-    static let InputBackground  = FromHex("131313")
+    static let CelledBackground  = FromHex("030303")
+    static let InputBackground   = FromHex("131313")
+    static let TerminalUserInput = FromHex("002b70")
     
 }

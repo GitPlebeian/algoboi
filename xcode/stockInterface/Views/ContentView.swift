@@ -23,14 +23,14 @@ class ContentView: NSView {
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
         setupView()
-        TickerDownload.shared.getAlpacaStock(ticker: "aapl", year: 4) { messageReturn, stockAggregate in
-            DispatchQueue.main.async {
-                guard let stockAggregate = stockAggregate else {return}
-                self.stockView.stockAggregate = stockAggregate
-
-//                SharedFileManager.shared.writeMLTrainingDataToFile(StockCalculations.ConvertStockAggregateToMLTrainingData(stockAggregate))
-            }
-        }
+//        TickerDownload.shared.getAlpacaStock(ticker: "aapl", year: 4) { messageReturn, stockAggregate in
+//            DispatchQueue.main.async {
+//                guard let stockAggregate = stockAggregate else {return}
+//                self.stockView.stockAggregate = stockAggregate
+//
+////                SharedFileManager.shared.writeMLTrainingDataToFile(StockCalculations.ConvertStockAggregateToMLTrainingData(stockAggregate))
+//            }
+//        }
 //        TickerDownload.shared.getAlpacaStockMinuteInterval(ticker: "TPST", date: (10,16,2023)) { _, stockAggregate in
 //            DispatchQueue.main.async {
 //                guard let stockAggregate = stockAggregate else {return}
@@ -61,12 +61,6 @@ class ContentView: NSView {
     // MARK: Setup Views
     
     private func setupView() {
-        
-        Timer.scheduledTimer(withTimeInterval: 0.3, repeats: true) { timer in
-            let arr = ["Boobs", "1\n2\n3\n4\n5\n6\n7", "The green man is not your friend in this world but I would like to meat him."]
-            let selectedText = arr[Int.random(in: 0..<arr.count)]
-            self.terminalView.addText(selectedText)
-        }
         
         let frostedGlassEffect = NSVisualEffectView()
         frostedGlassEffect.appearance = .currentDrawing()

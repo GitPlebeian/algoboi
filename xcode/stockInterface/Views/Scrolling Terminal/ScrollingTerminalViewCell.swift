@@ -21,13 +21,20 @@ class ScrollingTerminalViewCell: NSTableCellView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(text: String) {
+    func configure(text: String, type: TerminalTextType) {
         label.stringValue = text
+        label.textColor = .white
+        switch type {
+        case .userInput: 
+            backgroundView.layer?.backgroundColor = .TerminalUserInput
+        default: backgroundView.layer?.backgroundColor = .black
+        }
     }
     
     private func setupViews() {
         let backgroundView = NSView()
         backgroundView.wantsLayer = true
+        backgroundView.layer?.cornerRadius = 4
         backgroundView.layer?.backgroundColor = .black
         backgroundView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(backgroundView)
@@ -41,7 +48,7 @@ class ScrollingTerminalViewCell: NSTableCellView {
         
         let label = NSTextField(labelWithString: "")
         label.cell?.wraps = true
-        label.font = NSFont(name: "BrassMono-Bold", size: 12)
+        label.font = NSFont(name: "BrassMono-Bold", size: 16)
         self.addSubview(label)
         label.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([

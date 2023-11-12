@@ -7,6 +7,12 @@
 
 import Cocoa
 
+enum TerminalTextType {
+    case userInput
+    case normal
+    case error
+}
+
 class ScrollingTerminalView: NSView {
 
     // MARK: Subviews
@@ -21,7 +27,7 @@ class ScrollingTerminalView: NSView {
     
     var cachedRowHeights: [CGFloat] = []
     var data: [String] = []
-    
+    var dataType: [TerminalTextType] = []
     
     
     // MARK: Style
@@ -32,6 +38,7 @@ class ScrollingTerminalView: NSView {
         super.init(frame: frameRect)
         calculateCachedRowHeights()
         setupView()
+        TerminalManager.shared.currentTerminal = self
     }
     
     required init?(coder: NSCoder) {
@@ -40,9 +47,10 @@ class ScrollingTerminalView: NSView {
     
     // MARK: Public
     
-    func addText(_ string: String) {
+    func addText(_ string: String, type: TerminalTextType = .normal) {
         data.append(string)
-        cachedRowHeights.append(Text.HeightForString(string: string, width: 288 - 20, font: NSFont(name: "BrassMono-Bold", size: 12)!) + 5)
+        cachedRowHeights.append(Text.HeightForString(string: string, width: 288 - 20, font: NSFont(name: "BrassMono-Bold", size: 16)!) + 5)
+        dataType.append(type)
         tableView.reloadData()
         tableView.scrollRowToVisible(data.count - 1)
     }
@@ -51,7 +59,7 @@ class ScrollingTerminalView: NSView {
     
     private func calculateCachedRowHeights() {
         for e in data {
-            cachedRowHeights.append(Text.HeightForString(string: e, width: 288 - 20, font: NSFont(name: "BrassMono-Bold", size: 12)!) + 5)
+            cachedRowHeights.append(Text.HeightForString(string: e, width: 288 - 20, font: NSFont(name: "BrassMono-Bold", size: 16)!) + 5)
         }
     }
     
@@ -80,6 +88,7 @@ class ScrollingTerminalView: NSView {
         inputField.focusRingType = .none
         inputField.delegate = self
         inputField.resignFirstResponder()
+        inputField.lineBreakMode = .byTruncatingTail
         inputField.isBordered = false
         inputField.backgroundColor = .clear
         inputField.translatesAutoresizingMaskIntoConstraints = false
@@ -126,6 +135,7 @@ extension ScrollingTerminalView: NSTextFieldDelegate {
         }
         
         if commandSelector == #selector(NSResponder.insertNewline(_:)) {
+            TerminalManager.shared.enterCommand(command: inputField.stringValue)
             inputField.stringValue = ""
         }
         
@@ -140,7 +150,7 @@ extension ScrollingTerminalView: NSTableViewDelegate, NSTableViewDataSource {
     
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "Cell"), owner: nil) as? ScrollingTerminalViewCell ?? ScrollingTerminalViewCell()
-        cell.configure(text: data[row])
+        cell.configure(text: data[row], type: dataType[row])
         return cell
     }
     

@@ -10,6 +10,10 @@
 		5B0C78B22ADE5A3500E0EEEB /* SharedFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0C78B12ADE5A3500E0EEEB /* SharedFileManager.swift */; };
 		5B6D622D2AD9F265003B1D3A /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6D622C2AD9F265003B1D3A /* Style.swift */; };
 		5B6D622F2AD9F2B9003B1D3A /* LayoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6D622E2AD9F2B9003B1D3A /* LayoutManager.swift */; };
+		5B860BC12B0072C6002EA088 /* TerminalManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B860BC02B0072C6002EA088 /* TerminalManager.swift */; };
+		5B860BC42B0079E9002EA088 /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B860BC32B0079E9002EA088 /* Command.swift */; };
+		5B860BC62B007A02002EA088 /* HelpCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B860BC52B007A02002EA088 /* HelpCommand.swift */; };
+		5B860BC82B007B87002EA088 /* ChartCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B860BC72B007B87002EA088 /* ChartCommand.swift */; };
 		FC38C5F52AF293D300E29029 /* ScrollingTerminalViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC38C5F42AF293D300E29029 /* ScrollingTerminalViewCell.swift */; };
 		FC55C3182ADE74B800564D3C /* MLTrainingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC55C3172ADE74B800564D3C /* MLTrainingData.swift */; };
 		FC583DBE2AF9A79000B7CAAC /* Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC583DBD2AF9A79000B7CAAC /* Text.swift */; };
@@ -39,6 +43,10 @@
 		5B0C78B12ADE5A3500E0EEEB /* SharedFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedFileManager.swift; sourceTree = "<group>"; };
 		5B6D622C2AD9F265003B1D3A /* Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Style.swift; sourceTree = "<group>"; };
 		5B6D622E2AD9F2B9003B1D3A /* LayoutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutManager.swift; sourceTree = "<group>"; };
+		5B860BC02B0072C6002EA088 /* TerminalManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalManager.swift; sourceTree = "<group>"; };
+		5B860BC32B0079E9002EA088 /* Command.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
+		5B860BC52B007A02002EA088 /* HelpCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpCommand.swift; sourceTree = "<group>"; };
+		5B860BC72B007B87002EA088 /* ChartCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartCommand.swift; sourceTree = "<group>"; };
 		FC38C5F42AF293D300E29029 /* ScrollingTerminalViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollingTerminalViewCell.swift; sourceTree = "<group>"; };
 		FC55C3172ADE74B800564D3C /* MLTrainingData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLTrainingData.swift; sourceTree = "<group>"; };
 		FC583DBD2AF9A79000B7CAAC /* Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Text.swift; sourceTree = "<group>"; };
@@ -78,6 +86,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5B860BC22B0079E1002EA088 /* Commands */ = {
+			isa = PBXGroup;
+			children = (
+				5B860BC32B0079E9002EA088 /* Command.swift */,
+				5B860BC52B007A02002EA088 /* HelpCommand.swift */,
+				5B860BC72B007B87002EA088 /* ChartCommand.swift */,
+			);
+			path = Commands;
+			sourceTree = "<group>";
+		};
 		FC38C5F32AF293BE00E29029 /* Scrolling Terminal */ = {
 			isa = PBXGroup;
 			children = (
@@ -107,6 +125,7 @@
 			isa = PBXGroup;
 			children = (
 				FC64178B2AF285FB006EFC87 /* Info.plist */,
+				5B860BC22B0079E1002EA088 /* Commands */,
 				FC82FA3A2AC6C10200642210 /* Services */,
 				FC82FA372AC6C0D800642210 /* Views */,
 				FC82FA3F2AC6C13F00642210 /* Models */,
@@ -147,6 +166,7 @@
 				FCBAF4252ADE50610075ABEF /* StockAggregateManager.swift */,
 				5B0C78B12ADE5A3500E0EEEB /* SharedFileManager.swift */,
 				FCBAF4272ADE72D20075ABEF /* StockCalculations.swift */,
+				5B860BC02B0072C6002EA088 /* TerminalManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -271,15 +291,19 @@
 				FC82FA562AC6F97F00642210 /* Draw.swift in Sources */,
 				5B6D622F2AD9F2B9003B1D3A /* LayoutManager.swift in Sources */,
 				FCD1D5072ACBDB2200700D4C /* NSWindow.swift in Sources */,
+				5B860BC62B007A02002EA088 /* HelpCommand.swift in Sources */,
 				FC38C5F52AF293D300E29029 /* ScrollingTerminalViewCell.swift in Sources */,
 				FC55C3182ADE74B800564D3C /* MLTrainingData.swift in Sources */,
 				FCC8D86D2AE87637004D10F0 /* MLPlayback.swift in Sources */,
+				5B860BC12B0072C6002EA088 /* TerminalManager.swift in Sources */,
+				5B860BC42B0079E9002EA088 /* Command.swift in Sources */,
 				5B0C78B22ADE5A3500E0EEEB /* SharedFileManager.swift in Sources */,
 				FC82FA332AC6AE4800642210 /* ContentView.swift in Sources */,
 				5B6D622D2AD9F265003B1D3A /* Style.swift in Sources */,
 				FC82FA512AC6EB9200642210 /* Candle.swift in Sources */,
 				FC82FA582AC6FA4600642210 /* Calculate.swift in Sources */,
 				FC8B8CAA2AE8972D0053F5CF /* ScrollingTerminalView.swift in Sources */,
+				5B860BC82B007B87002EA088 /* ChartCommand.swift in Sources */,
 				FC583DBE2AF9A79000B7CAAC /* Text.swift in Sources */,
 				FCBAF42A2ADE73900075ABEF /* FloatingPointArray.swift in Sources */,
 				FC82F9E72AC6910C00642210 /* AppDelegate.swift in Sources */,
