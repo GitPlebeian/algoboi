@@ -44,6 +44,11 @@ class StockView: NSView {
     var currentHoveringCandle: Int?
     var currentHoveringCandleXPosition: CGFloat?
     
+    // MARK: Additonal View Items
+    
+    var greenBarIndices: [Int] = [2,5,25,37,48]
+    var redBarIndices:   [Int] = [2,4,7,24,42,68,69]
+    
     // MARK: Gestures
     
     // Pinch - Zooming
@@ -81,6 +86,14 @@ class StockView: NSView {
     override func layout() {
         super.layout()
 
+    }
+    
+    // MARK: Public
+    
+    func clearAllAdditionalItems() {
+        greenBarIndices = []
+        redBarIndices = []
+        setNeedsDisplay(bounds)
     }
     
     // MARK: Tracking Area
