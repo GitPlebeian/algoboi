@@ -39,5 +39,6 @@ extension CGColor {
     static let CelledBackground  = FromHex("030303")
     static let InputBackground   = FromHex("131313")
     static let TerminalUserInput = FromHex("002b70")
+    static let TerminalError     = FromHex("700707")
     
 }

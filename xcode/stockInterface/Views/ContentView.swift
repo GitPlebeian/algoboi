@@ -95,5 +95,6 @@ class ContentView: NSView {
 //            stockView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.7)
         ])
         self.stockView = stockView
+        ChartManager.shared.currentStockView = self.stockView
     }
 }

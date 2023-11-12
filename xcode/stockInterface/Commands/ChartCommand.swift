@@ -17,10 +17,12 @@ class ChartCommand: Command {
         let ticker = arguments[0]
         TickerDownload.shared.getAlpacaStock(ticker: ticker.uppercased(), year: 4) { messageReturn, stockAggregate in
             DispatchQueue.main.async {
-                guard let stockAggregate = stockAggregate else {return}
-//                self.stockView.stockAggregate = stockAggregate
-                
-                //                SharedFileManager.shared.writeMLTrainingDataToFile(StockCalculations.ConvertStockAggregateToMLTrainingData(stockAggregate))
+                guard let stockAggregate = stockAggregate else {
+                    TerminalManager.shared.currentTerminal?.addText(messageReturn, type: .error)
+                    return
+                }
+                ChartManager.shared.chartStock(stockAggregate)
+                TerminalManager.shared.currentTerminal?.addText("Charting: \(ticker.uppercased())", type: .normal)
             }
         }
     }

@@ -17,6 +17,8 @@ class TerminalManager {
     
     private init() {
         registerCommand(HelpCommand())
+        registerCommand(ChartCommand())
+        registerCommand(SaveCommand())
     }
 
     func registerCommand(_ command: Command) {

@@ -27,6 +27,8 @@ class ScrollingTerminalViewCell: NSTableCellView {
         switch type {
         case .userInput: 
             backgroundView.layer?.backgroundColor = .TerminalUserInput
+        case .error:
+            backgroundView.layer?.backgroundColor = .TerminalError
         default: backgroundView.layer?.backgroundColor = .black
         }
     }
