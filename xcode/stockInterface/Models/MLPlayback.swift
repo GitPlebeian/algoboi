@@ -19,7 +19,6 @@ struct MLPlayback: Codable {
         self.purchaseIndexs = try container.decode([[Int]].self, forKey: .purchaseIndexs)
         self.sellIndexs = try container.decode([[Int]].self, forKey: .sellIndexs)
         self.length = try container.decode(Int.self, forKey: .length)
-//        self.episodeCount = try container.decode(Int.self, forKey: .episodeCount)
         self.episodeCount = self.purchaseIndexs.count
     }
 }

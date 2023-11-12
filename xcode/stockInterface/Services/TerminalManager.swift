@@ -19,6 +19,7 @@ class TerminalManager {
         registerCommand(HelpCommand())
         registerCommand(ChartCommand())
         registerCommand(SaveCommand())
+        registerCommand(LoadPlayblackCommand())
     }
 
     func registerCommand(_ command: Command) {
