@@ -18,6 +18,7 @@
 		5B860BCC2B013788002EA088 /* SaveCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B860BCB2B013788002EA088 /* SaveCommand.swift */; };
 		5B860BCE2B013BC7002EA088 /* LoadPlayblackCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B860BCD2B013BC7002EA088 /* LoadPlayblackCommand.swift */; };
 		5B860BD02B013BED002EA088 /* PlaybackController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B860BCF2B013BED002EA088 /* PlaybackController.swift */; };
+		5B95015B2B0938ED008C3022 /* ChartRandomCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B95015A2B0938ED008C3022 /* ChartRandomCommand.swift */; };
 		FC38C5F52AF293D300E29029 /* ScrollingTerminalViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC38C5F42AF293D300E29029 /* ScrollingTerminalViewCell.swift */; };
 		FC55C3182ADE74B800564D3C /* MLTrainingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC55C3172ADE74B800564D3C /* MLTrainingData.swift */; };
 		FC583DBE2AF9A79000B7CAAC /* Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC583DBD2AF9A79000B7CAAC /* Text.swift */; };
@@ -56,6 +57,7 @@
 		5B860BCB2B013788002EA088 /* SaveCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveCommand.swift; sourceTree = "<group>"; };
 		5B860BCD2B013BC7002EA088 /* LoadPlayblackCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadPlayblackCommand.swift; sourceTree = "<group>"; };
 		5B860BCF2B013BED002EA088 /* PlaybackController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackController.swift; sourceTree = "<group>"; };
+		5B95015A2B0938ED008C3022 /* ChartRandomCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartRandomCommand.swift; sourceTree = "<group>"; };
 		FC38C5F42AF293D300E29029 /* ScrollingTerminalViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollingTerminalViewCell.swift; sourceTree = "<group>"; };
 		FC55C3172ADE74B800564D3C /* MLTrainingData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLTrainingData.swift; sourceTree = "<group>"; };
 		FC583DBD2AF9A79000B7CAAC /* Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Text.swift; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 				5B860BC72B007B87002EA088 /* ChartCommand.swift */,
 				5B860BCB2B013788002EA088 /* SaveCommand.swift */,
 				5B860BCD2B013BC7002EA088 /* LoadPlayblackCommand.swift */,
+				5B95015A2B0938ED008C3022 /* ChartRandomCommand.swift */,
 			);
 			path = Commands;
 			sourceTree = "<group>";
@@ -329,6 +332,7 @@
 				FC82F9F92AC6976A00642210 /* main.swift in Sources */,
 				5B860BD02B013BED002EA088 /* PlaybackController.swift in Sources */,
 				FCBAF4282ADE72D20075ABEF /* StockCalculations.swift in Sources */,
+				5B95015B2B0938ED008C3022 /* ChartRandomCommand.swift in Sources */,
 				FC82FA532AC6F79200642210 /* StockView.swift in Sources */,
 				FCBAF4242ADE497F0075ABEF /* CGColor.swift in Sources */,
 				FCBAF4262ADE50610075ABEF /* StockAggregateManager.swift in Sources */,

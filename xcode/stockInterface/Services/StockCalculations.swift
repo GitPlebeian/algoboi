@@ -15,19 +15,19 @@ class StockCalculations {
         guard !values.isEmpty, period > 0 else {
             return []
         }
-
+        
         var emas: [Float] = []
         var previousEMA = values[0]  // Start with the first data point
         emas.append(previousEMA)
-
+        
         let multiplier: Float = 2.0 / Float(period + 1)
-
+        
         for t in 1..<values.count {
             let currentEMA = (values[t] - previousEMA) * multiplier + previousEMA
             emas.append(currentEMA)
             previousEMA = currentEMA
         }
-
+        
         return emas
     }
     
@@ -56,5 +56,31 @@ class StockCalculations {
         let ema9Slopes = GetAngleBetweenTwoPoints(arr: ema9)
         let ema25Slopes = GetAngleBetweenTwoPoints(arr: ema25)
         return MLTrainingData(closes: closes, slopeOf9DayEMA: ema9Slopes, slopeOf25DayEMA: ema25Slopes)
+    }
+    
+    static func GenerateNetZeroRandomAggregate(length: Int) -> StockAggregate {
+        let ticker = "Random"
+        var candles: [Candle] = []
+        
+        var previousClose: Float = 0.0
+        let volatility: Float = 0.05 // Adjust this for more/less volatility
+        let trendProbability: Float = 0.2 // Probability of a trend starting
+        
+        for _ in 1...length {
+            let randomChange = Float.random(in: -volatility...volatility)
+            let isTrending = Float.random(in: 0...1) < trendProbability
+            let trendFactor = isTrending ? (Float.random(in: -2...2) * volatility) : 0
+            
+            let open = previousClose
+            let close = open + randomChange + trendFactor
+            let high = max(open, close) + Float.random(in: 0...volatility)
+            let low = min(open, close) - Float.random(in: 0...volatility)
+            
+            previousClose = close
+            let candle = Candle(volume: 2, volumeWeighted: 2, timestamp: Date(), transactionCount: 32, open: open, close: close, high: high, low: low)
+            candles.append(candle)
+        }
+        
+        return StockAggregate(symbol: ticker, candles: candles)
     }
 }

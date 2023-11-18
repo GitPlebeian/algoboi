@@ -6,3 +6,12 @@
 //
 
 import Foundation
+
+class ChartRandomCommand: Command {
+    var name: String { "chartRandom" }
+
+    func execute(with arguments: [String]) {
+        let aggregate = StockCalculations.GenerateNetZeroRandomAggregate(length: 2000)
+        ChartManager.shared.chartStock(aggregate)
+    }
+}
