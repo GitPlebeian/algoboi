@@ -43,9 +43,9 @@ class ReplayBuffer:
 # Parameters
 STATE_SIZE = 2  # Excluding the closing price
 ACTION_SIZE = 3  # buy, sell, hold
-BATCH_SIZE = 800
-LEARNING_RATE = 0.00005
-CAPACITY = 800  # Experience replay buffer capacity
+BATCH_SIZE = 9000
+LEARNING_RATE = 0.00001
+CAPACITY = 9000  # Experience replay buffer capacity
 
 # Initialize network, optimizer, and buffer
 network = DNN(STATE_SIZE, ACTION_SIZE)
@@ -55,8 +55,8 @@ loss_fn = nn.MSELoss()
 
 # Environment Parameters
 epsilon = 1.0  # exploration rate
-epsilon_min = 0.0005
-epsilon_decay = 0.995
+epsilon_min = 0.0001
+epsilon_decay = 0.97
 starting_portfolio = 100
 
 random_action_count = 0
@@ -82,7 +82,7 @@ def select_action(state):
             action_value = network(torch.tensor(state)).argmax().item()
     return action_value
 
-num_episodes = 2000
+num_episodes = 400
 
 playback_buys = []
 playback_sells = []
@@ -98,31 +98,57 @@ for episode in range(num_episodes):
     # buffer.reset(CAPACITY)
     playback_buys.append([])
     playback_sells.append([])
+
+    action_indicies = []
+    rewards = []
+    days_since_buy = 0
+
     for index, state in enumerate(states):
         action = select_action(state[1:])
-        actions.append(action)
-        if action == 0 and current_buy_price == None: # Buy Stock
+        # actions.append(action)
+        if action == 0 and current_buy_price == None and index != len(states) - 1: # Buy Stock
+            actions.append(action)
             current_buy_price = state[0]
             playback_buys[episode].append(index)
+            action_indicies.append(index)
             # print(f"{index} Buying at price: {current_buy_price}")
-        elif action == 1 and current_buy_price != None: # Sell Stock
+        elif (action == 1 or index == len(states) - 1) and current_buy_price != None: # Sell Stock
+            actions.append(action)
+            action_indicies.append(index)
             closing_price = state[0]
             percentage_change = (closing_price - current_buy_price) / current_buy_price
             portfolio_value = portfolio_value * (percentage_change + 1)
             current_buy_price = None
             playback_sells[episode].append(index)
+            waiting_mod = 0.05 * days_since_buy
+            days_since_buy = 0
+            rewards.append(percentage_change)
+            rewards.append(percentage_change - waiting_mod)
+        elif current_buy_price != None:
+            days_since_buy = days_since_buy + 1
+
             # print(f"{index} Selling {percentage_change * 100}% | ${portfolio_value}")
 
     total_reward = (portfolio_value - starting_portfolio) / starting_portfolio
-    print(f"Ending Value {total_reward} Random Count {random_action_count}")
+
+    average_reward = 0
+    if len(rewards) != 0:
+        average_reward = sum(rewards) / len(rewards)
+
+    print(f"AVG Reward {average_reward} Ending Value {total_reward} Random Count {random_action_count}")
 
     if epsilon * epsilon_decay >= epsilon_min:
         epsilon = epsilon * epsilon_decay
     else:
         epsilon = epsilon_min
+        # epsilon = 0
 
-    for index, state in enumerate(states):
-        buffer.push(state[1:], actions[index], total_reward)
+    # for index, state in enumerate(states):
+    #     buffer.push(state[1:], actions[index], total_reward)
+
+    for index, action_index in enumerate(action_indicies):
+        # print(len(states), len(actions), len(rewards), index, action_index, len(action_indicies))
+        buffer.push(states[action_index][1:], actions[index], rewards[index])
 
     # print(buffer.__len__())
 
