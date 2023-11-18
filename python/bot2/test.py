@@ -43,9 +43,9 @@ class ReplayBuffer:
 # Parameters
 STATE_SIZE = 2  # Excluding the closing price
 ACTION_SIZE = 3  # buy, sell, hold
-BATCH_SIZE = 2000
-LEARNING_RATE = 0.0001
-CAPACITY = 10000  # Experience replay buffer capacity
+BATCH_SIZE = 800
+LEARNING_RATE = 0.00005
+CAPACITY = 800  # Experience replay buffer capacity
 
 # Initialize network, optimizer, and buffer
 network = DNN(STATE_SIZE, ACTION_SIZE)
@@ -55,7 +55,7 @@ loss_fn = nn.MSELoss()
 
 # Environment Parameters
 epsilon = 1.0  # exploration rate
-epsilon_min = 0.005
+epsilon_min = 0.0005
 epsilon_decay = 0.995
 starting_portfolio = 100
 
@@ -82,7 +82,7 @@ def select_action(state):
             action_value = network(torch.tensor(state)).argmax().item()
     return action_value
 
-num_episodes = 100
+num_episodes = 2000
 
 playback_buys = []
 playback_sells = []
@@ -119,7 +119,7 @@ for episode in range(num_episodes):
     if epsilon * epsilon_decay >= epsilon_min:
         epsilon = epsilon * epsilon_decay
     else:
-        epsilon = 0
+        epsilon = epsilon_min
 
     for index, state in enumerate(states):
         buffer.push(state[1:], actions[index], total_reward)

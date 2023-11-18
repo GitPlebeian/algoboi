@@ -9,6 +9,8 @@ import Foundation
 
 class StockCalculations {
     
+    static let StartAtElement: Int = 25
+    
     static func GetEMASFor(for values: [Float], period: Int) -> [Float] {
         guard !values.isEmpty, period > 0 else {
             return []

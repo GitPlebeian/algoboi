@@ -36,9 +36,13 @@ extension CGColor {
         fatalError("Invalid Hex")
     }
     
-    static let CelledBackground  = FromHex("030303")
-    static let InputBackground   = FromHex("131313")
-    static let TerminalUserInput = FromHex("002b70")
-    static let TerminalError     = FromHex("700707")
+    func NSColor() -> NSColor { return AppKit.NSColor(cgColor: self)!}
+    
+    static let CelledBackground    = FromHex("030303")
+    static let InputBackground     = FromHex("131313")
+    static let TerminalUserInput   = FromHex("002b70")
+    static let TerminalError       = FromHex("700707")
+    static let ChartPurchasedLines = FromHex("32a87930")
+    static let ChartSoldLines      = FromHex("c4553330")
     
 }

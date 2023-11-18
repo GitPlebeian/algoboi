@@ -27,35 +27,49 @@ extension StockView {
     }
     
     func drawGreenRedBars() {
-        guard let hoveringCandleIndex = currentHoveringCandle else {
-            return
-        }
-        
-        for e in greenBarIndices {
-            if e < 0 || e >= stockAggregate!.candles.count {
+
+        for e in coloredFullHeightBars {
+            if e.0 < 0 || e.0 >= stockAggregate!.candles.count {
                 continue
             }
-            if e < startingCandleIndex || e > endingCandleIndex {
-                return
+            if e.0 < startingCandleIndex || e.0 > endingCandleIndex {
+                continue
             }
+            var xPosition: CGFloat = getCandleXPositionInViewForCandleIndex(candleIndex: e.0)
+            xPosition *= candleWidth
+            let candleBodyPath = NSBezierPath(rect: NSRect(x: xPosition + xPositionOffset,
+                                                           y: 0,
+                                                           width: candleWidth,
+                                                           height: bounds.height))
+            let color = e.1
+            color.setFill()
+            candleBodyPath.fill()
         }
-        
-        if hoveringCandleIndex < 0 || hoveringCandleIndex >= stockAggregate!.candles.count {
-            return
-        }
-        if hoveringCandleIndex < startingCandleIndex || hoveringCandleIndex > endingCandleIndex {
-            return
-        }
-
-        var xPosition: CGFloat = getCandleXPositionInViewForCandleIndex(candleIndex: hoveringCandleIndex)
-        xPosition *= candleWidth
-        let candleBodyPath = NSBezierPath(rect: NSRect(x: xPosition + xPositionOffset,
-                                                       y: 0,
-                                                       width: candleWidth,
-                                                       height: bounds.height))
-        let color: NSColor = .init(displayP3Red: 1, green: 1, blue: 1, alpha: 0.15)
-        color.setFill()
-        candleBodyPath.fill()
+//        for e in greenBarIndices {
+//            if e < 0 || e >= stockAggregate!.candles.count {
+//                continue
+//            }
+//            if e < startingCandleIndex || e > endingCandleIndex {
+//                return
+//            }
+//        }
+//
+//        if hoveringCandleIndex < 0 || hoveringCandleIndex >= stockAggregate!.candles.count {
+//            return
+//        }
+//        if hoveringCandleIndex < startingCandleIndex || hoveringCandleIndex > endingCandleIndex {
+//            return
+//        }
+//
+//        var xPosition: CGFloat = getCandleXPositionInViewForCandleIndex(candleIndex: hoveringCandleIndex)
+//        xPosition *= candleWidth
+//        let candleBodyPath = NSBezierPath(rect: NSRect(x: xPosition + xPositionOffset,
+//                                                       y: 0,
+//                                                       width: candleWidth,
+//                                                       height: bounds.height))
+//        let color: NSColor = .init(displayP3Red: 1, green: 1, blue: 1, alpha: 0.15)
+//        color.setFill()
+//        candleBodyPath.fill()
     }
     
     func drawCandles() {

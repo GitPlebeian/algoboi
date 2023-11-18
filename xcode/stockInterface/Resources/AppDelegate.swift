@@ -13,10 +13,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var window: NSWindow!
     var isFullScreen = false
     var originalFrame: NSRect?
+    var eventMonitor: Any?
+
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
 
         setupMenu()
+        
+        eventMonitor = NSEvent.addLocalMonitorForEvents(matching: [.keyDown]) { event in
+            self.handleKeyDown(event: event)
+            return event
+        }
+
 
         NSApp.setActivationPolicy(.regular)
 
@@ -83,5 +91,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Insert code here to tear down your application
         print("Bob")
     }
+    
+    func handleKeyDown(event: NSEvent) {
+        EventController.shared.handleEvent(event: event)
+    }
+
 }
 

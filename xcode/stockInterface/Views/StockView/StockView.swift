@@ -46,8 +46,7 @@ class StockView: NSView {
     
     // MARK: Additonal View Items
     
-    var greenBarIndices: [Int] = [2,5,25,37,48]
-    var redBarIndices:   [Int] = [2,4,7,24,42,68,69]
+    var coloredFullHeightBars: [(Int, NSColor)] = [(5, CGColor.ChartPurchasedLines.NSColor())]
     
     // MARK: Gestures
     
@@ -91,8 +90,12 @@ class StockView: NSView {
     // MARK: Public
     
     func clearAllAdditionalItems() {
-        greenBarIndices = []
-        redBarIndices = []
+        coloredFullHeightBars = []
+        setNeedsDisplay(bounds)
+    }
+    
+    func setColoredFullHeightBars(bars: [(Int, NSColor)]) {
+        coloredFullHeightBars = bars
         setNeedsDisplay(bounds)
     }
     

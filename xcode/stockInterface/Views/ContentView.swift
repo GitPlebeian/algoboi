@@ -23,27 +23,6 @@ class ContentView: NSView {
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
         setupView()
-//        TickerDownload.shared.getAlpacaStock(ticker: "aapl", year: 4) { messageReturn, stockAggregate in
-//            DispatchQueue.main.async {
-//                guard let stockAggregate = stockAggregate else {return}
-//                self.stockView.stockAggregate = stockAggregate
-//
-////                SharedFileManager.shared.writeMLTrainingDataToFile(StockCalculations.ConvertStockAggregateToMLTrainingData(stockAggregate))
-//            }
-//        }
-//        TickerDownload.shared.getAlpacaStockMinuteInterval(ticker: "TPST", date: (10,16,2023)) { _, stockAggregate in
-//            DispatchQueue.main.async {
-//                guard let stockAggregate = stockAggregate else {return}
-//                self.stockView.stockAggregate = stockAggregate
-//
-//                SharedFileManager.shared.writeMLTrainingDataToFile(StockCalculations.ConvertStockAggregateToMLTrainingData(stockAggregate))
-//            }
-//        }
-//        let fileNames = SharedFileManager.shared.getFileNamesFromPlaybackFolder()!
-//        guard let data = SharedFileManager.shared.getDataFromPlaybackFile(fileNames[0]) else {return}
-//        let decoder = JSONDecoder()
-//        let b = try! decoder.decode(MLPlayback.self, from: data)
-//        print(b)
     }
     
     required init?(coder: NSCoder) {
@@ -56,6 +35,11 @@ class ContentView: NSView {
         super.layout()
         frostedGlassEffect.frame = frame
 //        stockView.frame = frame
+    }
+    
+    override func keyDown(with event: NSEvent) {
+        if event.keyCode == 123 || event.keyCode == 124 || event.keyCode == 125 || event.keyCode == 126 {return}
+        super.keyDown(with: event)
     }
     
     // MARK: Setup Views

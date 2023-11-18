@@ -12,7 +12,6 @@ struct MLTrainingData: Codable {
     var closes: [Float]
     var slopeOf9DayEMA: [Float]
     var slopeOf25DayEMA: [Float]
-    var startAtElement: Int = 25
     
     func toNestedArray() -> [[Float]] {
         // Use Mirror to reflect the properties of the struct
@@ -41,6 +40,6 @@ struct MLTrainingData: Codable {
             result.append(currentRow)
         }
         
-        return Array(result[(startAtElement - 1)...])
+        return Array(result[(StockCalculations.StartAtElement - 1)...])
     }
 }
