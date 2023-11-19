@@ -7,11 +7,17 @@
 
 import Cocoa
 
+protocol StockViewMouseDelegate: AnyObject {
+    func candleHoverChanged(index: Int)
+}
+
 class StockView: NSView {
     
     // MARK: Subviews
     
     // MARK: Properties
+    
+    weak var mouseDelegate: StockViewMouseDelegate?
     
     var stockAggregate: StockAggregate? = nil {
         didSet {
@@ -183,9 +189,11 @@ class StockView: NSView {
         if let currentHoveringCandle = self.currentHoveringCandle {
             if newHoveringCandle != currentHoveringCandle {
                 setNeedsDisplay(bounds)
+                mouseDelegate?.candleHoverChanged(index: newHoveringCandle)
             }
         } else {
             setNeedsDisplay(bounds)
+            mouseDelegate?.candleHoverChanged(index: newHoveringCandle)
         }
         self.currentHoveringCandle = newHoveringCandle
         var x = CGFloat(newHoveringCandle - startingCandleIndex)

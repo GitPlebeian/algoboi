@@ -43,6 +43,9 @@
 		FCC5D7C92B01933100557CD5 /* EventController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC5D7C82B01933100557CD5 /* EventController.swift */; };
 		FCC8D86D2AE87637004D10F0 /* MLPlayback.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC8D86C2AE87637004D10F0 /* MLPlayback.swift */; };
 		FCD1D5072ACBDB2200700D4C /* NSWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD1D5062ACBDB2200700D4C /* NSWindow.swift */; };
+		FCDD12692B0AC00300DDF4C9 /* InputOutputGenerationCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCDD12682B0AC00300DDF4C9 /* InputOutputGenerationCommand.swift */; };
+		FCDD126B2B0AC0F800DDF4C9 /* MLDatasetGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCDD126A2B0AC0F800DDF4C9 /* MLDatasetGenerator.swift */; };
+		FCDD126D2B0AC24D00DDF4C9 /* MLDatasetInputOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCDD126C2B0AC24D00DDF4C9 /* MLDatasetInputOutput.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -85,6 +88,9 @@
 		FCC5D7C82B01933100557CD5 /* EventController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventController.swift; sourceTree = "<group>"; };
 		FCC8D86C2AE87637004D10F0 /* MLPlayback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLPlayback.swift; sourceTree = "<group>"; };
 		FCD1D5062ACBDB2200700D4C /* NSWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSWindow.swift; sourceTree = "<group>"; };
+		FCDD12682B0AC00300DDF4C9 /* InputOutputGenerationCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputOutputGenerationCommand.swift; sourceTree = "<group>"; };
+		FCDD126A2B0AC0F800DDF4C9 /* MLDatasetGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLDatasetGenerator.swift; sourceTree = "<group>"; };
+		FCDD126C2B0AC24D00DDF4C9 /* MLDatasetInputOutput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLDatasetInputOutput.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +113,7 @@
 				5B860BCB2B013788002EA088 /* SaveCommand.swift */,
 				5B860BCD2B013BC7002EA088 /* LoadPlayblackCommand.swift */,
 				5B95015A2B0938ED008C3022 /* ChartRandomCommand.swift */,
+				FCDD12682B0AC00300DDF4C9 /* InputOutputGenerationCommand.swift */,
 			);
 			path = Commands;
 			sourceTree = "<group>";
@@ -185,6 +192,7 @@
 				5B860BC92B01367E002EA088 /* ChartManager.swift */,
 				5B860BCF2B013BED002EA088 /* PlaybackController.swift */,
 				FCC5D7C82B01933100557CD5 /* EventController.swift */,
+				FCDD126A2B0AC0F800DDF4C9 /* MLDatasetGenerator.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -196,6 +204,7 @@
 				FC82FA502AC6EB9200642210 /* Candle.swift */,
 				FC55C3172ADE74B800564D3C /* MLTrainingData.swift */,
 				FCC8D86C2AE87637004D10F0 /* MLPlayback.swift */,
+				FCDD126C2B0AC24D00DDF4C9 /* MLDatasetInputOutput.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -308,6 +317,7 @@
 				FC82FA4F2AC6EA9F00642210 /* DateFormatter.swift in Sources */,
 				FC82FA562AC6F97F00642210 /* Draw.swift in Sources */,
 				5B6D622F2AD9F2B9003B1D3A /* LayoutManager.swift in Sources */,
+				FCDD12692B0AC00300DDF4C9 /* InputOutputGenerationCommand.swift in Sources */,
 				FCD1D5072ACBDB2200700D4C /* NSWindow.swift in Sources */,
 				5B860BC62B007A02002EA088 /* HelpCommand.swift in Sources */,
 				FC38C5F52AF293D300E29029 /* ScrollingTerminalViewCell.swift in Sources */,
@@ -318,8 +328,10 @@
 				5B0C78B22ADE5A3500E0EEEB /* SharedFileManager.swift in Sources */,
 				5B860BCC2B013788002EA088 /* SaveCommand.swift in Sources */,
 				FC82FA332AC6AE4800642210 /* ContentView.swift in Sources */,
+				FCDD126B2B0AC0F800DDF4C9 /* MLDatasetGenerator.swift in Sources */,
 				5B6D622D2AD9F265003B1D3A /* Style.swift in Sources */,
 				FC82FA512AC6EB9200642210 /* Candle.swift in Sources */,
+				FCDD126D2B0AC24D00DDF4C9 /* MLDatasetInputOutput.swift in Sources */,
 				5B860BCE2B013BC7002EA088 /* LoadPlayblackCommand.swift in Sources */,
 				FC82FA582AC6FA4600642210 /* Calculate.swift in Sources */,
 				FC8B8CAA2AE8972D0053F5CF /* ScrollingTerminalView.swift in Sources */,
