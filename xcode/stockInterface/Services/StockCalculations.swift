@@ -11,6 +11,24 @@ class StockCalculations {
     
     static let StartAtElement: Int = 25
     
+
+    static func Normalize(_ inputArray: [Float]) -> [Float] {
+
+        // Calculate the mean
+        let sum = inputArray.reduce(0.0, +)
+        let mean = sum / Float(inputArray.count)
+
+        // Calculate the standard deviation
+        let squaredDifferences = inputArray.map { pow($0 - mean, 2) }
+        let variance = squaredDifferences.reduce(0.0, +) / Float(inputArray.count)
+        let standardDeviation = sqrt(variance)
+
+        // Normalize the array
+        let normalizedArray = inputArray.map { ($0 - mean) / standardDeviation }
+
+        return normalizedArray
+    }
+    
     static func GetEMASFor(for values: [Float], period: Int) -> [Float] {
         guard !values.isEmpty, period > 0 else {
             return []
@@ -62,9 +80,9 @@ class StockCalculations {
         let ticker = "Random"
         var candles: [Candle] = []
         
-        var previousClose: Float = 0.0
-        let volatility: Float = 0.05 // Adjust this for more/less volatility
-        let trendProbability: Float = 0.2 // Probability of a trend starting
+        var previousClose: Float = 1000
+        let volatility: Float = 5 // Adjust this for more/less volatility
+        let trendProbability: Float = 0.3 // Probability of a trend starting
         
         for _ in 1...length {
             let randomChange = Float.random(in: -volatility...volatility)
@@ -75,7 +93,6 @@ class StockCalculations {
             let close = open + randomChange + trendFactor
             let high = max(open, close) + Float.random(in: 0...volatility)
             let low = min(open, close) - Float.random(in: 0...volatility)
-            
             previousClose = close
             let candle = Candle(volume: 2, volumeWeighted: 2, timestamp: Date(), transactionCount: 32, open: open, close: close, high: high, low: low)
             candles.append(candle)

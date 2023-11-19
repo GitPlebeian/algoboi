@@ -10,8 +10,14 @@ import Foundation
 struct MLTrainingData: Codable {
     
     var closes: [Float]
-    var slopeOf9DayEMA: [Float]
-    var slopeOf25DayEMA: [Float]
+    var slopeOf9DayEMA: [Float] = []
+    var slopeOf25DayEMA: [Float] = []
+    
+    init(closes: [Float], slopeOf9DayEMA: [Float], slopeOf25DayEMA: [Float]) {
+        self.closes = closes
+        self.slopeOf9DayEMA = StockCalculations.Normalize(slopeOf9DayEMA)
+        self.slopeOf25DayEMA = StockCalculations.Normalize(slopeOf25DayEMA)
+    }
     
     func toNestedArray() -> [[Float]] {
         // Use Mirror to reflect the properties of the struct
@@ -39,7 +45,6 @@ struct MLTrainingData: Codable {
             // Append the currentRow to the result
             result.append(currentRow)
         }
-        
         return Array(result[(StockCalculations.StartAtElement - 1)...])
     }
 }

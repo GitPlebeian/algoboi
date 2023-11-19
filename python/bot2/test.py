@@ -6,6 +6,12 @@ from collections import deque
 import json
 import os
 
+def normalize_rewards(rewards):
+    mean_reward = torch.mean(rewards)
+    std_reward = torch.std(rewards)
+    normalized_rewards = (rewards - mean_reward) / (std_reward + 1e-8)  # Add a small constant to avoid division by zero
+    return normalized_rewards
+
 # Define the DNN
 class DNN(nn.Module):
     def __init__(self, input_dim, output_dim):
@@ -43,9 +49,9 @@ class ReplayBuffer:
 # Parameters
 STATE_SIZE = 2  # Excluding the closing price
 ACTION_SIZE = 3  # buy, sell, hold
-BATCH_SIZE = 9000
-LEARNING_RATE = 0.00001
-CAPACITY = 9000  # Experience replay buffer capacity
+BATCH_SIZE = 8000
+LEARNING_RATE = 0.001
+CAPACITY = 8000  # Experience replay buffer capacity
 
 # Initialize network, optimizer, and buffer
 network = DNN(STATE_SIZE, ACTION_SIZE)
@@ -55,8 +61,8 @@ loss_fn = nn.MSELoss()
 
 # Environment Parameters
 epsilon = 1.0  # exploration rate
-epsilon_min = 0.0001
-epsilon_decay = 0.97
+epsilon_min = 0.01
+epsilon_decay = 0.95
 starting_portfolio = 100
 
 random_action_count = 0
@@ -82,11 +88,13 @@ def select_action(state):
             action_value = network(torch.tensor(state)).argmax().item()
     return action_value
 
-num_episodes = 400
+num_episodes = 500
 
 playback_buys = []
 playback_sells = []
 
+for s in states:
+    print(s[1], s[2])
 
 for episode in range(num_episodes):
     # print(f"Epsilon {epsilon}")
@@ -123,7 +131,7 @@ for episode in range(num_episodes):
             waiting_mod = 0.05 * days_since_buy
             days_since_buy = 0
             rewards.append(percentage_change)
-            rewards.append(percentage_change - waiting_mod)
+            rewards.append(percentage_change)
         elif current_buy_price != None:
             days_since_buy = days_since_buy + 1
 
@@ -135,20 +143,15 @@ for episode in range(num_episodes):
     if len(rewards) != 0:
         average_reward = sum(rewards) / len(rewards)
 
-    print(f"AVG Reward {average_reward} Ending Value {total_reward} Random Count {random_action_count}")
+    print(f"Ending Value {total_reward} Random Count {random_action_count} AVG Reward {average_reward} ")
 
     if epsilon * epsilon_decay >= epsilon_min:
         epsilon = epsilon * epsilon_decay
     else:
         epsilon = epsilon_min
-        # epsilon = 0
-
-    # for index, state in enumerate(states):
-    #     buffer.push(state[1:], actions[index], total_reward)
 
     for index, action_index in enumerate(action_indicies):
-        # print(len(states), len(actions), len(rewards), index, action_index, len(action_indicies))
-        buffer.push(states[action_index][1:], actions[index], rewards[index])
+        buffer.push(states[action_index][1:], actions[index], total_reward)
 
     # print(buffer.__len__())
 
@@ -163,6 +166,7 @@ for episode in range(num_episodes):
 
         # Compute loss and backpropagate
         loss = loss_fn(predicted_rewards, sampled_rewards)
+        print(loss)
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
