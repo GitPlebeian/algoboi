@@ -183,7 +183,7 @@ class TickerDownload {
         }
         
         
-        let urlString = "https://data.alpaca.markets/v2/stocks/\(ticker.uppercased())/bars?timeframe=1Day&adjustment=all&start=\(dateFormatter.string(from: startDate))&limit=5000"
+        let urlString = "https://data.alpaca.markets/v2/stocks/\(ticker.uppercased())/bars?timeframe=1Day&adjustment=all&start=\(dateFormatter.string(from: startDate))&limit=10000"
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
         guard let url = URL(string: urlString) else {
             completionHandler("Unable to create url", nil)

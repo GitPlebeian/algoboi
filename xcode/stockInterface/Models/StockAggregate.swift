@@ -10,11 +10,13 @@ import Foundation
 struct StockAggregate: Codable {
     
     let symbol: String
+    var name: String
     var candles: [Candle] = []
     
-    init(symbol: String, candles: [Candle]) {
+    init(symbol: String, candles: [Candle], name: String = "") {
         self.symbol = symbol
         self.candles = candles
+        self.name = name
     }
     
     init?(data: Data) {
