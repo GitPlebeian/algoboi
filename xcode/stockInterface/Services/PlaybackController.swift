@@ -27,7 +27,7 @@ class PlaybackController {
     
     func loadPlaybackFromFile() {
         guard let data = SharedFileManager.shared.getDataFromPlaybackFile("playback.json") else {
-            TerminalManager.shared.currentTerminal?.addText("playback file does not exist or there was an error getting the data", type: .error)
+            TerminalManager.shared.addText("playback file does not exist or there was an error getting the data", type: .error)
             return
         }
         let jsonDecoder = JSONDecoder()
@@ -35,10 +35,10 @@ class PlaybackController {
             let playbackModel = try jsonDecoder.decode(MLPlayback.self, from: data)
             self.currentPlaybackModel = playbackModel
             setPlaybackBarsForModel(playbackModel)
-            TerminalManager.shared.currentTerminal?.addText("Success loading playback model\nEpisodes: \(playbackModel.episodeCount)")
+            TerminalManager.shared.addText("Success loading playback model\nEpisodes: \(playbackModel.episodeCount)")
             chartCurrentPlaybackIndex()
         } catch {
-            TerminalManager.shared.currentTerminal?.addText("Unable to convert data to MLPlayback model", type: .error)
+            TerminalManager.shared.addText("Unable to convert data to MLPlayback model", type: .error)
         }
     }
     
@@ -61,14 +61,14 @@ class PlaybackController {
 //        guard let chartedStockAggregate = ChartManager.shared.currentAggregate else {return}
 //        if model.length != chartedStockAggregate.candles.count {return}
         if playbackIndex < 0 {
-            TerminalManager.shared.currentTerminal?.addText("Playback index < 0", type: .error)
+            TerminalManager.shared.addText("Playback index < 0", type: .error)
             return
         }
         if playbackIndex >= model.episodeCount {
-            TerminalManager.shared.currentTerminal?.addText("Playback index: \(playbackIndex) >= episode count: \(model.episodeCount)", type: .error)
+            TerminalManager.shared.addText("Playback index: \(playbackIndex) >= episode count: \(model.episodeCount)", type: .error)
             return
         }
-        TerminalManager.shared.currentTerminal?.addText("Charting Episode: \(playbackIndex) / \(model.episodeCount)")
+        TerminalManager.shared.addText("Charting Episode: \(playbackIndex) / \(model.episodeCount)")
         ChartManager.shared.currentStockView?.setColoredFullHeightBars(bars: playbackBars[playbackIndex])
     }
 }

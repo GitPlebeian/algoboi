@@ -38,7 +38,7 @@ class ScrollingTerminalView: NSView {
         super.init(frame: frameRect)
         calculateCachedRowHeights()
         setupView()
-        TerminalManager.shared.currentTerminal = self
+        TerminalManager.shared.setTerminal(view: self)
     }
     
     required init?(coder: NSCoder) {

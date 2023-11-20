@@ -18,6 +18,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
 
+        AllTickersController.shared.loadFromDisk()
+        
         setupMenu()
         
         eventMonitor = NSEvent.addLocalMonitorForEvents(matching: [.keyDown]) { event in

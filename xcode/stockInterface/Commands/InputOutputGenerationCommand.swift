@@ -12,7 +12,7 @@ class InputOutputGenerationCommand: Command {
 
     func execute(with arguments: [String]) {
         if arguments.count != 1 {
-            TerminalManager.shared.currentTerminal?.addText("Invalid arguement", type: .error)
+            TerminalManager.shared.addText("Invalid arguement", type: .error)
             return
         }
         
@@ -21,13 +21,13 @@ class InputOutputGenerationCommand: Command {
         TickerDownload.shared.getAlpacaStock(ticker: ticker.uppercased(), year: 4) { messageReturn, stockAggregate in
             DispatchQueue.main.async {
                 guard let stockAggregate = stockAggregate else {
-                    TerminalManager.shared.currentTerminal?.addText(messageReturn, type: .error)
+                    TerminalManager.shared.addText(messageReturn, type: .error)
                     return
                 }
                 MLDatasetGenerator.shared.setAggregateForGeneration(aggregate: stockAggregate)
                 ChartManager.shared.chartStock(stockAggregate)
                 ChartManager.shared.currentStockView?.mouseDelegate = MLDatasetGenerator.shared
-                TerminalManager.shared.currentTerminal?.addText("Charting: \(ticker.uppercased())", type: .normal)
+                TerminalManager.shared.addText("Charting: \(ticker.uppercased())", type: .normal)
             }
         }
     }

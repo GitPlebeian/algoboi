@@ -35,6 +35,35 @@ class SharedFileManager {
         }
     }
     
+    func getDataFromFile(_ fileName: String) -> Data? {
+        let urlString = "/Users/\(NSUserName())/Desktop/algoboi/shared/\(fileName)"
+        var fileURL: URL
+        if #available(macOS 13.0, *) {
+            fileURL = URL(filePath: urlString)
+        } else {
+            fileURL = URL(fileURLWithPath: urlString)
+        }
+        do {
+            let data = try Data(contentsOf: fileURL)
+            return data
+        } catch let e {
+            print(e)
+        }
+        return nil
+    }
+    
+    func writeCodableToFileNameInShared(codable: Codable, fileName: String) {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .prettyPrinted
+        
+        do {
+            let data = try encoder.encode(codable)
+            writeDataToFileName(data: data, fileName: fileName)
+        } catch let e {
+            fatalError("Error encoding stock Aggregate: \(e)")
+        }
+    }
+    
     func getFileNamesFromPlaybackFolder() -> [String]? {
         do {
             var url = FileManager.default.urls(for: .desktopDirectory, in: .userDomainMask).first!

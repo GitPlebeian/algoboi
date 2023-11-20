@@ -60,32 +60,32 @@ class MLDatasetGenerator {
         var recordPercentageGainPerTrade:      Float = -.infinity
         var recordCandleCount: Int   = 0
         
-        print()
-        print()
-        
-        print("Starting Price: \(startingPrice)")
+//        print()
+//        print()
+//        
+//        print("Starting Price: \(startingPrice)")
         
         while tradeHealth > 0 {
-            print("Starting Health: \(tradeHealth)")
+//            print("Starting Health: \(tradeHealth)")
             currentIndex += 1
             if currentIndex >= aggregate.candles.count {return nil}
             
             let totalPercentageChange = (aggregate.candles[currentIndex].close - startingPrice) / startingPrice
             let candlesPassed = currentIndex - index
             let averagePercentageChangePerCandle = totalPercentageChange / Float(candlesPassed)
-            print("Candles Passed: \(candlesPassed) Total % Change: \(totalPercentageChange) AVG: \(averagePercentageChangePerCandle)")
-            if averagePercentageChangePerCandle > recordPercentageGainPerTrade {
+//            print("Candles Passed: \(candlesPassed) Total % Change: \(totalPercentageChange) AVG: \(averagePercentageChangePerCandle)")
+            if averagePercentageChangePerCandle >= 0.025 && averagePercentageChangePerCandle > recordPercentageGainPerTrade && totalPercentageChange > 0.1 && candlesPassed >= 2 {
                 recordPercentageGainPerTrade = averagePercentageChangePerCandle
                 recordCandleCount = candlesPassed
-                print("Setting Record")
+//                print("Setting Record")
             }
             
             let percentageDiffFromPerviousDay = (aggregate.candles[currentIndex].close - aggregate.candles[currentIndex - 1].close) / aggregate.candles[currentIndex - 1].close
-            print("Percentage % From Previous Day: \(percentageDiffFromPerviousDay)")
+//            print("Percentage % From Previous Day: \(percentageDiffFromPerviousDay)")
             tradeHealth += percentageDiffFromPerviousDay
-            print("Starting Health After 1: \(tradeHealth)")
+//            print("Starting Health After 1: \(tradeHealth)")
             tradeHealth -= self.tradeDecay
-            print("Starting Health After 2: \(tradeHealth)")
+//            print("Starting Health After 2: \(tradeHealth)")
         }
         print("END")
         return MLDatasetInputOutput(percentagePerCandle: recordPercentageGainPerTrade,

@@ -13,12 +13,19 @@ class TerminalManager {
     
     private var commands: [String: Command] = [:]
     
-    weak var currentTerminal: ScrollingTerminalView?
+    private weak var currentTerminal: ScrollingTerminalView? {
+        didSet {
+            applyPendingCommands()
+        }
+    }
+    
+    var pendingCommands: [(String, TerminalTextType)] = []
     
     private init() {
         registerCommand(HelpCommand())
         registerCommand(ChartCommand())
         registerCommand(InputOutputGenerationCommand())
+        registerCommand(GetAllTickersListCommand())
 //        registerCommand(SaveCommand())
 //        registerCommand(LoadPlayblackCommand())
 //        registerCommand(ChartRandomCommand())
@@ -38,5 +45,24 @@ class TerminalManager {
         
         let arguments = Array(components.dropFirst())
         command.execute(with: arguments)
+    }
+    
+    func addText(_ text: String, type: TerminalTextType = .normal) {
+        if let terminal = self.currentTerminal {
+            terminal.addText(text, type: type)
+        } else {
+            pendingCommands.append((text, type))
+        }
+    }
+    
+    func applyPendingCommands() {
+        for e in pendingCommands {
+            currentTerminal!.addText(e.0, type: e.1)
+        }
+        pendingCommands = []
+    }
+    
+    func setTerminal(view: ScrollingTerminalView) {
+        self.currentTerminal = view
     }
 }

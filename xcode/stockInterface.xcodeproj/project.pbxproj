@@ -19,6 +19,7 @@
 		5B860BCE2B013BC7002EA088 /* LoadPlayblackCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B860BCD2B013BC7002EA088 /* LoadPlayblackCommand.swift */; };
 		5B860BD02B013BED002EA088 /* PlaybackController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B860BCF2B013BED002EA088 /* PlaybackController.swift */; };
 		5B95015B2B0938ED008C3022 /* ChartRandomCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B95015A2B0938ED008C3022 /* ChartRandomCommand.swift */; };
+		FC137A352B0AF30300061926 /* GetPrelimTickersCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC137A342B0AF30300061926 /* GetPrelimTickersCommand.swift */; };
 		FC38C5F52AF293D300E29029 /* ScrollingTerminalViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC38C5F42AF293D300E29029 /* ScrollingTerminalViewCell.swift */; };
 		FC55C3182ADE74B800564D3C /* MLTrainingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC55C3172ADE74B800564D3C /* MLTrainingData.swift */; };
 		FC583DBE2AF9A79000B7CAAC /* Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC583DBD2AF9A79000B7CAAC /* Text.swift */; };
@@ -43,6 +44,9 @@
 		FCC5D7C92B01933100557CD5 /* EventController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC5D7C82B01933100557CD5 /* EventController.swift */; };
 		FCC8D86D2AE87637004D10F0 /* MLPlayback.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC8D86C2AE87637004D10F0 /* MLPlayback.swift */; };
 		FCD1D5072ACBDB2200700D4C /* NSWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD1D5062ACBDB2200700D4C /* NSWindow.swift */; };
+		FCD871EF2B0BB26B00251777 /* TickerNameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD871EE2B0BB26B00251777 /* TickerNameModel.swift */; };
+		FCD871F12B0BB4C300251777 /* GetAllTickersListCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD871F02B0BB4C300251777 /* GetAllTickersListCommand.swift */; };
+		FCD871F32B0BBCD300251777 /* AllTickersController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD871F22B0BBCD300251777 /* AllTickersController.swift */; };
 		FCDD12692B0AC00300DDF4C9 /* InputOutputGenerationCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCDD12682B0AC00300DDF4C9 /* InputOutputGenerationCommand.swift */; };
 		FCDD126B2B0AC0F800DDF4C9 /* MLDatasetGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCDD126A2B0AC0F800DDF4C9 /* MLDatasetGenerator.swift */; };
 		FCDD126D2B0AC24D00DDF4C9 /* MLDatasetInputOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCDD126C2B0AC24D00DDF4C9 /* MLDatasetInputOutput.swift */; };
@@ -61,6 +65,7 @@
 		5B860BCD2B013BC7002EA088 /* LoadPlayblackCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadPlayblackCommand.swift; sourceTree = "<group>"; };
 		5B860BCF2B013BED002EA088 /* PlaybackController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackController.swift; sourceTree = "<group>"; };
 		5B95015A2B0938ED008C3022 /* ChartRandomCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartRandomCommand.swift; sourceTree = "<group>"; };
+		FC137A342B0AF30300061926 /* GetPrelimTickersCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPrelimTickersCommand.swift; sourceTree = "<group>"; };
 		FC38C5F42AF293D300E29029 /* ScrollingTerminalViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollingTerminalViewCell.swift; sourceTree = "<group>"; };
 		FC55C3172ADE74B800564D3C /* MLTrainingData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLTrainingData.swift; sourceTree = "<group>"; };
 		FC583DBD2AF9A79000B7CAAC /* Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Text.swift; sourceTree = "<group>"; };
@@ -88,6 +93,9 @@
 		FCC5D7C82B01933100557CD5 /* EventController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventController.swift; sourceTree = "<group>"; };
 		FCC8D86C2AE87637004D10F0 /* MLPlayback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLPlayback.swift; sourceTree = "<group>"; };
 		FCD1D5062ACBDB2200700D4C /* NSWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSWindow.swift; sourceTree = "<group>"; };
+		FCD871EE2B0BB26B00251777 /* TickerNameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickerNameModel.swift; sourceTree = "<group>"; };
+		FCD871F02B0BB4C300251777 /* GetAllTickersListCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAllTickersListCommand.swift; sourceTree = "<group>"; };
+		FCD871F22B0BBCD300251777 /* AllTickersController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllTickersController.swift; sourceTree = "<group>"; };
 		FCDD12682B0AC00300DDF4C9 /* InputOutputGenerationCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputOutputGenerationCommand.swift; sourceTree = "<group>"; };
 		FCDD126A2B0AC0F800DDF4C9 /* MLDatasetGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLDatasetGenerator.swift; sourceTree = "<group>"; };
 		FCDD126C2B0AC24D00DDF4C9 /* MLDatasetInputOutput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLDatasetInputOutput.swift; sourceTree = "<group>"; };
@@ -114,6 +122,8 @@
 				5B860BCD2B013BC7002EA088 /* LoadPlayblackCommand.swift */,
 				5B95015A2B0938ED008C3022 /* ChartRandomCommand.swift */,
 				FCDD12682B0AC00300DDF4C9 /* InputOutputGenerationCommand.swift */,
+				FC137A342B0AF30300061926 /* GetPrelimTickersCommand.swift */,
+				FCD871F02B0BB4C300251777 /* GetAllTickersListCommand.swift */,
 			);
 			path = Commands;
 			sourceTree = "<group>";
@@ -182,6 +192,7 @@
 		FC82FA3A2AC6C10200642210 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				FCD871F22B0BBCD300251777 /* AllTickersController.swift */,
 				FC82FA3B2AC6C12600642210 /* TickerDownload.swift */,
 				5B6D622C2AD9F265003B1D3A /* Style.swift */,
 				5B6D622E2AD9F2B9003B1D3A /* LayoutManager.swift */,
@@ -205,6 +216,7 @@
 				FC55C3172ADE74B800564D3C /* MLTrainingData.swift */,
 				FCC8D86C2AE87637004D10F0 /* MLPlayback.swift */,
 				FCDD126C2B0AC24D00DDF4C9 /* MLDatasetInputOutput.swift */,
+				FCD871EE2B0BB26B00251777 /* TickerNameModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -314,8 +326,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FCD871F12B0BB4C300251777 /* GetAllTickersListCommand.swift in Sources */,
 				FC82FA4F2AC6EA9F00642210 /* DateFormatter.swift in Sources */,
 				FC82FA562AC6F97F00642210 /* Draw.swift in Sources */,
+				FCD871EF2B0BB26B00251777 /* TickerNameModel.swift in Sources */,
 				5B6D622F2AD9F2B9003B1D3A /* LayoutManager.swift in Sources */,
 				FCDD12692B0AC00300DDF4C9 /* InputOutputGenerationCommand.swift in Sources */,
 				FCD1D5072ACBDB2200700D4C /* NSWindow.swift in Sources */,
@@ -324,6 +338,7 @@
 				FC55C3182ADE74B800564D3C /* MLTrainingData.swift in Sources */,
 				FCC8D86D2AE87637004D10F0 /* MLPlayback.swift in Sources */,
 				5B860BC12B0072C6002EA088 /* TerminalManager.swift in Sources */,
+				FC137A352B0AF30300061926 /* GetPrelimTickersCommand.swift in Sources */,
 				5B860BC42B0079E9002EA088 /* Command.swift in Sources */,
 				5B0C78B22ADE5A3500E0EEEB /* SharedFileManager.swift in Sources */,
 				5B860BCC2B013788002EA088 /* SaveCommand.swift in Sources */,
@@ -350,6 +365,7 @@
 				FCBAF4262ADE50610075ABEF /* StockAggregateManager.swift in Sources */,
 				FC82FA3C2AC6C12600642210 /* TickerDownload.swift in Sources */,
 				FC82FA4D2AC6E20000642210 /* StockAggregate.swift in Sources */,
+				FCD871F32B0BBCD300251777 /* AllTickersController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

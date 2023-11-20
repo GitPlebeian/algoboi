@@ -12,6 +12,7 @@ class TickerDownload {
     static let shared = TickerDownload()
     
     var lastDownload: DispatchTime?
+    var last12SecondDownload: DispatchTime?
     
     static let finnhubAPIKey: String = "cdgmsniad3i2r375a9p0cdgmsniad3i2r375a9pg"
     
@@ -234,6 +235,81 @@ class TickerDownload {
                 return
             }
             completionHandler("Success", stockAggregate)
+        }.resume()
+    }
+    
+    func getEveryTicker(nextURLString: String? = nil, handler: @escaping ([TickerNameModel]?, Bool) -> Bool) {
+        
+        var urlString: String
+        
+        if let nextURLString = nextURLString {
+            urlString = nextURLString + "&apiKey=Mnd1Ub6_2gZs2_2SLdQsdGVj_ZjribwsSbjFA4"
+        } else {
+            urlString = "https://api.polygon.io/v3/reference/tickers?type=CS&market=stocks&active=true&&limit=1000&apiKey=Mnd1Ub6_2gZs2_2SLdQsdGVj_ZjribwsSbjFA4"
+        }
+        
+        let request = URLRequest(url: URL(string: urlString)!)
+        self.last12SecondDownload = DispatchTime.now()
+        URLSession.shared.dataTask(with: request) {data, response, error in
+            if let error = error {
+                let _ = handler(nil, false)
+                TerminalManager.shared.addText("Error: \(error)", type: .error)
+                return
+            }
+            
+            guard let data = data else {
+                let _ = handler(nil, false)
+                TerminalManager.shared.addText("No data provided", type: .error)
+                return
+            }
+            
+            guard let response = response as? HTTPURLResponse else {
+                let _ = handler(nil, false)
+                TerminalManager.shared.addText("No response provided", type: .error)
+                return
+            }
+            if response.statusCode == 429 {
+                let _ = handler(nil, false)
+                TerminalManager.shared.addText("Too Many Requests", type: .error)
+                return
+            }
+            do {
+                guard let json = try JSONSerialization.jsonObject(with: data) as? [String: Any] else {
+                    let _ = handler(nil, false)
+                    TerminalManager.shared.addText("Error getting Json From Data", type: .error)
+                    return
+                }
+                guard let results = json["results"] as? [[String: Any]] else {
+                    let _ = handler(nil, false)
+                    TerminalManager.shared.addText("Error getting Json From Data", type: .error)
+                    return
+                }
+                var names: [TickerNameModel] = []
+                for e in results {
+                    guard let model = TickerNameModel(dict: e) else {
+                        continue
+                    }
+                    names.append(model)
+                }
+                let shouldContinue = handler(names, false)
+                if shouldContinue == false {return}
+                guard let nextURL = json["next_url"] as? String else {
+                    let _ = handler([], true)
+                    return
+                }
+                let now = DispatchTime.now()
+                let difference = (now.uptimeNanoseconds - self.last12SecondDownload!.uptimeNanoseconds) / 1000000
+                if difference < 12100 {
+                    let sleepAmount = TimeInterval(12100 - difference) / 1000
+                    print("Sleeping for \(sleepAmount)")
+                    Thread.sleep(forTimeInterval: sleepAmount)
+                }
+                self.getEveryTicker(nextURLString: nextURL, handler: handler)
+            } catch let e {
+                let _ = handler(nil, false)
+                TerminalManager.shared.addText("Error: \(e)", type: .error)
+                return
+            }
         }.resume()
     }
     
