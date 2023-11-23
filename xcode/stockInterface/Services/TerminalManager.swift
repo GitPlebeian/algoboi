@@ -28,6 +28,8 @@ class TerminalManager {
         registerCommand(GetAllTickersListCommand())
         registerCommand(ChartAllTimeCommand())
         registerCommand(DownloadEveryStockCommand())
+        registerCommand(BulkIndicatorDataCommand())
+        registerCommand(ChartLocalCommand())
 //        registerCommand(SaveCommand())
 //        registerCommand(LoadPlayblackCommand())
 //        registerCommand(ChartRandomCommand())

@@ -44,6 +44,9 @@
 		FCC5D7C92B01933100557CD5 /* EventController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC5D7C82B01933100557CD5 /* EventController.swift */; };
 		FCC8D86D2AE87637004D10F0 /* MLPlayback.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC8D86C2AE87637004D10F0 /* MLPlayback.swift */; };
 		FCD1D5072ACBDB2200700D4C /* NSWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD1D5062ACBDB2200700D4C /* NSWindow.swift */; };
+		FCD588152B0C1F5F001BBECC /* BulkIndicatorDataCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD588142B0C1F5F001BBECC /* BulkIndicatorDataCommand.swift */; };
+		FCD588172B0C2938001BBECC /* IndicatorData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD588162B0C2938001BBECC /* IndicatorData.swift */; };
+		FCD588192B0C2F17001BBECC /* ChartLocalCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD588182B0C2F17001BBECC /* ChartLocalCommand.swift */; };
 		FCD871EF2B0BB26B00251777 /* TickerNameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD871EE2B0BB26B00251777 /* TickerNameModel.swift */; };
 		FCD871F12B0BB4C300251777 /* GetAllTickersListCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD871F02B0BB4C300251777 /* GetAllTickersListCommand.swift */; };
 		FCD871F32B0BBCD300251777 /* AllTickersController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD871F22B0BBCD300251777 /* AllTickersController.swift */; };
@@ -97,6 +100,9 @@
 		FCC5D7C82B01933100557CD5 /* EventController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventController.swift; sourceTree = "<group>"; };
 		FCC8D86C2AE87637004D10F0 /* MLPlayback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLPlayback.swift; sourceTree = "<group>"; };
 		FCD1D5062ACBDB2200700D4C /* NSWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSWindow.swift; sourceTree = "<group>"; };
+		FCD588142B0C1F5F001BBECC /* BulkIndicatorDataCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BulkIndicatorDataCommand.swift; sourceTree = "<group>"; };
+		FCD588162B0C2938001BBECC /* IndicatorData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndicatorData.swift; sourceTree = "<group>"; };
+		FCD588182B0C2F17001BBECC /* ChartLocalCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartLocalCommand.swift; sourceTree = "<group>"; };
 		FCD871EE2B0BB26B00251777 /* TickerNameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TickerNameModel.swift; sourceTree = "<group>"; };
 		FCD871F02B0BB4C300251777 /* GetAllTickersListCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAllTickersListCommand.swift; sourceTree = "<group>"; };
 		FCD871F22B0BBCD300251777 /* AllTickersController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllTickersController.swift; sourceTree = "<group>"; };
@@ -134,6 +140,7 @@
 				FCD871F02B0BB4C300251777 /* GetAllTickersListCommand.swift */,
 				FCDF76E82B0BDF3000BE28BE /* ChartAllTimeCommand.swift */,
 				FCDF76EA2B0BE22900BE28BE /* DownloadEveryStockCommand.swift */,
+				FCD588142B0C1F5F001BBECC /* BulkIndicatorDataCommand.swift */,
 			);
 			path = Commands;
 			sourceTree = "<group>";
@@ -173,6 +180,7 @@
 				FC82FA3F2AC6C13F00642210 /* Models */,
 				FC82FA4B2AC6E1DD00642210 /* Extensions */,
 				FC82FA362AC6C07600642210 /* Resources */,
+				FCD588182B0C2F17001BBECC /* ChartLocalCommand.swift */,
 			);
 			path = stockInterface;
 			sourceTree = "<group>";
@@ -228,6 +236,7 @@
 				FCC8D86C2AE87637004D10F0 /* MLPlayback.swift */,
 				FCDD126C2B0AC24D00DDF4C9 /* MLDatasetInputOutput.swift */,
 				FCD871EE2B0BB26B00251777 /* TickerNameModel.swift */,
+				FCD588162B0C2938001BBECC /* IndicatorData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -344,6 +353,7 @@
 				FC82FA562AC6F97F00642210 /* Draw.swift in Sources */,
 				FCD871EF2B0BB26B00251777 /* TickerNameModel.swift in Sources */,
 				5B6D622F2AD9F2B9003B1D3A /* LayoutManager.swift in Sources */,
+				FCD588152B0C1F5F001BBECC /* BulkIndicatorDataCommand.swift in Sources */,
 				FCDD12692B0AC00300DDF4C9 /* InputOutputGenerationCommand.swift in Sources */,
 				FCD1D5072ACBDB2200700D4C /* NSWindow.swift in Sources */,
 				5B860BC62B007A02002EA088 /* HelpCommand.swift in Sources */,
@@ -356,6 +366,7 @@
 				5B860BC42B0079E9002EA088 /* Command.swift in Sources */,
 				5B0C78B22ADE5A3500E0EEEB /* SharedFileManager.swift in Sources */,
 				5B860BCC2B013788002EA088 /* SaveCommand.swift in Sources */,
+				FCD588192B0C2F17001BBECC /* ChartLocalCommand.swift in Sources */,
 				FC82FA332AC6AE4800642210 /* ContentView.swift in Sources */,
 				FCDF76ED2B0BE34200BE28BE /* HistoricalDataController.swift in Sources */,
 				FCDD126B2B0AC0F800DDF4C9 /* MLDatasetGenerator.swift in Sources */,
@@ -376,6 +387,7 @@
 				5B860BD02B013BED002EA088 /* PlaybackController.swift in Sources */,
 				FCBAF4282ADE72D20075ABEF /* StockCalculations.swift in Sources */,
 				5B95015B2B0938ED008C3022 /* ChartRandomCommand.swift in Sources */,
+				FCD588172B0C2938001BBECC /* IndicatorData.swift in Sources */,
 				FC82FA532AC6F79200642210 /* StockView.swift in Sources */,
 				FCBAF4242ADE497F0075ABEF /* CGColor.swift in Sources */,
 				FCBAF4262ADE50610075ABEF /* StockAggregateManager.swift in Sources */,

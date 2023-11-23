@@ -49,6 +49,11 @@ class MLDatasetGenerator {
         }
     }
     
+//    func calculateMLDataPointForAggregate(aggregate: StockAggregate) -> [MLDatasetInputOutput] {
+//        var results: [MLDatasetInputOutput] = []
+//        for i in 0..<aggregate.candles.count
+//    }
+    
     // MARK: Private
     
     private func calculateOutputForIndex(index: Int, aggregate: StockAggregate) -> MLDatasetInputOutput? {
@@ -74,7 +79,7 @@ class MLDatasetGenerator {
             let candlesPassed = currentIndex - index
             let averagePercentageChangePerCandle = totalPercentageChange / Float(candlesPassed)
 //            print("Candles Passed: \(candlesPassed) Total % Change: \(totalPercentageChange) AVG: \(averagePercentageChangePerCandle)")
-            if averagePercentageChangePerCandle >= 0.025 && averagePercentageChangePerCandle > recordPercentageGainPerTrade && totalPercentageChange > 0.1 && candlesPassed >= 2 {
+            if averagePercentageChangePerCandle >= 0.025 && averagePercentageChangePerCandle > recordPercentageGainPerTrade && totalPercentageChange > 0.1 && candlesPassed >= 2 && totalPercentageChange <= 0.3 && candlesPassed <= 10 {
                 recordPercentageGainPerTrade = averagePercentageChangePerCandle
                 recordCandleCount = candlesPassed
 //                print("Setting Record")
@@ -87,7 +92,7 @@ class MLDatasetGenerator {
             tradeHealth -= self.tradeDecay
 //            print("Starting Health After 2: \(tradeHealth)")
         }
-        print("END")
+        if recordCandleCount == 0 {return nil}
         return MLDatasetInputOutput(percentagePerCandle: recordPercentageGainPerTrade,
                                     candlesToTarget:     recordCandleCount)
     }

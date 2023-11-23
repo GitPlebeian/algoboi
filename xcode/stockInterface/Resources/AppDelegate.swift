@@ -19,6 +19,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
 
         AllTickersController.shared.loadFromDisk()
+        HistoricalDataController.shared.loadFromDisk()
         
         setupMenu()
         

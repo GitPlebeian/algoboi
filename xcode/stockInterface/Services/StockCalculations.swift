@@ -9,9 +9,21 @@ import Foundation
 
 class StockCalculations {
     
-    static let StartAtElement: Int = 25
+    static let StartAtElement: Int = 200
     
-
+    static func GetIndicatorData(aggregate: StockAggregate) -> IndicatorData? {
+        if aggregate.candles.count < StartAtElement {return nil}
+        let closes = aggregate.candles.map { $0.close }
+        let sma200 = GetSMAs(for: closes, period: 200)
+        let sma50  = GetSMAs(for: closes, period: 50)
+        let ema14  = GetEMAS(for: closes, period: 14)
+        let ema28  = GetEMAS(for: closes, period: 28)
+        
+        let result = IndicatorData(ticker: aggregate.symbol, sma200: sma200, sma50: sma50, ema14: ema14, ema28: ema28)
+        return result
+    }
+    
+    
     static func Normalize(_ inputArray: [Float]) -> [Float] {
 
         // Calculate the mean
@@ -29,7 +41,7 @@ class StockCalculations {
         return normalizedArray
     }
     
-    static func GetEMASFor(for values: [Float], period: Int) -> [Float] {
+    static func GetEMAS(for values: [Float], period: Int) -> [Float] {
         guard !values.isEmpty, period > 0 else {
             return []
         }
@@ -47,6 +59,23 @@ class StockCalculations {
         }
         
         return emas
+    }
+    
+    static func GetSMAs(for values: [Float], period: Int) -> [Float] {
+        var smas: [Float] = []
+        for endingIndex in 0..<values.count {
+            var startingIndex = endingIndex - period + 1
+            var divideBy = period
+            if startingIndex < 0 {
+                divideBy += startingIndex
+                startingIndex = 0
+            }
+            
+            let sum = values[startingIndex...endingIndex].reduce(0, +)
+            let average = sum / Float(divideBy)
+            smas.append(average)
+        }
+        return smas
     }
     
     static func GetAngleBetweenTwoPoints(start: Float, end: Float) -> Float {
@@ -69,8 +98,8 @@ class StockCalculations {
     
     static func ConvertStockAggregateToMLTrainingData(_ aggregate: StockAggregate) -> MLTrainingData {
         let closes = aggregate.candles.map { $0.close }
-        let ema9 = GetEMASFor(for: closes, period: 9)
-        let ema25 = GetEMASFor(for: closes, period: 25)
+        let ema9 = GetEMAS(for: closes, period: 9)
+        let ema25 = GetEMAS(for: closes, period: 25)
         let ema9Slopes = GetAngleBetweenTwoPoints(arr: ema9)
         let ema25Slopes = GetAngleBetweenTwoPoints(arr: ema25)
         return MLTrainingData(closes: closes, slopeOf9DayEMA: ema9Slopes, slopeOf25DayEMA: ema25Slopes)

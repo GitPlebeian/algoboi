@@ -38,6 +38,30 @@ class HistoricalDataController {
         shouldDownload = false
     }
     
+    func loadFromDisk() {
+        guard let toDownloadData = SharedFileManager.shared.getDataFromFile("/historicalData/00toDownload.json") else {
+            TerminalManager.shared.addText("Could load load 00toDownload.json", type: .error)
+            return
+        }
+        guard let downloadedData = SharedFileManager.shared.getDataFromFile("/historicalData/00downloaded.json") else {
+            TerminalManager.shared.addText("Could load load 00downloaded.json", type: .error)
+            return
+        }
+        do {
+            let jsonDecoder = JSONDecoder()
+            let toDownload = try jsonDecoder.decode([TickerNameModel].self, from: toDownloadData)
+            let downloaded = try jsonDecoder.decode([String].self, from: downloadedData)
+            self.stocksToDownload = toDownload
+            self.downloadedStocks = downloaded
+            self.totalCount = stocksToDownload.count + downloadedStocks.count
+            
+            let percentageComplete = (Float(downloadedStocks.count) / Float(totalCount))
+            TerminalManager.shared.addText("\((percentageComplete * 100).toRoundedString(precision: 1))% Downloaded\n\(downloaded.count) Downloaded\n\(toDownload.count) Needs to be downloaded")
+        } catch let e {
+            TerminalManager.shared.addText("Could not decode data for toDownload / downloaded: \(e)")
+        }
+    }
+    
     func downloadAndSaveStock() {
         if shouldDownload == false {
             let percentageComplete = (Float(downloadedStocks.count) / Float(totalCount))
@@ -68,5 +92,41 @@ class HistoricalDataController {
             }
         }
         
+    }
+    
+    func calculateIndicatorData() {
+        let fileNames = downloadedStocks
+//        var results = [Float]()
+//        let resultsQueue = DispatchQueue(label: "stockCalculationQueue", attributes: .concurrent)
+        let group = DispatchGroup()
+
+        
+        let jsonDecoder = JSONDecoder()
+        
+        fileNames.forEach { fileName in
+            group.enter() // Enter the group for each file
+
+            DispatchQueue.global().async {
+                
+                if let data = SharedFileManager.shared.getDataFromFile("/historicalData/\(fileName).json") {
+                    let aggregate = try! jsonDecoder.decode(StockAggregate.self, from: data)
+                    
+                    if let indicatorData = StockCalculations.GetIndicatorData(aggregate: aggregate) {
+                        SharedFileManager.shared.writeCodableToFileNameInShared(codable: indicatorData, fileName: "/indicatorData/\(aggregate.symbol).json")
+                    }
+                    
+//                    resultsQueue.async(flags: .barrier) {
+//                        results.append(result)
+//                        group.leave() // Leave the group when done
+//                    }
+                    group.leave()
+                } else {
+                    group.leave()
+                }
+            }
+        }
+        group.notify(queue: DispatchQueue.main) {
+            TerminalManager.shared.addText("All Files Proccessed")
+        }
     }
 }
