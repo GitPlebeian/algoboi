@@ -141,6 +141,7 @@
 				FCDF76E82B0BDF3000BE28BE /* ChartAllTimeCommand.swift */,
 				FCDF76EA2B0BE22900BE28BE /* DownloadEveryStockCommand.swift */,
 				FCD588142B0C1F5F001BBECC /* BulkIndicatorDataCommand.swift */,
+				FCD588182B0C2F17001BBECC /* ChartLocalCommand.swift */,
 			);
 			path = Commands;
 			sourceTree = "<group>";
@@ -180,7 +181,6 @@
 				FC82FA3F2AC6C13F00642210 /* Models */,
 				FC82FA4B2AC6E1DD00642210 /* Extensions */,
 				FC82FA362AC6C07600642210 /* Resources */,
-				FCD588182B0C2F17001BBECC /* ChartLocalCommand.swift */,
 			);
 			path = stockInterface;
 			sourceTree = "<group>";

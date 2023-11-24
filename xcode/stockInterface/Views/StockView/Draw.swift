@@ -20,6 +20,7 @@ extension StockView {
         drawGreenRedBars()
         drawCandles()
         drawBordlineCandles()
+        drawLines()
     }
     
     private func calculateDrawingValues() {
@@ -45,31 +46,6 @@ extension StockView {
             color.setFill()
             candleBodyPath.fill()
         }
-//        for e in greenBarIndices {
-//            if e < 0 || e >= stockAggregate!.candles.count {
-//                continue
-//            }
-//            if e < startingCandleIndex || e > endingCandleIndex {
-//                return
-//            }
-//        }
-//
-//        if hoveringCandleIndex < 0 || hoveringCandleIndex >= stockAggregate!.candles.count {
-//            return
-//        }
-//        if hoveringCandleIndex < startingCandleIndex || hoveringCandleIndex > endingCandleIndex {
-//            return
-//        }
-//
-//        var xPosition: CGFloat = getCandleXPositionInViewForCandleIndex(candleIndex: hoveringCandleIndex)
-//        xPosition *= candleWidth
-//        let candleBodyPath = NSBezierPath(rect: NSRect(x: xPosition + xPositionOffset,
-//                                                       y: 0,
-//                                                       width: candleWidth,
-//                                                       height: bounds.height))
-//        let color: NSColor = .init(displayP3Red: 1, green: 1, blue: 1, alpha: 0.15)
-//        color.setFill()
-//        candleBodyPath.fill()
     }
     
     func drawCandles() {
@@ -180,6 +156,28 @@ extension StockView {
         let color: NSColor = .init(displayP3Red: 1, green: 1, blue: 1, alpha: 0.15)
         color.setFill()
         candleBodyPath.fill()
+    }
+    
+    private func drawLines() {
+        for line in coloredLines {
+            let linePath = NSBezierPath()
+            var didStartPath = false
+            for i in -2..<visibleCandles + 2 {
+                let dataIndex = i + startingCandleIndex
+                if dataIndex < 0 || dataIndex >= line.0.count {continue}
+                let yPos = 1 - ((maxValue - line.0[dataIndex]) / range)
+                let xPos = CGFloat(i) * candleWidth + xPositionOffset + candleWidth / 2
+                if didStartPath == false {
+                    didStartPath = true
+                    linePath.move(to: NSPoint(x: xPos, y: CGFloat(yPos) * bounds.height))
+                } else {
+                    linePath.line(to: NSPoint(x: xPos, y: CGFloat(yPos) * bounds.height))
+                }
+            }
+            line.1.setStroke()
+            linePath.lineWidth = 1
+            linePath.stroke()
+        }
     }
     
     private func getCandleXPositionInViewForCandleIndex(candleIndex index: Int) -> CGFloat {

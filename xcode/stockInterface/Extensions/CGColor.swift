@@ -44,5 +44,8 @@ extension CGColor {
     static let TerminalError       = FromHex("700707")
     static let ChartPurchasedLines = FromHex("32a87930")
     static let ChartSoldLines      = FromHex("c4553330")
+    static let ChartEMALines       = FromHex("d63a7b")
+    static let DarkSMALine         = FromHex("073191")
+    static let LightSMALine        = FromHex("114cd4")
     
 }

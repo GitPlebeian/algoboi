@@ -23,6 +23,7 @@ class StockView: NSView {
         didSet {
             setVisibleCandleToMax()
             setMinimumCandleWidth()
+            clearAllAdditionalItems()
             setNeedsDisplay(bounds)
         }
     }
@@ -52,7 +53,8 @@ class StockView: NSView {
     
     // MARK: Additonal View Items
     
-    var coloredFullHeightBars: [(Int, NSColor)] = [(5, CGColor.ChartPurchasedLines.NSColor())]
+    var coloredFullHeightBars: [(Int, NSColor)]     = []
+    var coloredLines:          [([Float], NSColor)] = []
     
     // MARK: Gestures
     
@@ -97,11 +99,17 @@ class StockView: NSView {
     
     func clearAllAdditionalItems() {
         coloredFullHeightBars = []
+        coloredLines = []
         setNeedsDisplay(bounds)
     }
     
     func setColoredFullHeightBars(bars: [(Int, NSColor)]) {
         coloredFullHeightBars = bars
+        setNeedsDisplay(bounds)
+    }
+    
+    func addColoredLines(lines: [([Float], NSColor)]) {
+        coloredLines.append(contentsOf: lines)
         setNeedsDisplay(bounds)
     }
     
