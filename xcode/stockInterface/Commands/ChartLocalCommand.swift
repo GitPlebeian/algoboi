@@ -30,12 +30,7 @@ class ChartLocalCommand: Command {
             let aggregate = try jsonDecoder.decode(StockAggregate.self, from: aggregateData)
             let indicator = try jsonDecoder.decode(IndicatorData.self, from: indicatorData)
             ChartManager.shared.chartStock(aggregate)
-            ChartManager.shared.currentStockView?.addColoredLines(lines: [(indicator.ema14, CGColor.ChartEMALines.NSColor())])
-            ChartManager.shared.currentStockView?.addColoredLines(lines: [(indicator.ema28, CGColor.ChartEMALines.NSColor())])
-            ChartManager.shared.currentStockView?.addColoredLines(lines: [(indicator.sma50, CGColor.LightSMALine.NSColor())])
-            ChartManager.shared.currentStockView?.addColoredLines(lines: [(indicator.sma200, CGColor.DarkSMALine.NSColor())])
-//            ChartManager.shared.
-            ChartManager.shared.currentStockView?.mouseDelegate = self
+            ChartManager.shared.setIndicatorData(indicator)
         } catch let e {
             TerminalManager.shared.addText("Unable to unwrap data into aggregate: \(e)", type: .error)
         }

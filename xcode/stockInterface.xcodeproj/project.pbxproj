@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B09D7B32B11360A004536C4 /* TextValueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B09D7B22B11360A004536C4 /* TextValueView.swift */; };
+		5B09D7B52B114734004536C4 /* LabelValueController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B09D7B42B114734004536C4 /* LabelValueController.swift */; };
 		5B0C78B22ADE5A3500E0EEEB /* SharedFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0C78B12ADE5A3500E0EEEB /* SharedFileManager.swift */; };
 		5B6D622D2AD9F265003B1D3A /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6D622C2AD9F265003B1D3A /* Style.swift */; };
 		5B6D622F2AD9F2B9003B1D3A /* LayoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6D622E2AD9F2B9003B1D3A /* LayoutManager.swift */; };
@@ -60,6 +62,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5B09D7B22B11360A004536C4 /* TextValueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextValueView.swift; sourceTree = "<group>"; };
+		5B09D7B42B114734004536C4 /* LabelValueController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelValueController.swift; sourceTree = "<group>"; };
 		5B0C78B12ADE5A3500E0EEEB /* SharedFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedFileManager.swift; sourceTree = "<group>"; };
 		5B6D622C2AD9F265003B1D3A /* Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Style.swift; sourceTree = "<group>"; };
 		5B6D622E2AD9F2B9003B1D3A /* LayoutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutManager.swift; sourceTree = "<group>"; };
@@ -200,6 +204,7 @@
 		FC82FA372AC6C0D800642210 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5B09D7B22B11360A004536C4 /* TextValueView.swift */,
 				FC82FA322AC6AE4800642210 /* ContentView.swift */,
 				FC82FA542AC6F90500642210 /* StockView */,
 				FC38C5F32AF293BE00E29029 /* Scrolling Terminal */,
@@ -223,6 +228,7 @@
 				FCC5D7C82B01933100557CD5 /* EventController.swift */,
 				FCDD126A2B0AC0F800DDF4C9 /* MLDatasetGenerator.swift */,
 				FCDF76EC2B0BE34200BE28BE /* HistoricalDataController.swift */,
+				5B09D7B42B114734004536C4 /* LabelValueController.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -358,6 +364,7 @@
 				FCD1D5072ACBDB2200700D4C /* NSWindow.swift in Sources */,
 				5B860BC62B007A02002EA088 /* HelpCommand.swift in Sources */,
 				FCDF76EB2B0BE22900BE28BE /* DownloadEveryStockCommand.swift in Sources */,
+				5B09D7B32B11360A004536C4 /* TextValueView.swift in Sources */,
 				FC38C5F52AF293D300E29029 /* ScrollingTerminalViewCell.swift in Sources */,
 				FC55C3182ADE74B800564D3C /* MLTrainingData.swift in Sources */,
 				FCC8D86D2AE87637004D10F0 /* MLPlayback.swift in Sources */,
@@ -371,6 +378,7 @@
 				FCDF76ED2B0BE34200BE28BE /* HistoricalDataController.swift in Sources */,
 				FCDD126B2B0AC0F800DDF4C9 /* MLDatasetGenerator.swift in Sources */,
 				5B6D622D2AD9F265003B1D3A /* Style.swift in Sources */,
+				5B09D7B52B114734004536C4 /* LabelValueController.swift in Sources */,
 				FC82FA512AC6EB9200642210 /* Candle.swift in Sources */,
 				FCDD126D2B0AC24D00DDF4C9 /* MLDatasetInputOutput.swift in Sources */,
 				5B860BCE2B013BC7002EA088 /* LoadPlayblackCommand.swift in Sources */,

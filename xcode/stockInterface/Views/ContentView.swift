@@ -15,8 +15,9 @@ class ContentView: NSView {
     // MARK: Subviews
 
     weak var stockView:          StockView!
+    weak var textValueView:      TextValueView!
     weak var terminalView:       ScrollingTerminalView!
-    weak var frostedGlassEffect: NSVisualEffectView!
+//    weak var frostedGlassEffect: NSVisualEffectView!
     
     // MARK: Init
     
@@ -33,7 +34,7 @@ class ContentView: NSView {
     
     override func layout() {
         super.layout()
-        frostedGlassEffect.frame = frame
+//        frostedGlassEffect.frame = frame
 //        stockView.frame = frame
     }
     
@@ -46,18 +47,32 @@ class ContentView: NSView {
     
     private func setupView() {
         
-        let frostedGlassEffect = NSVisualEffectView()
-        frostedGlassEffect.appearance = .currentDrawing()
-        frostedGlassEffect.blendingMode = .behindWindow
-        frostedGlassEffect.state = .active
-        addSubview(frostedGlassEffect, positioned: .below, relativeTo: nil)
-        self.frostedGlassEffect = frostedGlassEffect
+        wantsLayer = true
+        layer?.backgroundColor = .black
+//        let frostedGlassEffect = NSVisualEffectView()
+//        frostedGlassEffect.appearance = .currentDrawing()
+//        frostedGlassEffect.blendingMode = .behindWindow
+//        frostedGlassEffect.state = .active
+//        addSubview(frostedGlassEffect, positioned: .below, relativeTo: nil)
+//        self.frostedGlassEffect = frostedGlassEffect
+        
+        let textValueView = TextValueView()
+        textValueView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(textValueView)
+        NSLayoutConstraint.activate([
+            textValueView.topAnchor.constraint(equalTo: topAnchor),
+            textValueView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            textValueView.widthAnchor.constraint(equalToConstant: 300),
+            textValueView.heightAnchor.constraint(equalToConstant: 250)
+        ])
+        self.textValueView = textValueView
+        LabelValueController.shared.setView(textValueView)
         
         let terminalView = ScrollingTerminalView()
         terminalView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(terminalView)
         NSLayoutConstraint.activate([
-            terminalView.topAnchor.constraint(equalTo: topAnchor),
+            terminalView.topAnchor.constraint(equalTo: textValueView.bottomAnchor),
             terminalView.trailingAnchor.constraint(equalTo: trailingAnchor),
             terminalView.bottomAnchor.constraint(equalTo: bottomAnchor),
             terminalView.widthAnchor.constraint(equalToConstant: 300)
