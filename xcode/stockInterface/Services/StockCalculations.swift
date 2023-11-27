@@ -14,12 +14,14 @@ class StockCalculations {
     static func GetIndicatorData(aggregate: StockAggregate) -> IndicatorData? {
         if aggregate.candles.count < StartAtElement {return nil}
         let closes = aggregate.candles.map { $0.close }
+        let volumes = aggregate.candles.map { $0.volume }
         let sma200 = GetSMAs(for: closes, period: 200)
         let sma50  = GetSMAs(for: closes, period: 50)
         let ema14  = GetEMAS(for: closes, period: 14)
         let ema28  = GetEMAS(for: closes, period: 28)
+        let volume5 = GetVolumsFromAverage(volumes: volumes, average: closes, period: 5)
         
-        let result = IndicatorData(ticker: aggregate.symbol, sma200: sma200, sma50: sma50, ema14: ema14, ema28: ema28)
+        let result = IndicatorData(ticker: aggregate.symbol, sma200: sma200, sma50: sma50, ema14: ema14, ema28: ema28, volumeIndicator: volume5)
         return result
     }
     
@@ -39,6 +41,10 @@ class StockCalculations {
         let normalizedArray = inputArray.map { ($0 - mean) / standardDeviation }
 
         return normalizedArray
+    }
+    
+    static func GetVolumsFromAverage(volumes: [Int64], average: [Float], period: Int) -> [Float] {
+        return []
     }
     
     static func GetEMAS(for values: [Float], period: Int) -> [Float] {
