@@ -21,6 +21,44 @@ extension StockView {
         drawCandles()
         drawBordlineCandles()
         drawLines()
+        
+        drawAuxBlackSquareOverlay()
+        
+        drawAuxViews()
+    }
+    
+    private func drawAuxViews() {
+        
+        var heightStartingPoint: CGFloat = 0
+        
+        for auxGraph in self.auxViews {
+            drawAuxBars(auxHeight: auxGraph.height, bars: auxGraph.bars, startingHeight: heightStartingPoint)
+            heightStartingPoint += auxGraph.height
+        }
+    }
+    
+    private func drawAuxBars(auxHeight: CGFloat, bars: [StockViewAuxGraphBars], startingHeight: CGFloat) {
+        
+        for i in -2..<visibleCandles + 2 {
+            let dataIndex = i + startingCandleIndex
+            if dataIndex < 0 || dataIndex >= bars.count {continue}
+            let yPos = startingHeight + auxHeight * bars[dataIndex].y
+            let xPos = CGFloat(i) * candleWidth + xPositionOffset + candleWidth / 2
+            let height = auxHeight * bars[dataIndex].height
+            let path = NSBezierPath(rect: NSRect(x: xPos, y: yPos, width: candleWidth, height: height))
+            bars[dataIndex].color.setFill()
+            path.fill()
+        }
+    }
+    
+    private func drawAuxBlackSquareOverlay() {
+        let path = NSBezierPath(rect: NSRect(x: 0,
+                                             y: 0,
+                                             width: bounds.width,
+                                             height: self.stockViewAuxYOffset))
+        let color = NSColor.black
+        color.setFill()
+        path.fill()
     }
     
     private func calculateDrawingValues() {
@@ -39,9 +77,9 @@ extension StockView {
             var xPosition: CGFloat = getCandleXPositionInViewForCandleIndex(candleIndex: e.0)
             xPosition *= candleWidth
             let candleBodyPath = NSBezierPath(rect: NSRect(x: xPosition + xPositionOffset,
-                                                           y: 0,
+                                                           y: self.stockViewAuxYOffset,
                                                            width: candleWidth,
-                                                           height: bounds.height))
+                                                           height: self.stockViewHeight))
             let color = e.1
             color.setFill()
             candleBodyPath.fill()
@@ -61,9 +99,9 @@ extension StockView {
                 candleBodyYPos = 1 - ((maxValue - candle.open) / range)
             }
             let candleBodyX = CGFloat(index) * candleWidth
-            let candleBodyHeight = bounds.height / (CGFloat(range) / (abs(CGFloat(candle.open - candle.close))))
+            let candleBodyHeight = self.stockViewHeight / (CGFloat(range) / (abs(CGFloat(candle.open - candle.close))))
             let candleBodyPath = NSBezierPath(rect: NSRect(x: candleBodyX + xPositionOffset,
-                                                           y: CGFloat(candleBodyYPos) * bounds.height,
+                                                           y: CGFloat(candleBodyYPos) * self.stockViewHeight + self.stockViewAuxYOffset,
                                                            width: candleWidth,
                                                            height: candleBodyHeight))
             
@@ -71,9 +109,9 @@ extension StockView {
             let candleLineYPos = 1 - ((maxValue - candle.low) / range)
             let candleLinePath = NSBezierPath()
             candleLinePath.move(to: CGPoint(x: candleLineXPos + xPositionOffset,
-                                            y: (CGFloat(candleLineYPos) * bounds.height)))
+                                            y: (CGFloat(candleLineYPos) * self.stockViewHeight) + self.stockViewAuxYOffset))
             candleLinePath.line(to: CGPoint(x: candleLineXPos + xPositionOffset,
-                                               y: (CGFloat(candleLineYPos) * bounds.height) + (bounds.height / (CGFloat(range) / (abs(CGFloat(candle.high - candle.low)))))))
+                                               y: self.stockViewAuxYOffset + (CGFloat(candleLineYPos) * self.stockViewHeight) + (self.stockViewHeight / (CGFloat(range) / (abs(CGFloat(candle.high - candle.low)))))))
             var candleColor: NSColor
             if candle.open > candle.close {
                 candleColor = .init(red: 1, green: 0, blue: 0, alpha: 1)
@@ -108,9 +146,9 @@ extension StockView {
             candleBodyYPos = 1 - ((maxValue - candle.open) / range)
         }
         let candleBodyX = CGFloat(positionIndex) * candleWidth
-        let candleBodyHeight = bounds.height / (CGFloat(range) / (abs(CGFloat(candle.open - candle.close))))
+        let candleBodyHeight = self.stockViewHeight / (CGFloat(range) / (abs(CGFloat(candle.open - candle.close))))
         let candleBodyPath = NSBezierPath(rect: NSRect(x: candleBodyX + xPositionOffset,
-                                                       y: CGFloat(candleBodyYPos) * bounds.height,
+                                                       y: CGFloat(candleBodyYPos) * self.stockViewHeight + self.stockViewAuxYOffset,
                                                        width: candleWidth,
                                                        height: candleBodyHeight))
         
@@ -118,9 +156,9 @@ extension StockView {
         let candleLineYPos = 1 - ((maxValue - candle.low) / range)
         let candleLinePath = NSBezierPath()
         candleLinePath.move(to: CGPoint(x: candleLineXPos + xPositionOffset,
-                                        y: (CGFloat(candleLineYPos) * bounds.height)))
+                                        y: (CGFloat(candleLineYPos) * self.stockViewHeight) + self.stockViewAuxYOffset))
         candleLinePath.line(to: CGPoint(x: candleLineXPos + xPositionOffset,
-                                           y: (CGFloat(candleLineYPos) * bounds.height) + (bounds.height / (CGFloat(range) / (abs(CGFloat(candle.high - candle.low)))))))
+                                           y: self.stockViewAuxYOffset + (CGFloat(candleLineYPos) * self.stockViewHeight) + (self.stockViewHeight / (CGFloat(range) / (abs(CGFloat(candle.high - candle.low)))))))
         var candleColor: NSColor
         if candle.open > candle.close {
             candleColor = .init(red: 0.7, green: 0, blue: 0, alpha: 1)
@@ -150,9 +188,9 @@ extension StockView {
         var xPosition: CGFloat = getCandleXPositionInViewForCandleIndex(candleIndex: hoveringCandleIndex)
         xPosition *= candleWidth
         let candleBodyPath = NSBezierPath(rect: NSRect(x: xPosition + xPositionOffset,
-                                                       y: 0,
+                                                       y: self.stockViewAuxYOffset,
                                                        width: candleWidth,
-                                                       height: bounds.height))
+                                                       height: self.stockViewHeight))
         let color: NSColor = .init(displayP3Red: 1, green: 1, blue: 1, alpha: 0.15)
         color.setFill()
         candleBodyPath.fill()
@@ -169,13 +207,13 @@ extension StockView {
                 let xPos = CGFloat(i) * candleWidth + xPositionOffset + candleWidth / 2
                 if didStartPath == false {
                     didStartPath = true
-                    linePath.move(to: NSPoint(x: xPos, y: CGFloat(yPos) * bounds.height))
+                    linePath.move(to: NSPoint(x: xPos, y: self.stockViewAuxYOffset + CGFloat(yPos) * self.stockViewHeight))
                 } else {
-                    linePath.line(to: NSPoint(x: xPos, y: CGFloat(yPos) * bounds.height))
+                    linePath.line(to: NSPoint(x: xPos, y: self.stockViewAuxYOffset + CGFloat(yPos) * self.stockViewHeight))
                 }
             }
             line.1.setStroke()
-            linePath.lineWidth = 1
+            linePath.lineWidth = 2
             linePath.stroke()
         }
     }

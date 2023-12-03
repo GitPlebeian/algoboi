@@ -39,6 +39,7 @@
 		FC8B8CAA2AE8972D0053F5CF /* ScrollingTerminalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC8B8CA92AE8972D0053F5CF /* ScrollingTerminalView.swift */; };
 		FC8B8CAE2AE89D360053F5CF /* BrassMono-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FC8B8CAC2AE89D360053F5CF /* BrassMono-Bold.ttf */; settings = {ASSET_TAGS = (New, ); }; };
 		FC8B8CAF2AE89D360053F5CF /* BrassMono-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FC8B8CAD2AE89D360053F5CF /* BrassMono-Regular.ttf */; settings = {ASSET_TAGS = (New, ); }; };
+		FC97AE8D2B14249300756773 /* StockViewAuxGraphProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC97AE8C2B14249300756773 /* StockViewAuxGraphProperties.swift */; };
 		FCBAF4242ADE497F0075ABEF /* CGColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBAF4232ADE497F0075ABEF /* CGColor.swift */; };
 		FCBAF4262ADE50610075ABEF /* StockAggregateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBAF4252ADE50610075ABEF /* StockAggregateManager.swift */; };
 		FCBAF4282ADE72D20075ABEF /* StockCalculations.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBAF4272ADE72D20075ABEF /* StockCalculations.swift */; };
@@ -97,6 +98,7 @@
 		FC8B8CA92AE8972D0053F5CF /* ScrollingTerminalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollingTerminalView.swift; sourceTree = "<group>"; };
 		FC8B8CAC2AE89D360053F5CF /* BrassMono-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BrassMono-Bold.ttf"; sourceTree = "<group>"; };
 		FC8B8CAD2AE89D360053F5CF /* BrassMono-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BrassMono-Regular.ttf"; sourceTree = "<group>"; };
+		FC97AE8C2B14249300756773 /* StockViewAuxGraphProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockViewAuxGraphProperties.swift; sourceTree = "<group>"; };
 		FCBAF4232ADE497F0075ABEF /* CGColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGColor.swift; sourceTree = "<group>"; };
 		FCBAF4252ADE50610075ABEF /* StockAggregateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockAggregateManager.swift; sourceTree = "<group>"; };
 		FCBAF4272ADE72D20075ABEF /* StockCalculations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockCalculations.swift; sourceTree = "<group>"; };
@@ -243,6 +245,7 @@
 				FCDD126C2B0AC24D00DDF4C9 /* MLDatasetInputOutput.swift */,
 				FCD871EE2B0BB26B00251777 /* TickerNameModel.swift */,
 				FCD588162B0C2938001BBECC /* IndicatorData.swift */,
+				FC97AE8C2B14249300756773 /* StockViewAuxGraphProperties.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -377,6 +380,7 @@
 				FC82FA332AC6AE4800642210 /* ContentView.swift in Sources */,
 				FCDF76ED2B0BE34200BE28BE /* HistoricalDataController.swift in Sources */,
 				FCDD126B2B0AC0F800DDF4C9 /* MLDatasetGenerator.swift in Sources */,
+				FC97AE8D2B14249300756773 /* StockViewAuxGraphProperties.swift in Sources */,
 				5B6D622D2AD9F265003B1D3A /* Style.swift in Sources */,
 				5B09D7B52B114734004536C4 /* LabelValueController.swift in Sources */,
 				FC82FA512AC6EB9200642210 /* Candle.swift in Sources */,

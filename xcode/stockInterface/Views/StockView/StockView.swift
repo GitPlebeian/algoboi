@@ -21,6 +21,24 @@ class StockView: NSView {
     
     var stockAggregate: StockAggregate? = nil {
         didSet {
+            
+//            var bars: [StockViewAuxGraphBars] = []
+//            
+//            for _ in 0..<stockAggregate!.candles.count {
+//                let y = CGFloat.random(in: 0...0.8)
+//                let height = CGFloat.random(in: 0.01...0.2)
+//                let rC = Int.random(in: 0...1)
+//                var color: NSColor
+//                if rC == 1 {
+//                    color = .red
+//                } else {
+//                    color = .green
+//                }
+//                bars.append(StockViewAuxGraphBars(y: y, height: height, color: color))
+//            }
+//            
+//            addAuxView(StockViewAuxGraphProperties(height: 100, bars: bars))
+            
             setVisibleCandleToMax()
             setMinimumCandleWidth()
             clearAllAdditionalItems()
@@ -32,6 +50,9 @@ class StockView: NSView {
     
     var minimumCandleWidth: CGFloat!
     var candleWidth: CGFloat = 80
+    
+    var stockViewHeight: CGFloat = 0
+    var stockViewAuxYOffset: CGFloat = 0
     
     
     var maxValue:              Float               = -.infinity
@@ -50,6 +71,10 @@ class StockView: NSView {
     // Candle Hovering
     var currentHoveringCandle: Int?
     var currentHoveringCandleXPosition: CGFloat?
+    
+    // MARK: AUX View Properties
+    
+    var auxViews: [StockViewAuxGraphProperties] = []
     
     // MARK: Additonal View Items
     
@@ -80,6 +105,7 @@ class StockView: NSView {
     
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
+        
         previousCandleWidth = candleWidth
         setupView()
     }
@@ -113,6 +139,10 @@ class StockView: NSView {
         setNeedsDisplay(bounds)
     }
     
+    func addAuxView(_ properties: StockViewAuxGraphProperties) {
+        auxViews.append(properties)
+        setNeedsDisplay(bounds)
+    }
     // MARK: Tracking Area
     
     override func updateTrackingAreas() {

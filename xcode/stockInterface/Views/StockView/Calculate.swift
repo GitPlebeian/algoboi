@@ -10,6 +10,7 @@ import Cocoa
 extension StockView {
     
     func updateAllPropertyValues() {
+        setStockViewHeight()
         setVisibleCandleCount()
         setStartingCandleIndex()
         setMissingCandleMarginSpace()
@@ -21,6 +22,15 @@ extension StockView {
         x -= xPositionOffset
         let candle = Int(x / candleWidth)
         return candle + startingCandleIndex
+    }
+    
+    func setStockViewHeight() {
+        var totalHeight: CGFloat = 0
+        for e in auxViews {
+            totalHeight += e.height
+        }
+        self.stockViewHeight = bounds.height - totalHeight
+        self.stockViewAuxYOffset = totalHeight
     }
     
     func setVisibleCandleToMax() {
