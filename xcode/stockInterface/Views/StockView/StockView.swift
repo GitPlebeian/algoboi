@@ -139,8 +139,9 @@ class StockView: NSView {
         setNeedsDisplay(bounds)
     }
     
-    func addAuxView(_ properties: StockViewAuxGraphProperties) {
-        auxViews.append(properties)
+    func setAuxViews(_ sets: [StockViewAuxGraphProperties]) {
+        auxViews = []
+        auxViews.append(contentsOf: sets)
         setNeedsDisplay(bounds)
     }
     // MARK: Tracking Area

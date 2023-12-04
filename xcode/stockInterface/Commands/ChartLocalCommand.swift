@@ -29,8 +29,12 @@ class ChartLocalCommand: Command {
             let jsonDecoder = JSONDecoder()
             let aggregate = try jsonDecoder.decode(StockAggregate.self, from: aggregateData)
             let indicator = try jsonDecoder.decode(IndicatorData.self, from: indicatorData)
+            
+            let auxSets = StockCalculations.GetAuxSetsForAggregate(aggregate: aggregate)
+            
             ChartManager.shared.chartStock(aggregate)
             ChartManager.shared.setIndicatorData(indicator)
+            ChartManager.shared.setAuxSets(auxSets: auxSets)
         } catch let e {
             TerminalManager.shared.addText("Unable to unwrap data into aggregate: \(e)", type: .error)
         }

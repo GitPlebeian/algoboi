@@ -30,6 +30,10 @@ class ChartManager {
         currentStockView?.addColoredLines(lines: [(indicatorData.sma200, CGColor.DarkSMALine.NSColor())])
         currentStockView?.mouseDelegate = self
     }
+    
+    func setAuxSets(auxSets: [StockViewAuxGraphProperties]) {
+        currentStockView?.setAuxViews(auxSets)
+    }
 }
 
 extension ChartManager: StockViewMouseDelegate {

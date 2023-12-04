@@ -25,6 +25,21 @@ class StockCalculations {
         return result
     }
     
+    static func GetAuxSetsForAggregate(aggregate: StockAggregate) -> [StockViewAuxGraphProperties] {
+        
+        var sets: [StockViewAuxGraphProperties] = []
+        
+        // Volume Period 10
+        
+        
+        
+        // Volume Period 20
+        
+        // Volume Period 30
+        
+        return []
+    }
+    
     
     static func Normalize(_ inputArray: [Float]) -> [Float] {
 
