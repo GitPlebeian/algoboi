@@ -43,7 +43,7 @@ extension StockView {
             let dataIndex = i + startingCandleIndex
             if dataIndex < 0 || dataIndex >= bars.count {continue}
             let yPos = startingHeight + auxHeight * bars[dataIndex].y
-            let xPos = CGFloat(i) * candleWidth + xPositionOffset + candleWidth / 2
+            let xPos = CGFloat(i) * candleWidth + xPositionOffset
             let height = auxHeight * bars[dataIndex].height
             let path = NSBezierPath(rect: NSRect(x: xPos, y: yPos, width: candleWidth, height: height))
             bars[dataIndex].color.setFill()

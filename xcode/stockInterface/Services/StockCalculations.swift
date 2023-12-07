@@ -5,7 +5,7 @@
 //  Created by CHONK on 10/17/23.
 //
 
-import Foundation
+import Cocoa
 
 class StockCalculations {
     
@@ -27,17 +27,48 @@ class StockCalculations {
     
     static func GetAuxSetsForAggregate(aggregate: StockAggregate) -> [StockViewAuxGraphProperties] {
         
-        var sets: [StockViewAuxGraphProperties] = []
+        let volumes = aggregate.candles.map { Float($0.volume) }
         
         // Volume Period 10
         
-        
+        let periodA = GetPercentageChangeFromSMANotIncluding(volumes, period: 10)
+        let periodABars = GetAuxGraphBarsForMinusOneToOne(periodA)
+        let periodAProperties = StockViewAuxGraphProperties(height: 100, bars: periodABars)
         
         // Volume Period 20
         
+        let periodB = GetPercentageChangeFromSMANotIncluding(volumes, period: 100)
+        let periodBBars = GetAuxGraphBarsForMinusOneToOne(periodB)
+        let periodBProperties = StockViewAuxGraphProperties(height: 100, bars: periodBBars)
+        
         // Volume Period 30
         
-        return []
+        let periodC = GetPercentageChangeFromSMANotIncluding(volumes, period: 500)
+        let periodCBars = GetAuxGraphBarsForMinusOneToOne(periodC)
+        let periodCProperties = StockViewAuxGraphProperties(height: 100, bars: periodCBars)
+        
+        return [periodAProperties, periodBProperties, periodCProperties]
+    }
+    
+    static func GetAuxGraphBarsForMinusOneToOne(_ arr: [Float]) -> [StockViewAuxGraphBars] {
+        var results: [StockViewAuxGraphBars] = []
+        for e in arr {
+            var color: NSColor
+            var y: CGFloat
+            var height: CGFloat
+            print(e)
+            if e <= 0 {
+                color = CGColor.barRed.NSColor()
+                y = 0.5 - (0.5 * CGFloat(abs(e)))
+                height = 0.5 * CGFloat(abs(e))
+            } else {
+                color = CGColor.barGreen.NSColor()
+                y = 0.5
+                height = 0.5 * CGFloat(e)
+            }
+            results.append(StockViewAuxGraphBars(y: y, height: height, color: color))
+        }
+        return results
     }
     
     
@@ -97,6 +128,16 @@ class StockCalculations {
             smas.append(average)
         }
         return smas
+    }
+    
+    static func GetPercentageChangeFromSMANotIncluding(_ values: [Float], period: Int) -> [Float] {
+        let previousSMAs = GetSMAs(for: values, period: period)
+        var results: [Float] = [0]
+        for index in 1..<values.count {
+            let value = (values[index] - previousSMAs[index - 1]) / previousSMAs[index - 1]
+            results.append(value)
+        }
+        return results
     }
     
     static func GetAngleBetweenTwoPoints(start: Float, end: Float) -> Float {

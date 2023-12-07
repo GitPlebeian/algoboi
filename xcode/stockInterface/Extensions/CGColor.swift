@@ -48,5 +48,7 @@ extension CGColor {
     static let DarkSMALine         = FromHex("073191")
     static let LightSMALine        = FromHex("114cd4")
     static let lightGrayTextColor  = FromHex("c4c4c4")
+    static let barGreen            = FromHex("1de81a")
+    static let barRed              = FromHex("c71a48")
     
 }
