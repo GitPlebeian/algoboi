@@ -15,8 +15,8 @@ class StockCalculations {
         if aggregate.candles.count < StartAtElement {return nil}
         let closes = aggregate.candles.map { $0.close }
         let volumes = aggregate.candles.map { $0.volume }
-        let sma200 = GetSMAs(for: closes, period: 200)
-        let sma50  = GetSMAs(for: closes, period: 50)
+        let sma200 = GetSMAS(for: closes, period: 200)
+        let sma50  = GetSMAS(for: closes, period: 50)
         let ema14  = GetEMAS(for: closes, period: 14)
         let ema28  = GetEMAS(for: closes, period: 28)
         let volume5 = GetVolumsFromAverage(volumes: volumes, average: closes, period: 5)
@@ -29,25 +29,25 @@ class StockCalculations {
         
         let volumes = aggregate.candles.map { Float($0.volume) }
         
-        // Volume Period 10
+        // Volume Period 10 SMA
         
-        let periodA = GetPercentageChangeFromSMANotIncluding(volumes, period: 10)
+        let periodA = GetPercentageChangeFromMovingAverageNotIncluding(volumes, period: 30, useSMA: true)
         let periodABars = GetAuxGraphBarsForMinusOneToOne(periodA)
         let periodAProperties = StockViewAuxGraphProperties(height: 100, bars: periodABars)
         
-        // Volume Period 20
+        // Volume Period 10 EMA
         
-        let periodB = GetPercentageChangeFromSMANotIncluding(volumes, period: 100)
+        let periodB = GetPercentageChangeFromMovingAverageNotIncluding(volumes, period: 30, useSMA: false)
         let periodBBars = GetAuxGraphBarsForMinusOneToOne(periodB)
         let periodBProperties = StockViewAuxGraphProperties(height: 100, bars: periodBBars)
+//
+//        // Volume Period 30
+//        
+//        let periodC = GetPercentageChangeFromSMANotIncluding(volumes, period: 500)
+//        let periodCBars = GetAuxGraphBarsForMinusOneToOne(periodC)
+//        let periodCProperties = StockViewAuxGraphProperties(height: 100, bars: periodCBars)
         
-        // Volume Period 30
-        
-        let periodC = GetPercentageChangeFromSMANotIncluding(volumes, period: 500)
-        let periodCBars = GetAuxGraphBarsForMinusOneToOne(periodC)
-        let periodCProperties = StockViewAuxGraphProperties(height: 100, bars: periodCBars)
-        
-        return [periodAProperties, periodBProperties, periodCProperties]
+        return [periodAProperties, periodBProperties]
     }
     
     static func GetAuxGraphBarsForMinusOneToOne(_ arr: [Float]) -> [StockViewAuxGraphBars] {
@@ -113,7 +113,7 @@ class StockCalculations {
         return emas
     }
     
-    static func GetSMAs(for values: [Float], period: Int) -> [Float] {
+    static func GetSMAS(for values: [Float], period: Int) -> [Float] {
         var smas: [Float] = []
         for endingIndex in 0..<values.count {
             var startingIndex = endingIndex - period + 1
@@ -130,11 +130,16 @@ class StockCalculations {
         return smas
     }
     
-    static func GetPercentageChangeFromSMANotIncluding(_ values: [Float], period: Int) -> [Float] {
-        let previousSMAs = GetSMAs(for: values, period: period)
+    static func GetPercentageChangeFromMovingAverageNotIncluding(_ values: [Float], period: Int, useSMA: Bool) -> [Float] {
+        var movingAverages: [Float] = []
+        if useSMA {
+            movingAverages = GetSMAS(for: values, period: period)
+        } else {
+            movingAverages = GetEMAS(for: values, period: period)
+        }
         var results: [Float] = [0]
         for index in 1..<values.count {
-            let value = (values[index] - previousSMAs[index - 1]) / previousSMAs[index - 1]
+            let value = (values[index] - movingAverages[index - 1]) / movingAverages[index - 1]
             results.append(value)
         }
         return results
