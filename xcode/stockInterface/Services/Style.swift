@@ -13,5 +13,7 @@ class Style {
     
     static let CellPadding: CGFloat = 16
     static let CellCornerRadius: CGFloat = 16
+    
+    static let ChartDividerWidth: CGFloat = 1
 }
 

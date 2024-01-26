@@ -50,5 +50,6 @@ extension CGColor {
     static let lightGrayTextColor  = FromHex("c4c4c4")
     static let barGreen            = FromHex("1de81a")
     static let barRed              = FromHex("c71a48")
+    static let ChartDividerColor   = FromHex("ffffff")
     
 }

@@ -45,8 +45,10 @@ class StockView: NSView {
             setNeedsDisplay(bounds)
         }
     }
-    let margin: CGFloat = 30
     
+    // MARK: Styling
+    
+    let margin: CGFloat = 30
     
     var minimumCandleWidth: CGFloat!
     var candleWidth: CGFloat = 80

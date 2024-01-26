@@ -27,7 +27,7 @@ extension StockView {
     func setStockViewHeight() {
         var totalHeight: CGFloat = 0
         for e in auxViews {
-            totalHeight += e.height
+            totalHeight += e.height + Style.ChartDividerWidth
         }
         self.stockViewHeight = bounds.height - totalHeight
         self.stockViewAuxYOffset = totalHeight

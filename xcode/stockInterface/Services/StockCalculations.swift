@@ -27,19 +27,25 @@ class StockCalculations {
     
     static func GetAuxSetsForAggregate(aggregate: StockAggregate) -> [StockViewAuxGraphProperties] {
         
-        let volumes = aggregate.candles.map { Float($0.volume) }
+        // INFORMATION: The first aux view in the array will be at the bottom of the stock chart FYI
         
-        // Volume Period 10 SMA
+        let volumes = aggregate.candles.map { Float($0.volume) }
+
         
         let periodA = GetPercentageChangeFromMovingAverageNotIncluding(volumes, period: 30, useSMA: true)
         let periodABars = GetAuxGraphBarsForMinusOneToOne(periodA)
         let periodAProperties = StockViewAuxGraphProperties(height: 100, bars: periodABars)
+
         
-        // Volume Period 10 EMA
-        
-        let periodB = GetPercentageChangeFromMovingAverageNotIncluding(volumes, period: 30, useSMA: false)
+        var periodB = GetPercentageChangeFromMovingAverageNotIncluding(volumes, period: 30, useSMA: true)
+        periodB = ScalePositiveNumbersFromZeroToMaxOne(arr: periodB, scalingFactor: 2, maxNum: 3)
         let periodBBars = GetAuxGraphBarsForMinusOneToOne(periodB)
         let periodBProperties = StockViewAuxGraphProperties(height: 100, bars: periodBBars)
+        
+        var periodC = GetPercentageChangeFromMovingAverageNotIncluding(volumes, period: 30, useSMA: true)
+        periodC = ScalePositiveNumbersFromZeroToMaxOne(arr: periodC, scalingFactor: 1, maxNum: 3)
+        let periodCBars = GetAuxGraphBarsForMinusOneToOne(periodC)
+        let periodCProperties = StockViewAuxGraphProperties(height: 100, bars: periodCBars)
 //
 //        // Volume Period 30
 //        
@@ -47,7 +53,7 @@ class StockCalculations {
 //        let periodCBars = GetAuxGraphBarsForMinusOneToOne(periodC)
 //        let periodCProperties = StockViewAuxGraphProperties(height: 100, bars: periodCBars)
         
-        return [periodAProperties, periodBProperties]
+        return [periodCProperties]
     }
     
     static func GetAuxGraphBarsForMinusOneToOne(_ arr: [Float]) -> [StockViewAuxGraphBars] {
@@ -69,6 +75,29 @@ class StockCalculations {
             results.append(StockViewAuxGraphBars(y: y, height: height, color: color))
         }
         return results
+    }
+    
+    static func ScalePositiveNumbersFromZeroToMaxOne(arr: [Float], scalingFactor: Float = 1, maxNum: Float) -> [Float] {
+        var scaledArray: [Float] = []
+        
+        // Iterate through the input array
+        for num in arr {
+            if num > 0 {
+                // Scale the positive numbers using the logarithm
+                let scaledValue = log(1 + (num / maxNum) * scalingFactor)
+                
+                // Ensure the scaled value is between 0 and 1
+                let scaledClamped = max(0, min(1, scaledValue))
+                
+                // Append the scaled value to the result array
+                scaledArray.append(scaledClamped)
+            } else {
+                // Negative numbers remain unchanged
+                scaledArray.append(num)
+            }
+        }
+        
+        return scaledArray
     }
     
     

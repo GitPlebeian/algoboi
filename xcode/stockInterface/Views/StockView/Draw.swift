@@ -32,9 +32,17 @@ extension StockView {
         var heightStartingPoint: CGFloat = 0
         
         for auxGraph in self.auxViews {
+            drawAuxBackground(auxHeight: auxGraph.height, startingHeight: heightStartingPoint)
             drawAuxBars(auxHeight: auxGraph.height, bars: auxGraph.bars, startingHeight: heightStartingPoint)
-            heightStartingPoint += auxGraph.height
+            heightStartingPoint += auxGraph.height + Style.ChartDividerWidth
         }
+    }
+    
+    private func drawAuxBackground(auxHeight: CGFloat, startingHeight: CGFloat) {
+        
+        let path = NSBezierPath(rect: NSRect(x: 0, y: startingHeight + auxHeight, width: bounds.width, height: Style.ChartDividerWidth))
+        CGColor.ChartDividerColor.NSColor().setFill()
+        path.fill()
     }
     
     private func drawAuxBars(auxHeight: CGFloat, bars: [StockViewAuxGraphBars], startingHeight: CGFloat) {
