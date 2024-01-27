@@ -27,4 +27,27 @@ extension Array where Element: FloatingPoint {
         let total = self.reduce(0, {$0 + $1})
         return total / Element(self.count)
     }
+    
+    func percentageChanges(compare: [Element]) -> [Element] {
+        var results: [Element] = []
+        if compare.count != self.count {return []}
+        for (i, startingValue) in self.enumerated() {
+            if startingValue == 0 {
+                results.append(0)
+                continue
+            }
+            results.append((compare[i] - startingValue) / abs(startingValue))
+//            results.append(startingValue)
+        }
+        return results
+    }
+    
+    func minus(compare: [Element]) -> [Element] {
+        var results: [Element] = []
+        if compare.count != self.count {return []}
+        for (i, starting) in self.enumerated() {
+            results.append(starting - compare[i])
+        }
+        return results
+    }
 }

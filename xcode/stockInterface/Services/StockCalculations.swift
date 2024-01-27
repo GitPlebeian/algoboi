@@ -20,8 +20,12 @@ class StockCalculations {
         let ema14  = GetEMAS(for: closes, period: 14)
         let ema28  = GetEMAS(for: closes, period: 28)
         let volume5 = GetVolumsFromAverage(volumes: volumes, average: closes, period: 5)
+//        let macdPercentageChanges = GetMACDPercentageDifference(closes: closes)
         
-        let result = IndicatorData(ticker: aggregate.symbol, sma200: sma200, sma50: sma50, ema14: ema14, ema28: ema28, volumeIndicator: volume5)
+        let macdData = GetImpulseMACD(arr: closes)
+        let macdDifference = macdData.0.minus(compare: macdData.1)
+        
+        let result = IndicatorData(ticker: aggregate.symbol, sma200: sma200, sma50: sma50, ema14: ema14, ema28: ema28, volumeIndicator: volume5, macdDifference: macdDifference, macdGreen: macdData.1, macdRed: macdData.0)
         return result
     }
     
@@ -93,11 +97,14 @@ class StockCalculations {
     static func GetImpulseMACD(arr: [Float]) -> ([Float], [Float]) {
         let ema12 = GetEMAS(for: arr, period: 12)
         let ema26 = GetEMAS(for: arr, period: 26)
-        var macdLine = zip(ema12, ema26).map(-)
-        var signalLine = GetEMAS(for: macdLine, period: 9)
-//        macdLine = NormalizeFromMinusOneToOne(array: macdLine)
-//        signalLine = NormalizeFromMinusOneToOne(array: signalLine)
+        let macdLine = zip(ema12, ema26).map(-)
+        let signalLine = GetEMAS(for: macdLine, period: 9)
         return (macdLine, signalLine)
+    }
+    
+    static func GetMACDPercentageDifference(closes: [Float]) -> [Float] {
+        let macdData = GetImpulseMACD(arr: closes)
+        return macdData.1.percentageChanges(compare: macdData.0)
     }
     
     static func Normalize(_ inputArray: [Float]) -> [Float] {
@@ -177,6 +184,8 @@ class StockCalculations {
         }
         return results
     }
+    
+//    static func ¡
     
     static func GetAngleBetweenTwoPoints(start: Float, end: Float) -> Float {
         let dx: Float = 1.0

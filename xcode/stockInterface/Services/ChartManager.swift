@@ -54,6 +54,9 @@ extension ChartManager: StockViewMouseDelegate {
         LabelValueController.shared.setLabelValue(index: 7, label: "EMA 14", value: data.ema14[index].toRoundedString(precision: 2))
         
         LabelValueController.shared.setLabelValue(index: 8, label: "Volume", value: String(aggregate.candles[index].volume))
+        LabelValueController.shared.setLabelValue(index: 9, label: "MACD Diff", value: data.macdDifference[index].toRoundedString(precision: 2))
+        LabelValueController.shared.setLabelValue(index: 10, label: "MACD Green", value: data.macdGreen[index].toRoundedString(precision: 2))
+        LabelValueController.shared.setLabelValue(index: 11, label: "MACD Red", value: data.macdRed[index].toRoundedString(precision: 2))
         
         
     }

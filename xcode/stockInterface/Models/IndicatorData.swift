@@ -17,4 +17,7 @@ struct IndicatorData: Codable {
     let ema14:           [Float]
     let ema28:           [Float]
     let volumeIndicator: [Float]
+    let macdDifference:  [Float]
+    let macdGreen:       [Float]
+    let macdRed:         [Float]
 }

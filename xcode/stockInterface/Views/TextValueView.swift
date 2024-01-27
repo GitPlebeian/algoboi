@@ -12,7 +12,7 @@ class TextValueView: NSView {
     // MARK: Properties
     
     let rows = 6
-    let columns = 4
+    let columns = 3
     var totalCells: Int {
         rows * columns
     }
