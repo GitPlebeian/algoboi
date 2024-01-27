@@ -68,16 +68,40 @@ class ContentView: NSView {
         self.textValueView = textValueView
         LabelValueController.shared.setView(textValueView)
         
+        let textValueViewBottomDivider = NSView()
+        textValueViewBottomDivider.wantsLayer = true
+        textValueViewBottomDivider.layer?.backgroundColor = .ChartDividerColor
+        textValueViewBottomDivider.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(textValueViewBottomDivider)
+        NSLayoutConstraint.activate([
+            textValueViewBottomDivider.topAnchor.constraint(equalTo: textValueView.bottomAnchor),
+            textValueViewBottomDivider.trailingAnchor.constraint(equalTo: textValueView.trailingAnchor),
+            textValueViewBottomDivider.leadingAnchor.constraint(equalTo: textValueView.leadingAnchor),
+            textValueViewBottomDivider.heightAnchor.constraint(equalToConstant: Style.ChartDividerWidth)
+        ])
+        
         let terminalView = ScrollingTerminalView()
         terminalView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(terminalView)
         NSLayoutConstraint.activate([
-            terminalView.topAnchor.constraint(equalTo: textValueView.bottomAnchor),
+            terminalView.topAnchor.constraint(equalTo: textValueViewBottomDivider.bottomAnchor),
             terminalView.trailingAnchor.constraint(equalTo: trailingAnchor),
             terminalView.bottomAnchor.constraint(equalTo: bottomAnchor),
             terminalView.widthAnchor.constraint(equalToConstant: 300)
         ])
         self.terminalView = terminalView
+        
+        let dividerView = NSView()
+        dividerView.wantsLayer = true
+        dividerView.layer?.backgroundColor = .ChartDividerColor
+        dividerView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(dividerView)
+        NSLayoutConstraint.activate([
+            dividerView.trailingAnchor.constraint(equalTo: textValueView.leadingAnchor),
+            dividerView.topAnchor.constraint(equalTo: topAnchor),
+            dividerView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            dividerView.widthAnchor.constraint(equalToConstant: Style.ChartDividerWidth)
+        ])
         
         let stockView = StockView()
         stockView.translatesAutoresizingMaskIntoConstraints = false
@@ -85,7 +109,7 @@ class ContentView: NSView {
         NSLayoutConstraint.activate([
             stockView.topAnchor.constraint(equalTo: topAnchor, constant: 0),
             stockView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
-            stockView.trailingAnchor.constraint(equalTo: terminalView.leadingAnchor),
+            stockView.trailingAnchor.constraint(equalTo: dividerView.leadingAnchor),
             stockView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0)
             
 //            stockView.centerXAnchor.constraint(equalTo: centerXAnchor),

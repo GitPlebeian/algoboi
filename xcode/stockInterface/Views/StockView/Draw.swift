@@ -34,6 +34,7 @@ extension StockView {
         for auxGraph in self.auxViews {
             drawAuxBackground(auxHeight: auxGraph.height, startingHeight: heightStartingPoint)
             drawAuxBars(auxHeight: auxGraph.height, bars: auxGraph.bars, startingHeight: heightStartingPoint)
+            drawAuxLines(auxHeight: auxGraph.height, lines: auxGraph.lines, startingHeight: heightStartingPoint)
             heightStartingPoint += auxGraph.height + Style.ChartDividerWidth
         }
     }
@@ -46,7 +47,7 @@ extension StockView {
     }
     
     private func drawAuxBars(auxHeight: CGFloat, bars: [StockViewAuxGraphBars], startingHeight: CGFloat) {
-        
+        if bars.count == 0 {return}
         for i in -2..<visibleCandles + 2 {
             let dataIndex = i + startingCandleIndex
             if dataIndex < 0 || dataIndex >= bars.count {continue}
@@ -56,6 +57,54 @@ extension StockView {
             let path = NSBezierPath(rect: NSRect(x: xPos, y: yPos, width: candleWidth, height: height))
             bars[dataIndex].color.setFill()
             path.fill()
+        }
+    }
+    
+    private func drawAuxLines(auxHeight: CGFloat, lines: [StockViewAuxGraphLines], startingHeight: CGFloat) {
+        if lines.count == 0 {return}
+        print(startingCandleIndex)
+        var normalizedValues: [Float] = []
+        
+        // Visible Normalize | Expensive
+        for i in -2..<visibleCandles + 2 {
+            let dataIndex = i + startingCandleIndex
+            for line in lines {
+                if dataIndex < 0 || dataIndex >= line.yValues.count {continue}
+                normalizedValues.append(Float(line.yValues[dataIndex]))
+            }
+        }
+        normalizedValues = StockCalculations.NormalizeFromMinusOneToOne(array: normalizedValues)
+        
+        let dataValues = normalizedValues.map{ CGFloat($0)}
+        
+        for (lineIndex, line) in lines.enumerated() {
+            let linePath = NSBezierPath()
+            var didStartPath = false
+            
+            
+            for i in 0..<dataValues.count / lines.count {
+                let dataIndex = i * lines.count
+                if dataIndex < 0 || dataIndex >= dataValues.count {continue}
+                
+                var yPos = dataValues[dataIndex + lineIndex]
+                yPos = auxHeight / 2 + auxHeight / 2 * yPos
+                
+                var xPos: CGFloat
+                if  startingCandleIndex < 0 {
+                    xPos = CGFloat(i - startingCandleIndex) * candleWidth + xPositionOffset + candleWidth / 2
+                } else {
+                    xPos = CGFloat(i - 2) * candleWidth + xPositionOffset + candleWidth / 2
+                }
+                if didStartPath == false {
+                    didStartPath = true
+                    linePath.move(to: NSPoint(x: xPos, y: startingHeight + yPos))
+                } else {
+                    linePath.line(to: NSPoint(x: xPos, y: startingHeight + yPos))
+                }
+            }
+            line.color.setStroke()
+            linePath.lineWidth = 2
+            linePath.stroke()
         }
     }
     

@@ -9,11 +9,17 @@ import Cocoa
 
 struct StockViewAuxGraphProperties {
     let height: CGFloat
-    let bars: [StockViewAuxGraphBars]
+    var bars: [StockViewAuxGraphBars] = []
+    var lines: [StockViewAuxGraphLines] = []
 }
 
 struct StockViewAuxGraphBars {
     let y: CGFloat
     let height: CGFloat
+    let color: NSColor
+}
+
+struct StockViewAuxGraphLines {
+    let yValues: [CGFloat]
     let color: NSColor
 }

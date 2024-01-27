@@ -30,30 +30,20 @@ class StockCalculations {
         // INFORMATION: The first aux view in the array will be at the bottom of the stock chart FYI
         
         let volumes = aggregate.candles.map { Float($0.volume) }
-
-        
-        let periodA = GetPercentageChangeFromMovingAverageNotIncluding(volumes, period: 30, useSMA: true)
-        let periodABars = GetAuxGraphBarsForMinusOneToOne(periodA)
-        let periodAProperties = StockViewAuxGraphProperties(height: 100, bars: periodABars)
-
-        
-        var periodB = GetPercentageChangeFromMovingAverageNotIncluding(volumes, period: 30, useSMA: true)
-        periodB = ScalePositiveNumbersFromZeroToMaxOne(arr: periodB, scalingFactor: 2, maxNum: 3)
-        let periodBBars = GetAuxGraphBarsForMinusOneToOne(periodB)
-        let periodBProperties = StockViewAuxGraphProperties(height: 100, bars: periodBBars)
+        let closes  = aggregate.candles.map { $0.close }
         
         var periodC = GetPercentageChangeFromMovingAverageNotIncluding(volumes, period: 30, useSMA: true)
         periodC = ScalePositiveNumbersFromZeroToMaxOne(arr: periodC, scalingFactor: 1, maxNum: 3)
         let periodCBars = GetAuxGraphBarsForMinusOneToOne(periodC)
         let periodCProperties = StockViewAuxGraphProperties(height: 100, bars: periodCBars)
-//
-//        // Volume Period 30
-//        
-//        let periodC = GetPercentageChangeFromSMANotIncluding(volumes, period: 500)
-//        let periodCBars = GetAuxGraphBarsForMinusOneToOne(periodC)
-//        let periodCProperties = StockViewAuxGraphProperties(height: 100, bars: periodCBars)
+
+        // Impulse MACD
         
-        return [periodCProperties]
+        let impulseMACDLines = GetImpulseMACD(arr: closes)
+        let macdLine = StockViewAuxGraphLines(yValues: impulseMACDLines.0.map{ CGFloat($0) }, color: CGColor.barRed.NSColor())
+        let macdSignalLine = StockViewAuxGraphLines(yValues: impulseMACDLines.1.map{ CGFloat($0) }, color: CGColor.barGreen.NSColor())
+        let macdProperties = StockViewAuxGraphProperties(height: 120, lines: [macdLine, macdSignalLine])
+        return [periodCProperties, macdProperties]
     }
     
     static func GetAuxGraphBarsForMinusOneToOne(_ arr: [Float]) -> [StockViewAuxGraphBars] {
@@ -62,7 +52,6 @@ class StockCalculations {
             var color: NSColor
             var y: CGFloat
             var height: CGFloat
-            print(e)
             if e <= 0 {
                 color = CGColor.barRed.NSColor()
                 y = 0.5 - (0.5 * CGFloat(abs(e)))
@@ -101,6 +90,16 @@ class StockCalculations {
     }
     
     
+    static func GetImpulseMACD(arr: [Float]) -> ([Float], [Float]) {
+        let ema12 = GetEMAS(for: arr, period: 12)
+        let ema26 = GetEMAS(for: arr, period: 26)
+        var macdLine = zip(ema12, ema26).map(-)
+        var signalLine = GetEMAS(for: macdLine, period: 9)
+//        macdLine = NormalizeFromMinusOneToOne(array: macdLine)
+//        signalLine = NormalizeFromMinusOneToOne(array: signalLine)
+        return (macdLine, signalLine)
+    }
+    
     static func Normalize(_ inputArray: [Float]) -> [Float] {
 
         // Calculate the mean
@@ -116,6 +115,11 @@ class StockCalculations {
         let normalizedArray = inputArray.map { ($0 - mean) / standardDeviation }
 
         return normalizedArray
+    }
+    
+    static func NormalizeFromMinusOneToOne(array: [Float]) -> [Float] {
+        guard let max = array.max(), let min = array.min() else { return [] }
+        return array.map { 2 * ($0 - min) / (max - min) - 1 }
     }
     
     static func GetVolumsFromAverage(volumes: [Int64], average: [Float], period: Int) -> [Float] {
