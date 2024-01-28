@@ -20,4 +20,13 @@ struct IndicatorData: Codable {
     let macdDifference:  [Float]
     let macdGreen:       [Float]
     let macdRed:         [Float]
+    // Anything else below is used for the machine learning dataset inputs
+    let slopesOf9DayEMA:     [Float]
+    let slopesOf25DayEMA:    [Float]
+    let slopesOf50DaySMA:    [Float]
+    let slopesOf200DaySMA:   [Float]
+    let macdGreenLineLevels: [Float]
+    let macdGreenLineSlopes: [Float]
+    let macdRedLineSlopes:   [Float]
+    let macdDifferences:     [Float]
 }

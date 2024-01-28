@@ -23,7 +23,6 @@
 		5B95015B2B0938ED008C3022 /* ChartRandomCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B95015A2B0938ED008C3022 /* ChartRandomCommand.swift */; };
 		FC137A352B0AF30300061926 /* GetPrelimTickersCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC137A342B0AF30300061926 /* GetPrelimTickersCommand.swift */; };
 		FC38C5F52AF293D300E29029 /* ScrollingTerminalViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC38C5F42AF293D300E29029 /* ScrollingTerminalViewCell.swift */; };
-		FC55C3182ADE74B800564D3C /* MLTrainingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC55C3172ADE74B800564D3C /* MLTrainingData.swift */; };
 		FC583DBE2AF9A79000B7CAAC /* Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC583DBD2AF9A79000B7CAAC /* Text.swift */; };
 		FC82F9E72AC6910C00642210 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC82F9E62AC6910C00642210 /* AppDelegate.swift */; };
 		FC82F9EB2AC6910C00642210 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC82F9EA2AC6910C00642210 /* Assets.xcassets */; };
@@ -55,11 +54,13 @@
 		FCD871F32B0BBCD300251777 /* AllTickersController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD871F22B0BBCD300251777 /* AllTickersController.swift */; };
 		FCDD12692B0AC00300DDF4C9 /* InputOutputGenerationCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCDD12682B0AC00300DDF4C9 /* InputOutputGenerationCommand.swift */; };
 		FCDD126B2B0AC0F800DDF4C9 /* MLDatasetGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCDD126A2B0AC0F800DDF4C9 /* MLDatasetGenerator.swift */; };
-		FCDD126D2B0AC24D00DDF4C9 /* MLDatasetInputOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCDD126C2B0AC24D00DDF4C9 /* MLDatasetInputOutput.swift */; };
+		FCDD126D2B0AC24D00DDF4C9 /* MLDatasetOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCDD126C2B0AC24D00DDF4C9 /* MLDatasetOutput.swift */; };
 		FCDF76E92B0BDF3000BE28BE /* ChartAllTimeCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCDF76E82B0BDF3000BE28BE /* ChartAllTimeCommand.swift */; };
 		FCDF76EB2B0BE22900BE28BE /* DownloadEveryStockCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCDF76EA2B0BE22900BE28BE /* DownloadEveryStockCommand.swift */; };
 		FCDF76ED2B0BE34200BE28BE /* HistoricalDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCDF76EC2B0BE34200BE28BE /* HistoricalDataController.swift */; };
 		FCDF76EF2B0BE7E200BE28BE /* Float.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCDF76EE2B0BE7E200BE28BE /* Float.swift */; };
+		FCE09A852B65B62F004ACF20 /* MLDataset1.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE09A842B65B62F004ACF20 /* MLDataset1.swift */; };
+		FCE09A882B65B788004ACF20 /* Guide & Results.md in Resources */ = {isa = PBXBuildFile; fileRef = FCE09A872B65B788004ACF20 /* Guide & Results.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -79,7 +80,6 @@
 		5B95015A2B0938ED008C3022 /* ChartRandomCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartRandomCommand.swift; sourceTree = "<group>"; };
 		FC137A342B0AF30300061926 /* GetPrelimTickersCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPrelimTickersCommand.swift; sourceTree = "<group>"; };
 		FC38C5F42AF293D300E29029 /* ScrollingTerminalViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollingTerminalViewCell.swift; sourceTree = "<group>"; };
-		FC55C3172ADE74B800564D3C /* MLTrainingData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLTrainingData.swift; sourceTree = "<group>"; };
 		FC583DBD2AF9A79000B7CAAC /* Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Text.swift; sourceTree = "<group>"; };
 		FC64178B2AF285FB006EFC87 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		FC82F9E32AC6910C00642210 /* stockInterface.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = stockInterface.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -114,11 +114,13 @@
 		FCD871F22B0BBCD300251777 /* AllTickersController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllTickersController.swift; sourceTree = "<group>"; };
 		FCDD12682B0AC00300DDF4C9 /* InputOutputGenerationCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputOutputGenerationCommand.swift; sourceTree = "<group>"; };
 		FCDD126A2B0AC0F800DDF4C9 /* MLDatasetGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLDatasetGenerator.swift; sourceTree = "<group>"; };
-		FCDD126C2B0AC24D00DDF4C9 /* MLDatasetInputOutput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLDatasetInputOutput.swift; sourceTree = "<group>"; };
+		FCDD126C2B0AC24D00DDF4C9 /* MLDatasetOutput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLDatasetOutput.swift; sourceTree = "<group>"; };
 		FCDF76E82B0BDF3000BE28BE /* ChartAllTimeCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartAllTimeCommand.swift; sourceTree = "<group>"; };
 		FCDF76EA2B0BE22900BE28BE /* DownloadEveryStockCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadEveryStockCommand.swift; sourceTree = "<group>"; };
 		FCDF76EC2B0BE34200BE28BE /* HistoricalDataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoricalDataController.swift; sourceTree = "<group>"; };
 		FCDF76EE2B0BE7E200BE28BE /* Float.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Float.swift; sourceTree = "<group>"; };
+		FCE09A842B65B62F004ACF20 /* MLDataset1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLDataset1.swift; sourceTree = "<group>"; };
+		FCE09A872B65B788004ACF20 /* Guide & Results.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Guide & Results.md"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -238,11 +240,12 @@
 		FC82FA3F2AC6C13F00642210 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				FCE09A812B65B58F004ACF20 /* ML Calculators */,
+				FCE09A7F2B65B4E3004ACF20 /* ML Outputs */,
+				FCE09A802B65B580004ACF20 /* ML Inputs */,
 				FC82FA4C2AC6E20000642210 /* StockAggregate.swift */,
 				FC82FA502AC6EB9200642210 /* Candle.swift */,
-				FC55C3172ADE74B800564D3C /* MLTrainingData.swift */,
 				FCC8D86C2AE87637004D10F0 /* MLPlayback.swift */,
-				FCDD126C2B0AC24D00DDF4C9 /* MLDatasetInputOutput.swift */,
 				FCD871EE2B0BB26B00251777 /* TickerNameModel.swift */,
 				FCD588162B0C2938001BBECC /* IndicatorData.swift */,
 				FC97AE8C2B14249300756773 /* StockViewAuxGraphProperties.swift */,
@@ -282,6 +285,30 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
+		FCE09A7F2B65B4E3004ACF20 /* ML Outputs */ = {
+			isa = PBXGroup;
+			children = (
+				FCDD126C2B0AC24D00DDF4C9 /* MLDatasetOutput.swift */,
+			);
+			path = "ML Outputs";
+			sourceTree = "<group>";
+		};
+		FCE09A802B65B580004ACF20 /* ML Inputs */ = {
+			isa = PBXGroup;
+			children = (
+				FCE09A872B65B788004ACF20 /* Guide & Results.md */,
+				FCE09A842B65B62F004ACF20 /* MLDataset1.swift */,
+			);
+			path = "ML Inputs";
+			sourceTree = "<group>";
+		};
+		FCE09A812B65B58F004ACF20 /* ML Calculators */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "ML Calculators";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -313,7 +340,7 @@
 					New,
 				);
 				LastSwiftUpdateCheck = 1420;
-				LastUpgradeCheck = 1500;
+				LastUpgradeCheck = 1520;
 				TargetAttributes = {
 					FC82F9E22AC6910C00642210 = {
 						CreatedOnToolsVersion = 14.2;
@@ -346,6 +373,7 @@
 				FC8B8CAF2AE89D360053F5CF /* BrassMono-Regular.ttf in Resources */,
 				FC8B8CAE2AE89D360053F5CF /* BrassMono-Bold.ttf in Resources */,
 				FC82F9EB2AC6910C00642210 /* Assets.xcassets in Resources */,
+				FCE09A882B65B788004ACF20 /* Guide & Results.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -369,7 +397,6 @@
 				FCDF76EB2B0BE22900BE28BE /* DownloadEveryStockCommand.swift in Sources */,
 				5B09D7B32B11360A004536C4 /* TextValueView.swift in Sources */,
 				FC38C5F52AF293D300E29029 /* ScrollingTerminalViewCell.swift in Sources */,
-				FC55C3182ADE74B800564D3C /* MLTrainingData.swift in Sources */,
 				FCC8D86D2AE87637004D10F0 /* MLPlayback.swift in Sources */,
 				5B860BC12B0072C6002EA088 /* TerminalManager.swift in Sources */,
 				FC137A352B0AF30300061926 /* GetPrelimTickersCommand.swift in Sources */,
@@ -384,7 +411,8 @@
 				5B6D622D2AD9F265003B1D3A /* Style.swift in Sources */,
 				5B09D7B52B114734004536C4 /* LabelValueController.swift in Sources */,
 				FC82FA512AC6EB9200642210 /* Candle.swift in Sources */,
-				FCDD126D2B0AC24D00DDF4C9 /* MLDatasetInputOutput.swift in Sources */,
+				FCE09A852B65B62F004ACF20 /* MLDataset1.swift in Sources */,
+				FCDD126D2B0AC24D00DDF4C9 /* MLDatasetOutput.swift in Sources */,
 				5B860BCE2B013BC7002EA088 /* LoadPlayblackCommand.swift in Sources */,
 				FC82FA582AC6FA4600642210 /* Calculate.swift in Sources */,
 				FC8B8CAA2AE8972D0053F5CF /* ScrollingTerminalView.swift in Sources */,
@@ -416,6 +444,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -478,6 +507,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";

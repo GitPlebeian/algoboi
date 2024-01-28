@@ -21,7 +21,7 @@ class MLDatasetGenerator {
     
     // MARK: Get
     
-    func getOuputForCurrentIndex() -> MLDatasetInputOutput? {
+    func getOuputForCurrentIndex() -> MLDatasetOutput? {
         guard let aggregate = currentAggregate else {return nil}
         let output = calculateOutputForIndex(index: self.index, aggregate: aggregate)
         return output
@@ -56,7 +56,7 @@ class MLDatasetGenerator {
     
     // MARK: Private
     
-    private func calculateOutputForIndex(index: Int, aggregate: StockAggregate) -> MLDatasetInputOutput? {
+    func calculateOutputForIndex(index: Int, aggregate: StockAggregate) -> MLDatasetOutput? {
         
         let startingPrice = aggregate.candles[index].close
         var tradeHealth = self.tradeHealth
@@ -93,7 +93,7 @@ class MLDatasetGenerator {
 //            print("Starting Health After 2: \(tradeHealth)")
         }
         if recordCandleCount == 0 {return nil}
-        return MLDatasetInputOutput(percentagePerCandle: recordPercentageGainPerTrade,
+        return MLDatasetOutput(percentagePerCandle: recordPercentageGainPerTrade,
                                     candlesToTarget:     recordCandleCount)
     }
 }

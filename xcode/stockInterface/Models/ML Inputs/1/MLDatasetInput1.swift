@@ -1,17 +1,22 @@
 //
-//  MLTrainingData.swift
+//  MLDatasetInputOutput1.swift
 //  stockInterface
 //
-//  Created by CHONK on 10/17/23.
+//  Created by CHONK on 1/27/24.
 //
 
 import Foundation
 
-struct MLTrainingData: Codable {
+struct MLDatasetInputOutput1: Codable {
     
-    var closes: [Float]
-    var slopeOf9DayEMA: [Float] = []
-    var slopeOf25DayEMA: [Float] = []
+    var slopeOf9DayEMA: Float
+    var slopeOf25DayEMA: Float
+    var slopeOf50DaySMA: Float
+    var slopeOf200DaySMA: Float
+    var macdBaseLineLevel:   Float
+    var macdBaseLineSlope:   Float
+    var macdSignalLineSlope: Float
+    var macdDifference:      Float
     
     init(closes: [Float], slopeOf9DayEMA: [Float], slopeOf25DayEMA: [Float]) {
         self.closes = closes
@@ -47,4 +52,5 @@ struct MLTrainingData: Codable {
         }
         return Array(result[(StockCalculations.StartAtElement - 1)...])
     }
+    
 }

@@ -23,17 +23,17 @@ class SharedFileManager {
         }
     }
     
-    func writeMLTrainingDataToFile(_ model: MLTrainingData) {
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = .prettyPrinted
-        
-        do {
-            let data = try encoder.encode(model.toNestedArray())
-            writeDataToFileName(data: data, fileName: "test.json")
-        } catch let e {
-            fatalError("Error encoding stock Aggregate: \(e)")
-        }
-    }
+//    func writeMLTrainingDataToFile(_ model: MLTrainingData) {
+//        let encoder = JSONEncoder()
+//        encoder.outputFormatting = .prettyPrinted
+//        
+//        do {
+//            let data = try encoder.encode(model.toNestedArray())
+//            writeDataToFileName(data: data, fileName: "test.json")
+//        } catch let e {
+//            fatalError("Error encoding stock Aggregate: \(e)")
+//        }
+//    }
     
     func getDataFromFile(_ fileName: String) -> Data? {
         let urlString = "/Users/\(NSUserName())/Desktop/algoboi/shared/\(fileName)"

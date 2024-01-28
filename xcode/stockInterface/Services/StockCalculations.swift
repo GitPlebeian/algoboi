@@ -25,7 +25,36 @@ class StockCalculations {
         let macdData = GetImpulseMACD(arr: closes)
         let macdDifference = macdData.0.minus(compare: macdData.1)
         
-        let result = IndicatorData(ticker: aggregate.symbol, sma200: sma200, sma50: sma50, ema14: ema14, ema28: ema28, volumeIndicator: volume5, macdDifference: macdDifference, macdGreen: macdData.1, macdRed: macdData.0)
+        // MACD Red is 0 | MACD Green is 1
+        
+        // Calculations for Machine Learning dataset inputs
+        
+        let ema9 = GetEMAS(for: closes, period: 9)
+        let ema9Slopes = GetAngleBetweenTwoPoints(arr: ema9)
+        let ema25 = GetEMAS(for: closes, period: 25)
+        let ema25Slopes = GetAngleBetweenTwoPoints(arr: ema25)
+        let sma200Slopes = GetAngleBetweenTwoPoints(arr: sma200)
+        let sma50Slopes = GetAngleBetweenTwoPoints(arr: sma50)
+        let macdGreenSlopes = GetAngleBetweenTwoPoints(arr: macdData.1)
+        let macdRedSlopes = GetAngleBetweenTwoPoints(arr: macdData.0)
+        
+        let result = IndicatorData(ticker: aggregate.symbol,
+                                   sma200: sma200,
+                                   sma50: sma50,
+                                   ema14: ema14,
+                                   ema28: ema28,
+                                   volumeIndicator: volume5,
+                                   macdDifference: macdDifference,
+                                   macdGreen: macdData.1,
+                                   macdRed: macdData.0,
+                                   slopesOf9DayEMA: ema9Slopes,
+                                   slopesOf25DayEMA: ema25Slopes,
+                                   slopesOf50DaySMA: sma50Slopes,
+                                   slopesOf200DaySMA: sma200Slopes,
+                                   macdGreenLineLevels: macdData.1,
+                                   macdGreenLineSlopes: macdGreenSlopes,
+                                   macdRedLineSlopes: macdRedSlopes,
+                                   macdDifferences: macdDifference)
         return result
     }
     
@@ -205,14 +234,14 @@ class StockCalculations {
         return results
     }
     
-    static func ConvertStockAggregateToMLTrainingData(_ aggregate: StockAggregate) -> MLTrainingData {
-        let closes = aggregate.candles.map { $0.close }
-        let ema9 = GetEMAS(for: closes, period: 9)
-        let ema25 = GetEMAS(for: closes, period: 25)
-        let ema9Slopes = GetAngleBetweenTwoPoints(arr: ema9)
-        let ema25Slopes = GetAngleBetweenTwoPoints(arr: ema25)
-        return MLTrainingData(closes: closes, slopeOf9DayEMA: ema9Slopes, slopeOf25DayEMA: ema25Slopes)
-    }
+//    static func ConvertStockAggregateToMLTrainingData(_ aggregate: StockAggregate) -> MLTrainingData {
+//        let closes = aggregate.candles.map { $0.close }
+//        let ema9 = GetEMAS(for: closes, period: 9)
+//        let ema25 = GetEMAS(for: closes, period: 25)
+//        let ema9Slopes = GetAngleBetweenTwoPoints(arr: ema9)
+//        let ema25Slopes = GetAngleBetweenTwoPoints(arr: ema25)
+//        return MLTrainingData(closes: closes, slopeOf9DayEMA: ema9Slopes, slopeOf25DayEMA: ema25Slopes)
+//    }
     
     static func GenerateNetZeroRandomAggregate(length: Int) -> StockAggregate {
         let ticker = "Random"

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MLDatasetInputOutput {
+struct MLDatasetOutput: Codable {
     let percentagePerCandle: Float
     let candlesToTarget: Int
 }

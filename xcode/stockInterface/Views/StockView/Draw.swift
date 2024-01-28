@@ -62,7 +62,6 @@ extension StockView {
     
     private func drawAuxLines(auxHeight: CGFloat, lines: [StockViewAuxGraphLines], startingHeight: CGFloat) {
         if lines.count == 0 {return}
-        print(startingCandleIndex)
         var normalizedValues: [Float] = []
         
         // Visible Normalize | Expensive
