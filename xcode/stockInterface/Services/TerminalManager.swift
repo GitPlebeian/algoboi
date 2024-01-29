@@ -30,6 +30,8 @@ class TerminalManager {
         registerCommand(DownloadEveryStockCommand())
         registerCommand(BulkIndicatorDataCommand())
         registerCommand(ChartLocalCommand())
+        registerCommand(SaveCommand())
+        registerCommand(GenerateEntireDatasetCommand())
 //        registerCommand(SaveCommand())
 //        registerCommand(LoadPlayblackCommand())
 //        registerCommand(ChartRandomCommand())

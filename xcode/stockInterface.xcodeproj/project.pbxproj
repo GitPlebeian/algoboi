@@ -23,6 +23,9 @@
 		5B95015B2B0938ED008C3022 /* ChartRandomCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B95015A2B0938ED008C3022 /* ChartRandomCommand.swift */; };
 		FC137A352B0AF30300061926 /* GetPrelimTickersCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC137A342B0AF30300061926 /* GetPrelimTickersCommand.swift */; };
 		FC38C5F52AF293D300E29029 /* ScrollingTerminalViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC38C5F42AF293D300E29029 /* ScrollingTerminalViewCell.swift */; };
+		FC39E1722B672B02000C62CA /* GenerateEntireDatasetCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC39E1712B672B02000C62CA /* GenerateEntireDatasetCommand.swift */; };
+		FC39E1752B674AAF000C62CA /* MLPredictor1.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC39E1742B674AAF000C62CA /* MLPredictor1.swift */; };
+		FC39E17B2B674B67000C62CA /* ForcastingModel1.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = FC39E17A2B674B67000C62CA /* ForcastingModel1.mlpackage */; };
 		FC583DBE2AF9A79000B7CAAC /* Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC583DBD2AF9A79000B7CAAC /* Text.swift */; };
 		FC82F9E72AC6910C00642210 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC82F9E62AC6910C00642210 /* AppDelegate.swift */; };
 		FC82F9EB2AC6910C00642210 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC82F9EA2AC6910C00642210 /* Assets.xcassets */; };
@@ -80,6 +83,9 @@
 		5B95015A2B0938ED008C3022 /* ChartRandomCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartRandomCommand.swift; sourceTree = "<group>"; };
 		FC137A342B0AF30300061926 /* GetPrelimTickersCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPrelimTickersCommand.swift; sourceTree = "<group>"; };
 		FC38C5F42AF293D300E29029 /* ScrollingTerminalViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollingTerminalViewCell.swift; sourceTree = "<group>"; };
+		FC39E1712B672B02000C62CA /* GenerateEntireDatasetCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateEntireDatasetCommand.swift; sourceTree = "<group>"; };
+		FC39E1742B674AAF000C62CA /* MLPredictor1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLPredictor1.swift; sourceTree = "<group>"; };
+		FC39E17A2B674B67000C62CA /* ForcastingModel1.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; name = ForcastingModel1.mlpackage; path = ../../../../../python/bot3/ForcastingModel1.mlpackage; sourceTree = "<group>"; };
 		FC583DBD2AF9A79000B7CAAC /* Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Text.swift; sourceTree = "<group>"; };
 		FC64178B2AF285FB006EFC87 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		FC82F9E32AC6910C00642210 /* stockInterface.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = stockInterface.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -150,6 +156,7 @@
 				FCDF76EA2B0BE22900BE28BE /* DownloadEveryStockCommand.swift */,
 				FCD588142B0C1F5F001BBECC /* BulkIndicatorDataCommand.swift */,
 				FCD588182B0C2F17001BBECC /* ChartLocalCommand.swift */,
+				FC39E1712B672B02000C62CA /* GenerateEntireDatasetCommand.swift */,
 			);
 			path = Commands;
 			sourceTree = "<group>";
@@ -161,6 +168,15 @@
 				FC38C5F42AF293D300E29029 /* ScrollingTerminalViewCell.swift */,
 			);
 			path = "Scrolling Terminal";
+			sourceTree = "<group>";
+		};
+		FC39E1732B674A97000C62CA /* 1 */ = {
+			isa = PBXGroup;
+			children = (
+				FC39E17A2B674B67000C62CA /* ForcastingModel1.mlpackage */,
+				FC39E1742B674AAF000C62CA /* MLPredictor1.swift */,
+			);
+			path = 1;
 			sourceTree = "<group>";
 		};
 		FC82F9DA2AC6910C00642210 = {
@@ -240,7 +256,7 @@
 		FC82FA3F2AC6C13F00642210 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				FCE09A812B65B58F004ACF20 /* ML Calculators */,
+				FCE09A812B65B58F004ACF20 /* MLPredictors */,
 				FCE09A7F2B65B4E3004ACF20 /* ML Outputs */,
 				FCE09A802B65B580004ACF20 /* ML Inputs */,
 				FC82FA4C2AC6E20000642210 /* StockAggregate.swift */,
@@ -302,11 +318,12 @@
 			path = "ML Inputs";
 			sourceTree = "<group>";
 		};
-		FCE09A812B65B58F004ACF20 /* ML Calculators */ = {
+		FCE09A812B65B58F004ACF20 /* MLPredictors */ = {
 			isa = PBXGroup;
 			children = (
+				FC39E1732B674A97000C62CA /* 1 */,
 			);
-			path = "ML Calculators";
+			path = MLPredictors;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -399,7 +416,9 @@
 				FC38C5F52AF293D300E29029 /* ScrollingTerminalViewCell.swift in Sources */,
 				FCC8D86D2AE87637004D10F0 /* MLPlayback.swift in Sources */,
 				5B860BC12B0072C6002EA088 /* TerminalManager.swift in Sources */,
+				FC39E1752B674AAF000C62CA /* MLPredictor1.swift in Sources */,
 				FC137A352B0AF30300061926 /* GetPrelimTickersCommand.swift in Sources */,
+				FC39E17B2B674B67000C62CA /* ForcastingModel1.mlpackage in Sources */,
 				5B860BC42B0079E9002EA088 /* Command.swift in Sources */,
 				5B0C78B22ADE5A3500E0EEEB /* SharedFileManager.swift in Sources */,
 				5B860BCC2B013788002EA088 /* SaveCommand.swift in Sources */,
@@ -410,6 +429,7 @@
 				FC97AE8D2B14249300756773 /* StockViewAuxGraphProperties.swift in Sources */,
 				5B6D622D2AD9F265003B1D3A /* Style.swift in Sources */,
 				5B09D7B52B114734004536C4 /* LabelValueController.swift in Sources */,
+				FC39E1722B672B02000C62CA /* GenerateEntireDatasetCommand.swift in Sources */,
 				FC82FA512AC6EB9200642210 /* Candle.swift in Sources */,
 				FCE09A852B65B62F004ACF20 /* MLDataset1.swift in Sources */,
 				FCDD126D2B0AC24D00DDF4C9 /* MLDatasetOutput.swift in Sources */,

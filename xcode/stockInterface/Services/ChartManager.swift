@@ -57,7 +57,9 @@ extension ChartManager: StockViewMouseDelegate {
         LabelValueController.shared.setLabelValue(index: 9, label: "MACD Diff", value: data.macdDifference[index].toRoundedString(precision: 2))
         LabelValueController.shared.setLabelValue(index: 10, label: "MACD Green", value: data.macdGreen[index].toRoundedString(precision: 2))
         LabelValueController.shared.setLabelValue(index: 11, label: "MACD Red", value: data.macdRed[index].toRoundedString(precision: 2))
-        
-        
+        LabelValueController.shared.setLabelValue(index: 12, label: "C To T", value: data.predictedCandlesToTarget[index].toRoundedString(precision: 2))
+        LabelValueController.shared.setLabelValue(index: 13, label: "P Per C", value: "\(data.predictedPercentagePerCandle[index].toRoundedString(precision: 2))%")
+        LabelValueController.shared.setLabelValue(index: 15, label: "C To T R", value: "\(data.actualCandlesToTarget[index])")
+        LabelValueController.shared.setLabelValue(index: 16, label: "P Per C R", value: "\(data.actualPercentagePerCandle[index].toRoundedString(precision: 2))%")
     }
 }

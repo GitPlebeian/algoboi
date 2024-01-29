@@ -28,9 +28,27 @@ class ChartLocalCommand: Command {
         do {
             let jsonDecoder = JSONDecoder()
             let aggregate = try jsonDecoder.decode(StockAggregate.self, from: aggregateData)
-            let indicator = try jsonDecoder.decode(IndicatorData.self, from: indicatorData)
+            var indicator = try jsonDecoder.decode(IndicatorData.self, from: indicatorData)
             
             let auxSets = StockCalculations.GetAuxSetsForAggregate(aggregate: aggregate)
+            
+            // Predictions
+            for i in 0..<aggregate.candles.count {
+                if let prediction = MLPredictor1.shared.makePrediction(indicatorData: indicator, index: i) {
+                    indicator.predictedCandlesToTarget.append(prediction[0])
+                    indicator.predictedPercentagePerCandle.append(prediction[1] * 100)
+                } else {
+                    indicator.predictedCandlesToTarget.append(-999)
+                    indicator.predictedPercentagePerCandle.append(-999)
+                }
+                if let output = MLDatasetGenerator.shared.calculateOutputForIndex(index: i, aggregate: aggregate) {
+                    indicator.actualCandlesToTarget.append(Float(output.candlesToTarget))
+                    indicator.actualPercentagePerCandle.append(Float(output.percentagePerCandle) * 100)
+                } else {
+                    indicator.actualCandlesToTarget.append(0)
+                    indicator.actualPercentagePerCandle.append(0)
+                }
+            }
             
             ChartManager.shared.chartStock(aggregate)
             ChartManager.shared.setIndicatorData(indicator)

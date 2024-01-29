@@ -1,0 +1,11 @@
+name: bot3
+channels:
+  - pytorch
+  - defaults
+dependencies:
+  - python=3.8
+  - pytorch
+  - scikit-learn
+  - numpy
+  - pandas 
+  - coremltools

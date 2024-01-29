@@ -20,6 +20,12 @@ struct IndicatorData: Codable {
     let macdDifference:  [Float]
     let macdGreen:       [Float]
     let macdRed:         [Float]
+    // Predicted Values
+    var predictedPercentagePerCandle: [Float] = []
+    var predictedCandlesToTarget: [Float] = []
+    // Actual Value
+    var actualPercentagePerCandle: [Float] = []
+    var actualCandlesToTarget: [Float] = []
     // Anything else below is used for the machine learning dataset inputs
     let slopesOf9DayEMA:     [Float]
     let slopesOf25DayEMA:    [Float]
