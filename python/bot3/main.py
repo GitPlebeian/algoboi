@@ -122,7 +122,7 @@ coreml_model.save('ForcastingModel1.mlpackage')
 means = scaler.mean_
 stds = scaler.scale_
 # Save these parameters to a text or JSON file
-with open('scaling_parameters.txt', 'w') as file:
+with open('ForcastingModel1ScalingParameters.txt', 'w') as file:
     for mean, std in zip(means, stds):
         file.write(f"{mean},{std}\n")
 

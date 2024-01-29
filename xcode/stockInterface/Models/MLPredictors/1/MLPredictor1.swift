@@ -12,20 +12,55 @@ class MLPredictor1 {
     static let shared = MLPredictor1()
     
     private let model: ForcastingModel1
+    private var normalizingValues: [[Float]] = []
 
     init() {
         guard let loadedModel = try? ForcastingModel1(configuration: MLModelConfiguration()) else {
             fatalError("Couldn't load the model")
         }
         model = loadedModel
+        
+        if let stringData = SharedFileManager.shared.getDataFromPythonFile("bot3/ForcastingModel1ScalingParameters.txt") {
+            guard let content = String(data: stringData, encoding: .utf8) else {
+                fatalError()
+            }
+            // Split the content into lines
+            let lines = content.components(separatedBy: "\n")
+            
+            // Create a two-dimensional array to store the numbers
+            var twoDimensionalArray: [[Float]] = []
+            
+            for line in lines {
+                if let parsedValues = parseLine(line) {
+                    twoDimensionalArray.append([parsedValues.0, parsedValues.1])
+                }
+            }
+            self.normalizingValues = twoDimensionalArray
+        } else {
+            fatalError()
+        }
     }
+    
+    private func parseLine(_ line: String) -> (Float, Float)? {
+        let components = line.split(separator: ",")
+        guard components.count == 2,
+              let firstNumber = Float(components[0]),
+              let secondNumber = Float(components[1]) else {
+            return nil
+        }
+        return (firstNumber, secondNumber)
+    }
+    
+    private func normalizeValue(originalValue: Float, mean: Float, std: Float) -> Float {
+        return (originalValue - mean) / std
+    }
+
     
     func makePrediction(indicatorData: IndicatorData, index: Int) -> [Float]? {
         guard let inputArray = try? MLMultiArray(shape: [1, 8], dataType: .float32) else {
             print("Failed to create input array")
             return nil
         }
-        print(inputArray)
         
         inputArray[0] = indicatorData.macdDifferences[index] as NSNumber
         inputArray[1] = indicatorData.macdGreenLineLevels[index] as NSNumber
@@ -36,7 +71,16 @@ class MLPredictor1 {
         inputArray[6] = indicatorData.slopesOf50DaySMA[index] as NSNumber
         inputArray[7] = indicatorData.slopesOf200DaySMA[index] as NSNumber
         
-        print(inputArray)
+        for i in 0..<self.normalizingValues.count {
+            let old = Float(truncating: inputArray[i])
+            print(old)
+            inputArray[i] = normalizeValue(originalValue: old, mean: normalizingValues[i][0], std: normalizingValues[i][1]) as NSNumber
+        }
+        
+        // Load and Normalize
+        
+        
+        
         
         guard let output = try? model.prediction(input: ForcastingModel1Input(x: inputArray)) else {
             print("Prediction failed")

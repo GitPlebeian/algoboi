@@ -30,10 +30,15 @@ class SaveCommand: Command {
         var dataSets: [MLDatasetInputOutputCombined1] = []
         
         for i in (StockCalculations.StartAtElement - 1)..<aggregate.candles.count {
-            if let datasetOutput = MLDatasetGenerator.shared.calculateOutputForIndex(index: i, aggregate: aggregate) {
-                let datasetInput = MLDatasetInput1(indicatorData: indicatorData, index: i)
-                let inputOutput = MLDatasetInputOutputCombined1(input: datasetInput, output: datasetOutput)
-                dataSets.append(inputOutput)
+//            if let datasetOutputs = MLDatasetGenerator.shared.calculateOutputsForIndex(index: i, aggregate: aggregate) {
+//                let datasetInput = MLDatasetInput1(indicatorData: indicatorData, index: i)
+//                let inputOutput = MLDatasetInputOutputCombined1(input: datasetInput, output: datasetOutput)
+//                dataSets.append(inputOutput)
+//            }
+            let datasetOutputs = MLDatasetGenerator.shared.calculateOutputsForIndex(index: i, aggregate: aggregate)
+            let datasetInput = MLDatasetInput1(indicatorData: indicatorData, index: i)
+            for datasetOutput in datasetOutputs {
+                dataSets.append(MLDatasetInputOutputCombined1(input: datasetInput, output: datasetOutput))
             }
         }
         

@@ -96,6 +96,22 @@ class MLDatasetGenerator {
         return MLDatasetOutput(percentagePerCandle: recordPercentageGainPerTrade,
                                     candlesToTarget:     recordCandleCount)
     }
+    
+    func calculateOutputsForIndex(index: Int, aggregate: StockAggregate) -> [MLDatasetOutput] {
+        
+        let outputsPerCandle: Int = 5
+        
+        var outputs: [MLDatasetOutput] = []
+        
+        for i in 1...outputsPerCandle {
+            if i + index >= aggregate.candles.count {break}
+            let currentPrice = aggregate.candles[index].close
+            let candlesToTarget = i
+            let totalPercentageChange = (aggregate.candles[index + 1].close - currentPrice) / currentPrice
+            outputs.append(MLDatasetOutput(percentagePerCandle: totalPercentageChange, candlesToTarget: candlesToTarget))
+        }
+        return outputs
+    }
 }
 
 extension MLDatasetGenerator: StockViewMouseDelegate {

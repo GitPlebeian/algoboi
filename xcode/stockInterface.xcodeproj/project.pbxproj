@@ -173,8 +173,8 @@
 		FC39E1732B674A97000C62CA /* 1 */ = {
 			isa = PBXGroup;
 			children = (
-				FC39E17A2B674B67000C62CA /* ForcastingModel1.mlpackage */,
 				FC39E1742B674AAF000C62CA /* MLPredictor1.swift */,
+				FC39E17A2B674B67000C62CA /* ForcastingModel1.mlpackage */,
 			);
 			path = 1;
 			sourceTree = "<group>";

@@ -35,6 +35,23 @@ class SharedFileManager {
 //        }
 //    }
     
+    func getDataFromPythonFile(_ fileName: String) -> Data? {
+        let urlString = "/Users/\(NSUserName())/Desktop/algoboi/python/\(fileName)"
+        var fileURL: URL
+        if #available(macOS 13.0, *) {
+            fileURL = URL(filePath: urlString)
+        } else {
+            fileURL = URL(fileURLWithPath: urlString)
+        }
+        do {
+            let data = try Data(contentsOf: fileURL)
+            return data
+        } catch let e {
+            print(e)
+        }
+        return nil
+    }
+    
     func getDataFromFile(_ fileName: String) -> Data? {
         let urlString = "/Users/\(NSUserName())/Desktop/algoboi/shared/\(fileName)"
         var fileURL: URL
