@@ -21,8 +21,11 @@ struct IndicatorData: Codable {
     let macdGreen:       [Float]
     let macdRed:         [Float]
     // Predicted Values
-    var predictedPercentagePerCandle: [Float] = []
-    var predictedCandlesToTarget: [Float] = []
+    var predicted1CandleOut: [Float] = []
+    var predicted2CandleOut: [Float] = []
+    var predicted3CandleOut: [Float] = []
+    var predicted4CandleOut: [Float] = []
+    var predicted5CandleOut: [Float] = []
     // Actual Value
     var actualPercentagePerCandle: [Float] = []
     var actualCandlesToTarget: [Float] = []

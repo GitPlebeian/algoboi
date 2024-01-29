@@ -70,9 +70,9 @@ val_loader = DataLoader(val_data, batch_size=64, shuffle=False)
 class ForecastingModel(nn.Module):
     def __init__(self):
         super(ForecastingModel, self).__init__()
-        self.fc1 = nn.Linear(8, 64)  # 8 input features
+        self.fc1 = nn.Linear(9, 64)  # 8 input features
         self.fc2 = nn.Linear(64, 32)
-        self.fc3 = nn.Linear(32, 2)  # 2 output features
+        self.fc3 = nn.Linear(32, 1)  # 2 output features
 
     def forward(self, x):
         x = torch.relu(self.fc1(x))
@@ -113,8 +113,8 @@ model = train_model(model, train_loader, val_loader)
 model.eval()
 
 # Convert to Core ML
-traced_model = torch.jit.trace(model, torch.randn(1, 8))  # Example input shape
-coreml_model = ct.convert(traced_model, inputs=[ct.TensorType(shape=(1, 8))])
+traced_model = torch.jit.trace(model, torch.randn(1, 9))  # Example input shape
+coreml_model = ct.convert(traced_model, inputs=[ct.TensorType(shape=(1, 9))])
 coreml_model.save('ForcastingModel1.mlpackage')
 
 # joblib.dump(scaler, 'scaler.pkl')

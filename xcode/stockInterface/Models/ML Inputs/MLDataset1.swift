@@ -36,6 +36,7 @@ struct MLDatasetInputOutputCombined1: Codable {
 }
 
 struct MLDatasetInput1: Codable {
+    var candlesToTarget:    Float
     var slopeOf9DayEMA:     Float
     var slopeOf25DayEMA:    Float
     var slopeOf50DaySMA:    Float
@@ -45,7 +46,8 @@ struct MLDatasetInput1: Codable {
     var macdRedLineSlope:   Float
     var macdDifference:     Float
     
-    init(indicatorData: IndicatorData, index i: Int) {
+    init(indicatorData: IndicatorData, index i: Int, candlesToTarget: Float) {
+        self.candlesToTarget = candlesToTarget
         self.slopeOf9DayEMA = indicatorData.slopesOf9DayEMA[i]
         self.slopeOf25DayEMA = indicatorData.slopesOf25DayEMA[i]
         self.slopeOf50DaySMA = indicatorData.slopesOf50DaySMA[i]

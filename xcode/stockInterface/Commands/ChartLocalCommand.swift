@@ -34,20 +34,20 @@ class ChartLocalCommand: Command {
             
             // Predictions
             for i in 0..<aggregate.candles.count {
-                if let prediction = MLPredictor1.shared.makePrediction(indicatorData: indicator, index: i) {
-                    indicator.predictedCandlesToTarget.append(prediction[0])
-                    indicator.predictedPercentagePerCandle.append(prediction[1] * 100)
-                } else {
-                    indicator.predictedCandlesToTarget.append(-999)
-                    indicator.predictedPercentagePerCandle.append(-999)
+                var predictions: [Float] = []
+                for j in 1...5 {
+                    if let prediction = MLPredictor1.shared.makePrediction(indicatorData: indicator, index: i, candlesToTarget: j) {
+                        predictions.append(prediction)
+                    } else {
+                        predictions.append(999)
+                    }
                 }
-                if let output = MLDatasetGenerator.shared.calculateOutputForIndex(index: i, aggregate: aggregate) {
-                    indicator.actualCandlesToTarget.append(Float(output.candlesToTarget))
-                    indicator.actualPercentagePerCandle.append(Float(output.percentagePerCandle) * 100)
-                } else {
-                    indicator.actualCandlesToTarget.append(0)
-                    indicator.actualPercentagePerCandle.append(0)
-                }
+                indicator.predicted1CandleOut.append(predictions[0] * 100)
+                indicator.predicted2CandleOut.append(predictions[1] * 100)
+                indicator.predicted3CandleOut.append(predictions[2] * 100)
+                indicator.predicted4CandleOut.append(predictions[3] * 100)
+                indicator.predicted5CandleOut.append(predictions[4] * 100)
+                
             }
             
             ChartManager.shared.chartStock(aggregate)

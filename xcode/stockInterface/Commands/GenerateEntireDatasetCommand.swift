@@ -42,13 +42,13 @@ class GenerateEntireDatasetCommand: Command {
                     continue
                 }
                 
-                for i in (StockCalculations.StartAtElement - 1)..<aggregate.candles.count {
-                    if let datasetOutput = MLDatasetGenerator.shared.calculateOutputForIndex(index: i, aggregate: aggregate) {
-                        let datasetInput = MLDatasetInput1(indicatorData: indicator, index: i)
-                        let inputOutput = MLDatasetInputOutputCombined1(input: datasetInput, output: datasetOutput)
-                        dataSets.append(inputOutput)
-                    }
-                }
+//                for i in (StockCalculations.StartAtElement - 1)..<aggregate.candles.count {
+//                    if let datasetOutput = MLDatasetGenerator.shared.calculateOutputForIndex(index: i, aggregate: aggregate) {
+//                        let datasetInput = MLDatasetInput1(indicatorData: indicator, index: i)
+//                        let inputOutput = MLDatasetInputOutputCombined1(input: datasetInput, output: datasetOutput)
+//                        dataSets.append(inputOutput)
+//                    }
+//                }
                 
             } catch let e {
                 TerminalManager.shared.addText("Unable to unwrap data into aggregate: \(e)", type: .error)

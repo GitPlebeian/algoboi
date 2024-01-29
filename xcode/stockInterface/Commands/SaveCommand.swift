@@ -30,16 +30,14 @@ class SaveCommand: Command {
         var dataSets: [MLDatasetInputOutputCombined1] = []
         
         for i in (StockCalculations.StartAtElement - 1)..<aggregate.candles.count {
-//            if let datasetOutputs = MLDatasetGenerator.shared.calculateOutputsForIndex(index: i, aggregate: aggregate) {
-//                let datasetInput = MLDatasetInput1(indicatorData: indicatorData, index: i)
-//                let inputOutput = MLDatasetInputOutputCombined1(input: datasetInput, output: datasetOutput)
-//                dataSets.append(inputOutput)
-//            }
-            let datasetOutputs = MLDatasetGenerator.shared.calculateOutputsForIndex(index: i, aggregate: aggregate)
-            let datasetInput = MLDatasetInput1(indicatorData: indicatorData, index: i)
-            for datasetOutput in datasetOutputs {
+
+            let candlesToTest = 5
+            if let datasetOutput = MLDatasetGenerator.shared.calculateTotalPercentageChangeForXChandlesToTarget(index: i, aggregate: aggregate, candlesToTarget: 1) {
+                let datasetInput = MLDatasetInput1(indicatorData: indicatorData, index: i, candlesToTarget: Float(1))
                 dataSets.append(MLDatasetInputOutputCombined1(input: datasetInput, output: datasetOutput))
-            }
+            } else {break}
+//            for j in 1...candlesToTest {
+//            }
         }
         
         let encoder = JSONEncoder()

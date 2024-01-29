@@ -8,6 +8,5 @@
 import Foundation
 
 struct MLDatasetOutput: Codable {
-    let percentagePerCandle: Float
-    let candlesToTarget: Int
+    let totalPercentageChange: Float
 }

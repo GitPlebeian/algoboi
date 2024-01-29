@@ -42,24 +42,30 @@ extension ChartManager: StockViewMouseDelegate {
         guard let aggregate = currentAggregate else {return}
         if index < 0 || index >= data.length {return}
         
-        LabelValueController.shared.setLabelValue(index: 0, label: "Open", value: aggregate.candles[index].open.toRoundedString(precision: 2))
-        LabelValueController.shared.setLabelValue(index: 1, label: "Close", value: aggregate.candles[index].close.toRoundedString(precision: 2))
-        LabelValueController.shared.setLabelValue(index: 2, label: "High", value: aggregate.candles[index].high.toRoundedString(precision: 2))
-        LabelValueController.shared.setLabelValue(index: 3, label: "Low", value: aggregate.candles[index].low.toRoundedString(precision: 2))
+        LabelValueController.shared.setLabelValue(index: 0, label: "1", value: "\(data.predicted1CandleOut[index].toRoundedString(precision: 2))")
+        LabelValueController.shared.setLabelValue(index: 3, label: "2", value: "\(data.predicted2CandleOut[index].toRoundedString(precision: 2))")
+        LabelValueController.shared.setLabelValue(index: 6, label: "3", value: "\(data.predicted3CandleOut[index].toRoundedString(precision: 2))")
+        LabelValueController.shared.setLabelValue(index: 9, label: "4", value: "\(data.predicted4CandleOut[index].toRoundedString(precision: 2))")
+        LabelValueController.shared.setLabelValue(index: 12, label: "5", value: "\(data.predicted5CandleOut[index].toRoundedString(precision: 2))")
         
-        
-        LabelValueController.shared.setLabelValue(index: 4, label: "SMA 200", value: data.sma200[index].toRoundedString(precision: 2))
-        LabelValueController.shared.setLabelValue(index: 5, label: "SMA 50", value: data.sma50[index].toRoundedString(precision: 2))
-        LabelValueController.shared.setLabelValue(index: 6, label: "EMA 28", value: data.ema28[index].toRoundedString(precision: 2))
-        LabelValueController.shared.setLabelValue(index: 7, label: "EMA 14", value: data.ema14[index].toRoundedString(precision: 2))
-        
-        LabelValueController.shared.setLabelValue(index: 8, label: "Volume", value: String(aggregate.candles[index].volume))
-        LabelValueController.shared.setLabelValue(index: 9, label: "MACD Diff", value: data.macdDifference[index].toRoundedString(precision: 2))
-        LabelValueController.shared.setLabelValue(index: 10, label: "MACD Green", value: data.macdGreen[index].toRoundedString(precision: 2))
-        LabelValueController.shared.setLabelValue(index: 11, label: "MACD Red", value: data.macdRed[index].toRoundedString(precision: 2))
-        LabelValueController.shared.setLabelValue(index: 12, label: "C To T", value: data.predictedCandlesToTarget[index].toRoundedString(precision: 2))
-        LabelValueController.shared.setLabelValue(index: 13, label: "P Per C", value: "\(data.predictedPercentagePerCandle[index].toRoundedString(precision: 2))%")
-        LabelValueController.shared.setLabelValue(index: 15, label: "C To T R", value: "\(data.actualCandlesToTarget[index])")
-        LabelValueController.shared.setLabelValue(index: 16, label: "P Per C R", value: "\(data.actualPercentagePerCandle[index].toRoundedString(precision: 2))%")
+//        LabelValueController.shared.setLabelValue(index: 0, label: "Open", value: aggregate.candles[index].open.toRoundedString(precision: 2))
+//        LabelValueController.shared.setLabelValue(index: 1, label: "Close", value: aggregate.candles[index].close.toRoundedString(precision: 2))
+//        LabelValueController.shared.setLabelValue(index: 2, label: "High", value: aggregate.candles[index].high.toRoundedString(precision: 2))
+//        LabelValueController.shared.setLabelValue(index: 3, label: "Low", value: aggregate.candles[index].low.toRoundedString(precision: 2))
+//        
+//        
+//        LabelValueController.shared.setLabelValue(index: 4, label: "SMA 200", value: data.sma200[index].toRoundedString(precision: 2))
+//        LabelValueController.shared.setLabelValue(index: 5, label: "SMA 50", value: data.sma50[index].toRoundedString(precision: 2))
+//        LabelValueController.shared.setLabelValue(index: 6, label: "EMA 28", value: data.ema28[index].toRoundedString(precision: 2))
+//        LabelValueController.shared.setLabelValue(index: 7, label: "EMA 14", value: data.ema14[index].toRoundedString(precision: 2))
+//        
+//        LabelValueController.shared.setLabelValue(index: 8, label: "Volume", value: String(aggregate.candles[index].volume))
+//        LabelValueController.shared.setLabelValue(index: 9, label: "MACD Diff", value: data.macdDifference[index].toRoundedString(precision: 2))
+//        LabelValueController.shared.setLabelValue(index: 10, label: "MACD Green", value: data.macdGreen[index].toRoundedString(precision: 2))
+//        LabelValueController.shared.setLabelValue(index: 11, label: "MACD Red", value: data.macdRed[index].toRoundedString(precision: 2))
+//        LabelValueController.shared.setLabelValue(index: 12, label: "C To T", value: data.predictedCandlesToTarget[index].toRoundedString(precision: 2))
+//        LabelValueController.shared.setLabelValue(index: 13, label: "P Per C", value: "\(data.predictedPercentagePerCandle[index].toRoundedString(precision: 2))%")
+//        LabelValueController.shared.setLabelValue(index: 15, label: "C To T R", value: "\(data.actualCandlesToTarget[index])")
+//        LabelValueController.shared.setLabelValue(index: 16, label: "P Per C R", value: "\(data.actualPercentagePerCandle[index].toRoundedString(precision: 2))%")
     }
 }

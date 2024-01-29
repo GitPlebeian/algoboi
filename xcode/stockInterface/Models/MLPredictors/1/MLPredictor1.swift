@@ -56,20 +56,21 @@ class MLPredictor1 {
     }
 
     
-    func makePrediction(indicatorData: IndicatorData, index: Int) -> [Float]? {
-        guard let inputArray = try? MLMultiArray(shape: [1, 8], dataType: .float32) else {
+    func makePrediction(indicatorData: IndicatorData, index: Int, candlesToTarget: Int) -> Float? {
+        guard let inputArray = try? MLMultiArray(shape: [1, 9], dataType: .float32) else {
             print("Failed to create input array")
             return nil
         }
         
-        inputArray[0] = indicatorData.macdDifferences[index] as NSNumber
-        inputArray[1] = indicatorData.macdGreenLineLevels[index] as NSNumber
-        inputArray[2] = indicatorData.macdGreenLineSlopes[index] as NSNumber
-        inputArray[3] = indicatorData.macdRedLineSlopes[index] as NSNumber
-        inputArray[4] = indicatorData.slopesOf9DayEMA[index] as NSNumber
-        inputArray[5] = indicatorData.slopesOf25DayEMA[index] as NSNumber
-        inputArray[6] = indicatorData.slopesOf50DaySMA[index] as NSNumber
-        inputArray[7] = indicatorData.slopesOf200DaySMA[index] as NSNumber
+        inputArray[0] = candlesToTarget as NSNumber
+        inputArray[1] = indicatorData.macdDifferences[index] as NSNumber
+        inputArray[2] = indicatorData.macdGreenLineLevels[index] as NSNumber
+        inputArray[3] = indicatorData.macdGreenLineSlopes[index] as NSNumber
+        inputArray[4] = indicatorData.macdRedLineSlopes[index] as NSNumber
+        inputArray[5] = indicatorData.slopesOf9DayEMA[index] as NSNumber
+        inputArray[6] = indicatorData.slopesOf25DayEMA[index] as NSNumber
+        inputArray[7] = indicatorData.slopesOf50DaySMA[index] as NSNumber
+        inputArray[8] = indicatorData.slopesOf200DaySMA[index] as NSNumber
         
         for i in 0..<self.normalizingValues.count {
             let old = Float(truncating: inputArray[i])
@@ -90,6 +91,6 @@ class MLPredictor1 {
 //        let firstValue = output.output[0].floatValue
 //        let secondValue = output.output[1].floatValue
 //        let firstValue = output.
-        return [output.linear_2[0].floatValue, output.linear_2[1].floatValue]
+        return output.linear_2[0].floatValue
     }
 }
