@@ -46,6 +46,8 @@
 		FCBAF4262ADE50610075ABEF /* StockAggregateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBAF4252ADE50610075ABEF /* StockAggregateManager.swift */; };
 		FCBAF4282ADE72D20075ABEF /* StockCalculations.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBAF4272ADE72D20075ABEF /* StockCalculations.swift */; };
 		FCBAF42A2ADE73900075ABEF /* FloatingPointArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBAF4292ADE73900075ABEF /* FloatingPointArray.swift */; };
+		FCC546D82B72DCF000D4AF7D /* BacktestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC546D72B72DCF000D4AF7D /* BacktestController.swift */; };
+		FCC546DA2B72DEC800D4AF7D /* BacktestCurrentCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC546D92B72DEC800D4AF7D /* BacktestCurrentCommand.swift */; };
 		FCC5D7C92B01933100557CD5 /* EventController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC5D7C82B01933100557CD5 /* EventController.swift */; };
 		FCC8D86D2AE87637004D10F0 /* MLPlayback.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC8D86C2AE87637004D10F0 /* MLPlayback.swift */; };
 		FCD1D5072ACBDB2200700D4C /* NSWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCD1D5062ACBDB2200700D4C /* NSWindow.swift */; };
@@ -109,6 +111,8 @@
 		FCBAF4252ADE50610075ABEF /* StockAggregateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockAggregateManager.swift; sourceTree = "<group>"; };
 		FCBAF4272ADE72D20075ABEF /* StockCalculations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockCalculations.swift; sourceTree = "<group>"; };
 		FCBAF4292ADE73900075ABEF /* FloatingPointArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingPointArray.swift; sourceTree = "<group>"; };
+		FCC546D72B72DCF000D4AF7D /* BacktestController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BacktestController.swift; sourceTree = "<group>"; };
+		FCC546D92B72DEC800D4AF7D /* BacktestCurrentCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BacktestCurrentCommand.swift; sourceTree = "<group>"; };
 		FCC5D7C82B01933100557CD5 /* EventController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventController.swift; sourceTree = "<group>"; };
 		FCC8D86C2AE87637004D10F0 /* MLPlayback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLPlayback.swift; sourceTree = "<group>"; };
 		FCD1D5062ACBDB2200700D4C /* NSWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSWindow.swift; sourceTree = "<group>"; };
@@ -157,6 +161,7 @@
 				FCD588142B0C1F5F001BBECC /* BulkIndicatorDataCommand.swift */,
 				FCD588182B0C2F17001BBECC /* ChartLocalCommand.swift */,
 				FC39E1712B672B02000C62CA /* GenerateEntireDatasetCommand.swift */,
+				FCC546D92B72DEC800D4AF7D /* BacktestCurrentCommand.swift */,
 			);
 			path = Commands;
 			sourceTree = "<group>";
@@ -249,6 +254,7 @@
 				FCDD126A2B0AC0F800DDF4C9 /* MLDatasetGenerator.swift */,
 				FCDF76EC2B0BE34200BE28BE /* HistoricalDataController.swift */,
 				5B09D7B42B114734004536C4 /* LabelValueController.swift */,
+				FCC546D72B72DCF000D4AF7D /* BacktestController.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -427,6 +433,7 @@
 				FCDF76ED2B0BE34200BE28BE /* HistoricalDataController.swift in Sources */,
 				FCDD126B2B0AC0F800DDF4C9 /* MLDatasetGenerator.swift in Sources */,
 				FC97AE8D2B14249300756773 /* StockViewAuxGraphProperties.swift in Sources */,
+				FCC546D82B72DCF000D4AF7D /* BacktestController.swift in Sources */,
 				5B6D622D2AD9F265003B1D3A /* Style.swift in Sources */,
 				5B09D7B52B114734004536C4 /* LabelValueController.swift in Sources */,
 				FC39E1722B672B02000C62CA /* GenerateEntireDatasetCommand.swift in Sources */,
@@ -442,6 +449,7 @@
 				FCDF76E92B0BDF3000BE28BE /* ChartAllTimeCommand.swift in Sources */,
 				FCBAF42A2ADE73900075ABEF /* FloatingPointArray.swift in Sources */,
 				FCC5D7C92B01933100557CD5 /* EventController.swift in Sources */,
+				FCC546DA2B72DEC800D4AF7D /* BacktestCurrentCommand.swift in Sources */,
 				FC82F9E72AC6910C00642210 /* AppDelegate.swift in Sources */,
 				FC82F9F92AC6976A00642210 /* main.swift in Sources */,
 				5B860BD02B013BED002EA088 /* PlaybackController.swift in Sources */,

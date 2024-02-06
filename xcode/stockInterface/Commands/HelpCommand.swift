@@ -18,5 +18,6 @@ class HelpCommand: Command {
         TerminalManager.shared.addText("\"ci\" calculate and save indicator data", type: .normal)
         TerminalManager.shared.addText("\"save\" generates all training data sets for the currently charted stock")
         TerminalManager.shared.addText("\"g\" generates and saves the entire dataset for all saved stocks. You must have run the ci command before hand")
+        TerminalManager.shared.addText("\"bc\" runs a backtest using the current forcasting model on the currently charted stock")
     }
 }

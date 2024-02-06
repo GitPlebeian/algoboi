@@ -74,7 +74,6 @@ class MLPredictor1 {
         
         for i in 0..<self.normalizingValues.count {
             let old = Float(truncating: inputArray[i])
-            print(old)
             inputArray[i] = normalizeValue(originalValue: old, mean: normalizingValues[i][0], std: normalizingValues[i][1]) as NSNumber
         }
         
