@@ -46,10 +46,12 @@ extension ChartManager: StockViewMouseDelegate {
         guard let aggregate = currentAggregate else {return}
         if index < 0 || index >= data.length {return}
         
-        LabelValueController.shared.setLabelValue(index: 0, label: "1", value: "\(data.predicted1CandleOut[index].toRoundedString(precision: 2))")
-        LabelValueController.shared.setLabelValue(index: 3, label: "2", value: "\(data.predicted2CandleOut[index].toRoundedString(precision: 2))")
-        LabelValueController.shared.setLabelValue(index: 6, label: "3", value: "\(data.predicted3CandleOut[index].toRoundedString(precision: 2))")
-        LabelValueController.shared.setLabelValue(index: 9, label: "4", value: "\(data.predicted4CandleOut[index].toRoundedString(precision: 2))")
-        LabelValueController.shared.setLabelValue(index: 12, label: "5", value: "\(data.predicted5CandleOut[index].toRoundedString(precision: 2))")
+        LabelValueController.shared.setLabelValue(index: 0, label: "% Gain", value: "\((data.percentageChange[index] * 100).toRoundedString(precision: 2))%")
+        LabelValueController.shared.setLabelValue(index: 1, label: "Close", value: "\((aggregate.candles[index].close).toRoundedString(precision: 2))%")
+        LabelValueController.shared.setLabelValue(index: 3, label: "Index", value: "\(index)")
+//        LabelValueController.shared.setLabelValue(index: 3, label: "2", value: "\(data.predicted2CandleOut[index].toRoundedString(precision: 2))")
+//        LabelValueController.shared.setLabelValue(index: 6, label: "3", value: "\(data.predicted3CandleOut[index].toRoundedString(precision: 2))")
+//        LabelValueController.shared.setLabelValue(index: 9, label: "4", value: "\(data.predicted4CandleOut[index].toRoundedString(precision: 2))")
+//        LabelValueController.shared.setLabelValue(index: 12, label: "5", value: "\(data.predicted5CandleOut[index].toRoundedString(precision: 2))")
     }
 }

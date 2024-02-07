@@ -8,29 +8,21 @@ import torch.nn as nn
 import torch.optim as optim
 import coremltools as ct
 import joblib
+import random
 
 # Load JSON data
-def load_data(json_file):
+# def load_data(json_file):
+#     with open(json_file, 'r') as file:
+#         data = json.load(file)
+#     return data
+
+def load_data(json_file, dataset_multiplier=1.0):
     with open(json_file, 'r') as file:
         data = json.load(file)
-    return data
-
-# def preprocess_data(data):
-#     inputs = [d['input'] for d in data]
-#     outputs = [d['output'] for d in data]
-#     # print(inputs)
-#     # print()
-#     # print()
-#     # print()
-#     # print()
-#     # print(outputs)
-
-#     # print([list(out.values()) for out in outputs])
-
-#     X = torch.tensor([list(inp.values()) for inp in inputs], dtype=torch.float32)
-#     y = torch.tensor([list(out.values()) for out in outputs], dtype=torch.float32)
-
-#     return X, y
+    # Randomly sample a fraction of the data
+    data_sampled = random.sample(data, int(len(data) * dataset_multiplier))
+    print(f"Number of sampled data points: {len(data_sampled)}")
+    return data_sampled
 
 scaler = StandardScaler()
 
@@ -51,10 +43,12 @@ def preprocess_data(data):
 current_dir = os.path.dirname(os.path.abspath(__file__))
 
 # Construct the path to the test.json file
-# json_file = os.path.join(current_dir, '..', '..', 'shared', 'datasets', 'set1.json')
+# json_file = os.path.join(current_dir, '..', '..', 'shared', 'datasets', 'set1FullSet.json')
+# json_file = os.path.join(current_dir, '..', '..', 'shared', 'datasets', 'set1TenPercent.json')
+# json_file = os.path.join(current_dir, '..', '..', 'shared', 'datasets', 'set1OnePercent.json')
 json_file = os.path.join(current_dir, '..', '..', 'shared', 'datasets', 'AAASingleSet.json')
 
-data = load_data(json_file)
+data = load_data(json_file, 1)
 X, y = preprocess_data(data)
 
 # Split data into training and validation sets
@@ -85,7 +79,7 @@ model = ForecastingModel()
 # Training loop
 def train_model(model, train_loader, val_loader, num_epochs=300):
     criterion = nn.MSELoss()
-    optimizer = optim.Adam(model.parameters(), lr=0.001)
+    optimizer = optim.Adam(model.parameters(), lr=0.0001)
 
     for epoch in range(num_epochs):
         model.train()

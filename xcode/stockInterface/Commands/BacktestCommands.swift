@@ -23,3 +23,13 @@ class BacktestCurrentCommand: Command {
         BacktestController.shared.backtestCurrentChartedStock()
     }
 }
+
+class BacktestAllCommand: Command {
+    
+    var name: String { "bac" }
+
+    func execute(with arguments: [String]) {
+
+        BacktestController.shared.backtestAllStocks()
+    }
+}

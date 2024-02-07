@@ -20,6 +20,7 @@ class StockCalculations {
         let ema14  = GetEMAS(for: closes, period: 14)
         let ema28  = GetEMAS(for: closes, period: 28)
         let volume5 = GetVolumsFromAverage(volumes: volumes, average: closes, period: 5)
+        let percentageChanges = GetPercentageChange(closes)
 //        let macdPercentageChanges = GetMACDPercentageDifference(closes: closes)
         
         let macdData = GetImpulseMACD(arr: closes)
@@ -46,7 +47,8 @@ class StockCalculations {
                                    volumeIndicator: volume5,
                                    macdDifference: macdDifference,
                                    macdGreen: macdData.1,
-                                   macdRed: macdData.0,
+                                   macdRed: macdData.0, 
+                                   percentageChange: percentageChanges,
                                    slopesOf9DayEMA: ema9Slopes,
                                    slopesOf25DayEMA: ema25Slopes,
                                    slopesOf50DaySMA: sma50Slopes,
@@ -214,7 +216,15 @@ class StockCalculations {
         return results
     }
     
-//    static func ¡
+    static func GetPercentageChange(_ arr: [Float]) -> [Float] {
+        var results: [Float] = [0]
+
+        for i in 1..<arr.count {
+            results.append((arr[i] - arr[i - 1]) / arr[i - 1])
+        }
+        
+        return results
+    }
     
     static func GetAngleBetweenTwoPoints(start: Float, end: Float) -> Float {
         let dx: Float = 1.0

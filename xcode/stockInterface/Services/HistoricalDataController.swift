@@ -129,4 +129,60 @@ class HistoricalDataController {
             TerminalManager.shared.addText("All Files Proccessed")
         }
     }
+    
+    func generateAndSaveGeneralAggregate() {
+        
+        var aggregates: [StockAggregate] = []
+        // Load All Aggregates
+        let jsonDecoder = JSONDecoder()
+        downloadedStocks.forEach { fileName in
+            if let data = SharedFileManager.shared.getDataFromFile("/historicalData/\(fileName).json") {
+                let aggregate = try! jsonDecoder.decode(StockAggregate.self, from: data)
+                aggregates.append(aggregate)
+            }
+        }
+        TerminalManager.shared.addText("Loaded All Aggregates: \(aggregates.count)")
+        
+        let startingCandle = Candle(volume: 1, volumeWeighted: 1, timestamp: Date(), transactionCount: 1, open: 100, close: 100, high: 110, low: 90)
+        
+        var candles: [Candle] = [startingCandle]
+        var candlesCount: Int = 0
+        var averagePercentageGain: Float = 0
+        var index = 1
+        
+        var aggregateHadACandle = true
+        while aggregateHadACandle {
+            candlesCount = 0
+            averagePercentageGain = 0
+            for aggregate in aggregates {
+                aggregateHadACandle = false
+                if index >= aggregate.candles.count {
+                    continue
+                }
+                aggregateHadACandle = true
+                let percentageGain = (aggregate.candles[index].close - aggregate.candles[index - 1].close) / aggregate.candles[index - 1].close
+                if percentageGain > 0.18 && index == 1352 {
+                    print("\(percentageGain) \(aggregate.symbol) \(aggregate.candles[index].timestamp) \(aggregate.name)")
+                }
+                candlesCount += 1
+                averagePercentageGain += percentageGain
+            }
+            if aggregateHadACandle == false {break}
+            let percentGain = averagePercentageGain / Float(candlesCount)
+            if index == 1352 {
+                
+                print("Index: \(index) % Gain: \(percentGain) Candle Count\(candlesCount)")
+            }
+            let newClose = candles[index - 1].close * (percentGain + 1)
+            let candle = Candle(volume: 1, volumeWeighted: 1, timestamp: Date(), transactionCount: 1, open: candles[index - 1].close, close: newClose, high: newClose, low: newClose)
+            candles.append(candle)
+            index += 1
+        }
+        let generalAggregate = StockAggregate(symbol: "GA", candles: candles, name: "General Aggregate")
+        let indicatorData = StockCalculations.GetIndicatorData(aggregate: generalAggregate)!
+        
+        SharedFileManager.shared.writeCodableToFileNameInShared(codable: indicatorData, fileName: "/indicatorData/\(generalAggregate.symbol).json")
+        SharedFileManager.shared.writeCodableToFileNameInShared(codable: generalAggregate, fileName: "/historicalData/\(generalAggregate.symbol).json")
+        
+    }
 }

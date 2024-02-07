@@ -18,12 +18,36 @@ struct MLDatasetInputOutputCombined1: Codable {
 //    }
     
     static func Write(dataSets: [MLDatasetInputOutputCombined1]) {
+        
+        let dataset10Percent = SampleArray(dataSets, percentageToReturn: 0.1)
+        let dataset1Percent  = SampleArray(dataSets, percentageToReturn: 0.01)
+        
         let encoder = JSONEncoder()
         encoder.outputFormatting = .sortedKeys
         if let jsonData = try? encoder.encode(dataSets),
            let jsonString = String(data: jsonData, encoding: .utf8) {
             var url = FileManager.default.urls(for: .desktopDirectory, in: .userDomainMask).first!
-            url = url.appendingPathComponent("/algoboi/shared/datasets/set1.json")
+            url = url.appendingPathComponent("/algoboi/shared/datasets/set1FullSet.json")
+            do {
+                try jsonString.write(to: url, atomically: false, encoding: .utf8)
+            } catch {
+                print("Failed to write JSON data: \(error.localizedDescription)")
+            }
+        }
+        if let jsonData = try? encoder.encode(dataset10Percent),
+           let jsonString = String(data: jsonData, encoding: .utf8) {
+            var url = FileManager.default.urls(for: .desktopDirectory, in: .userDomainMask).first!
+            url = url.appendingPathComponent("/algoboi/shared/datasets/set1TenPercent.json")
+            do {
+                try jsonString.write(to: url, atomically: false, encoding: .utf8)
+            } catch {
+                print("Failed to write JSON data: \(error.localizedDescription)")
+            }
+        }
+        if let jsonData = try? encoder.encode(dataset1Percent),
+           let jsonString = String(data: jsonData, encoding: .utf8) {
+            var url = FileManager.default.urls(for: .desktopDirectory, in: .userDomainMask).first!
+            url = url.appendingPathComponent("/algoboi/shared/datasets/set1OnePercent.json")
             do {
                 try jsonString.write(to: url, atomically: false, encoding: .utf8)
             } catch {
@@ -33,6 +57,25 @@ struct MLDatasetInputOutputCombined1: Codable {
     }
     
     
+    private static func SampleArray(_ inputArray: [MLDatasetInputOutputCombined1], percentageToReturn: Float) -> [MLDatasetInputOutputCombined1] {
+        guard percentageToReturn > 0 && percentageToReturn <= 1 else {
+            fatalError("Percentage should be between 0 and 1")
+        }
+        
+        let sampleSize = Int(Float(inputArray.count) * percentageToReturn)
+        var sampledArray = [MLDatasetInputOutputCombined1]()
+        var sampledIndexes = Set<Int>()
+        
+        while sampledIndexes.count < sampleSize {
+            let randomIndex = Int.random(in: 0..<inputArray.count)
+            if !sampledIndexes.contains(randomIndex) {
+                sampledIndexes.insert(randomIndex)
+                sampledArray.append(inputArray[randomIndex])
+            }
+        }
+        
+        return sampledArray
+    }
 }
 
 struct MLDatasetInput1: Codable {

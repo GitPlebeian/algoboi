@@ -16,6 +16,7 @@ class BacktestController {
     
     var portfolioValueAmounts: [Float] = []
     var buyAndHoldPortfolioAmounts: [Float] = []
+    var predictedAmounts: [Float] = []
     
     func backtestCurrentChartedStock() {
         
@@ -35,7 +36,7 @@ class BacktestController {
         portfolioValue = startingPortfolioValues
         buyAndHoldPortfolioValue = startingPortfolioValues
         
-        var startingIndex = StockCalculations.StartAtElement - 1
+        let startingIndex = StockCalculations.StartAtElement - 1
         
         if startingIndex >= aggregate.candles.count {
             TerminalManager.shared.addText("Starting index: \(startingIndex) is greater than or equal to the length of the aggregate.candles", type: .error)
@@ -45,6 +46,7 @@ class BacktestController {
         var buyBars: [(Int, NSColor)] = []
         portfolioValueAmounts      = .init(repeating: startingPortfolioValues, count: aggregate.candles.count)
         buyAndHoldPortfolioAmounts = .init(repeating: startingPortfolioValues, count: aggregate.candles.count)
+        predictedAmounts = .init(repeating: startingPortfolioValues, count: aggregate.candles.count)
         
         var boughtPrice: Float? = nil
         
@@ -60,7 +62,6 @@ class BacktestController {
                 portfolioValue *= changeMultiplyer
                 boughtPrice = nil
             }
-            
             if prediction > 0 { // Buy
                 if i != aggregate.candles.count - 1 {
                     boughtPrice = aggregate.candles[i].close
@@ -74,12 +75,16 @@ class BacktestController {
                 let changeMultiplyer = (endingPrice - startingPrice) / startingPrice + 1
                 buyAndHoldPortfolioValue *= changeMultiplyer
             }
-            
+            predictedAmounts[i] = prediction
             portfolioValueAmounts[i] = portfolioValue
             buyAndHoldPortfolioAmounts[i] = buyAndHoldPortfolioValue
         }
         
         ChartManager.shared.currentStockView?.setColoredFullHeightBars(bars: buyBars)
+    }
+    
+    func backtestAllStocks() {
+        
     }
 }
 
@@ -88,6 +93,7 @@ extension BacktestController: StockViewMouseDelegate {
         if index < 0 || index >= portfolioValueAmounts.count {return}
         LabelValueController.shared.setLabelValue(index: 0, label: "Portfolio $", value: portfolioValueAmounts[index].toRoundedString(precision: 2))
         LabelValueController.shared.setLabelValue(index: 3, label: "Buy Hold Portfolio $", value: buyAndHoldPortfolioAmounts[index].toRoundedString(precision: 2))
-        LabelValueController.shared.setLabelValue(index: 6, label: "Index", value: "\(index)")
+        LabelValueController.shared.setLabelValue(index: 6, label: "Prediction", value: (predictedAmounts[index] * 100).toRoundedString(precision: 2))
+        LabelValueController.shared.setLabelValue(index: 9, label: "Index", value: "\(index)")
     }
 }

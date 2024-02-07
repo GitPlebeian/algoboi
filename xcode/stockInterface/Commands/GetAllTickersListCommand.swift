@@ -20,6 +20,7 @@ class GetAllTickersListCommand: Command {
             if isDone {
                 TerminalManager.shared.addText("Done")
                 self.isCurrentlyDownloading = false
+                AllTickersController.shared.appendTickers([TickerNameModel(symbol: "VOO", name: "SPY ETF")])
                 AllTickersController.shared.saveToDisk()
                 return
             }
