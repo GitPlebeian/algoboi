@@ -49,9 +49,12 @@ extension ChartManager: StockViewMouseDelegate {
         LabelValueController.shared.setLabelValue(index: 0, label: "% Gain", value: "\((data.percentageChange[index] * 100).toRoundedString(precision: 2))%")
         LabelValueController.shared.setLabelValue(index: 1, label: "Close", value: "\((aggregate.candles[index].close).toRoundedString(precision: 2))%")
         LabelValueController.shared.setLabelValue(index: 3, label: "Index", value: "\(index)")
-//        LabelValueController.shared.setLabelValue(index: 3, label: "2", value: "\(data.predicted2CandleOut[index].toRoundedString(precision: 2))")
-//        LabelValueController.shared.setLabelValue(index: 6, label: "3", value: "\(data.predicted3CandleOut[index].toRoundedString(precision: 2))")
-//        LabelValueController.shared.setLabelValue(index: 9, label: "4", value: "\(data.predicted4CandleOut[index].toRoundedString(precision: 2))")
-//        LabelValueController.shared.setLabelValue(index: 12, label: "5", value: "\(data.predicted5CandleOut[index].toRoundedString(precision: 2))")
+
+        var date = aggregate.candles[index].timestamp
+//        print("\n\n\(date)\n\(date.stripDateToDayMonthYear())")
+//        date = date.stripDateToDayMonthYear()
+        let formatter = DateFormatter.AlpacaDateFormatter
+        LabelValueController.shared.setLabelValue(index: 6, label: "Old", value: formatter.string(from: date))
+        LabelValueController.shared.setLabelValue(index: 9, label: "New", value: formatter.string(from: date.stripDateToDayMonthYearAndAddOneDay()))
     }
 }

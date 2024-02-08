@@ -33,6 +33,7 @@ class TerminalManager {
         registerCommand(SaveCommand())
         registerCommand(GenerateEntireDatasetCommand())
         registerCommand(BacktestCurrentCommand())
+        registerCommand(BacktestAllCommand())
         registerCommand(GenerateGeneralAggregateCommand())
 //        registerCommand(SaveCommand())
 //        registerCommand(LoadPlayblackCommand())

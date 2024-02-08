@@ -46,6 +46,8 @@
 		FCBAF4262ADE50610075ABEF /* StockAggregateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBAF4252ADE50610075ABEF /* StockAggregateManager.swift */; };
 		FCBAF4282ADE72D20075ABEF /* StockCalculations.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBAF4272ADE72D20075ABEF /* StockCalculations.swift */; };
 		FCBAF42A2ADE73900075ABEF /* FloatingPointArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBAF4292ADE73900075ABEF /* FloatingPointArray.swift */; };
+		FCC144A42B7492D100EF7A65 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC144A32B7492D100EF7A65 /* Date.swift */; };
+		FCC144A62B74971C00EF7A65 /* BKTestScoreModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC144A52B74971C00EF7A65 /* BKTestScoreModel.swift */; };
 		FCC546D82B72DCF000D4AF7D /* BacktestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC546D72B72DCF000D4AF7D /* BacktestController.swift */; };
 		FCC546DA2B72DEC800D4AF7D /* BacktestCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC546D92B72DEC800D4AF7D /* BacktestCommands.swift */; };
 		FCC546DC2B730ECF00D4AF7D /* GenerateGeneralAggregateCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC546DB2B730ECF00D4AF7D /* GenerateGeneralAggregateCommand.swift */; };
@@ -112,6 +114,8 @@
 		FCBAF4252ADE50610075ABEF /* StockAggregateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockAggregateManager.swift; sourceTree = "<group>"; };
 		FCBAF4272ADE72D20075ABEF /* StockCalculations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockCalculations.swift; sourceTree = "<group>"; };
 		FCBAF4292ADE73900075ABEF /* FloatingPointArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingPointArray.swift; sourceTree = "<group>"; };
+		FCC144A32B7492D100EF7A65 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		FCC144A52B74971C00EF7A65 /* BKTestScoreModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BKTestScoreModel.swift; sourceTree = "<group>"; };
 		FCC546D72B72DCF000D4AF7D /* BacktestController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BacktestController.swift; sourceTree = "<group>"; };
 		FCC546D92B72DEC800D4AF7D /* BacktestCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BacktestCommands.swift; sourceTree = "<group>"; };
 		FCC546DB2B730ECF00D4AF7D /* GenerateGeneralAggregateCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateGeneralAggregateCommand.swift; sourceTree = "<group>"; };
@@ -274,6 +278,7 @@
 				FCD871EE2B0BB26B00251777 /* TickerNameModel.swift */,
 				FCD588162B0C2938001BBECC /* IndicatorData.swift */,
 				FC97AE8C2B14249300756773 /* StockViewAuxGraphProperties.swift */,
+				FCC144A52B74971C00EF7A65 /* BKTestScoreModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -287,6 +292,7 @@
 				FCBAF4292ADE73900075ABEF /* FloatingPointArray.swift */,
 				FC583DBD2AF9A79000B7CAAC /* Text.swift */,
 				FCDF76EE2B0BE7E200BE28BE /* Float.swift */,
+				FCC144A32B7492D100EF7A65 /* Date.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -426,6 +432,7 @@
 				FCC8D86D2AE87637004D10F0 /* MLPlayback.swift in Sources */,
 				5B860BC12B0072C6002EA088 /* TerminalManager.swift in Sources */,
 				FC39E1752B674AAF000C62CA /* MLPredictor1.swift in Sources */,
+				FCC144A42B7492D100EF7A65 /* Date.swift in Sources */,
 				FC137A352B0AF30300061926 /* GetPrelimTickersCommand.swift in Sources */,
 				FC39E17B2B674B67000C62CA /* ForcastingModel1.mlpackage in Sources */,
 				5B860BC42B0079E9002EA088 /* Command.swift in Sources */,
@@ -464,6 +471,7 @@
 				FCBAF4242ADE497F0075ABEF /* CGColor.swift in Sources */,
 				FCBAF4262ADE50610075ABEF /* StockAggregateManager.swift in Sources */,
 				FC82FA3C2AC6C12600642210 /* TickerDownload.swift in Sources */,
+				FCC144A62B74971C00EF7A65 /* BKTestScoreModel.swift in Sources */,
 				FC82FA4D2AC6E20000642210 /* StockAggregate.swift in Sources */,
 				FCD871F32B0BBCD300251777 /* AllTickersController.swift in Sources */,
 			);

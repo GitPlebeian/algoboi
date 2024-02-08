@@ -18,6 +18,12 @@ class BacktestController {
     var buyAndHoldPortfolioAmounts: [Float] = []
     var predictedAmounts: [Float] = []
     
+    // All Backtest
+    
+    var scores: [[BKTestScoreModel]] = []
+    var spyAggregate: StockAggregate!
+    var allAggregatesAndIndicatorData: [(StockAggregate, IndicatorData)] = []
+    
     func backtestCurrentChartedStock() {
         
         guard let aggregate = ChartManager.shared.currentAggregate else {
@@ -84,6 +90,61 @@ class BacktestController {
     }
     
     func backtestAllStocks() {
+        guard let spyAggregateData = SharedFileManager.shared.getDataFromFile("/historicalData/VOO.json") else {
+            TerminalManager.shared.addText("VOO aggregate File does not exist", type: .error)
+            return
+        }
+        let decoder = JSONDecoder()
+        do {
+            spyAggregate = try decoder.decode(StockAggregate.self, from: spyAggregateData)
+        } catch {
+            TerminalManager.shared.addText("Unable to decode VOO", type: .error)
+            return
+        }
+        let getAllStockGroup = DispatchGroup()
+        TerminalManager.shared.addText("Getting All Stocks From Libary")
+        let allStocks = AllTickersController.shared.getAllTickers()
+        for stock in allStocks {
+            DispatchQueue.global().async(group: getAllStockGroup) {
+                guard let aggregateData = SharedFileManager.shared.getDataFromFile("/historicalData/\(stock.symbol).json") else {
+                    return
+                }
+                guard let indicatorData = SharedFileManager.shared.getDataFromFile("/indicatorData/\(stock.symbol).json") else {
+                    return
+                }
+                do {
+                    let aggregate = try decoder.decode(StockAggregate.self, from: aggregateData)
+                    let indicator = try decoder.decode(IndicatorData.self, from: indicatorData)
+                    self.allAggregatesAndIndicatorData.append((aggregate, indicator))
+                } catch {
+                    fatalError("Could not decode for ticker: \(stock.name)")
+                }
+            }
+        }
+        getAllStockGroup.notify(queue: .main) {
+            TerminalManager.shared.addText("Loaded: \(self.allAggregatesAndIndicatorData.count) aggregates")
+        }
+        
+//        var scores: [[BKTestScoreModel]] = []
+        
+        
+        
+//        addScoresForCandleIndex()
+        
+//        guard let aggregate = ChartManager.shared.currentAggregate else {
+//            TerminalManager.shared.addText("No current aggregate", type: .error)
+//            return
+//        }
+//        guard let indicatorData = ChartManager.shared.indicatorData else {
+//            TerminalManager.shared.addText("No current indicatorData", type: .error)
+//            return
+//        }
+        
+    }
+    
+    private func addScoresForCandleIndex(index: Int = 0) {
+        let indexDate = spyAggregate.candles[index].timestamp.stripDateToDayMonthYearAndAddOneDay()
+        
         
     }
 }
