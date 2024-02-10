@@ -12,15 +12,17 @@ struct IndicatorData: Codable {
     var length: Int {
         return sma200.count
     }
-    let sma200:           [Float]
-    let sma50:            [Float]
-    let ema14:            [Float]
-    let ema28:            [Float]
-    let volumeIndicator:  [Float]
-    let macdDifference:   [Float]
-    let macdGreen:        [Float]
-    let macdRed:          [Float]
-    let percentageChange: [Float]
+    let timestamps:        [Date]
+    let sma200:            [Float]
+    let sma50:             [Float]
+    let ema14:             [Float]
+    let ema28:             [Float]
+    let volumeIndicator:   [Float]
+    let macdDifference:    [Float]
+    let macdGreen:         [Float]
+    let macdRed:           [Float]
+    let percentageChange:  [Float]
+    var backtestingOffset: Int = 0
     // Predicted Values
     var predicted1CandleOut: [Float] = []
     var predicted2CandleOut: [Float] = []

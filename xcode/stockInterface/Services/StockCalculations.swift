@@ -15,6 +15,7 @@ class StockCalculations {
         if aggregate.candles.count < StartAtElement {return nil}
         let closes = aggregate.candles.map { $0.close }
         let volumes = aggregate.candles.map { $0.volume }
+        let timestamps = aggregate.candles.map {$0.timestamp}
         let sma200 = GetSMAS(for: closes, period: 200)
         let sma50  = GetSMAS(for: closes, period: 50)
         let ema14  = GetEMAS(for: closes, period: 14)
@@ -40,6 +41,7 @@ class StockCalculations {
         let macdRedSlopes = GetAngleBetweenTwoPoints(arr: macdData.0)
         
         let result = IndicatorData(ticker: aggregate.symbol,
+                                   timestamps: timestamps,
                                    sma200: sma200,
                                    sma50: sma50,
                                    ema14: ema14,

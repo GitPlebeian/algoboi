@@ -24,6 +24,10 @@ class BacktestController {
     var spyAggregate: StockAggregate!
     var allAggregatesAndIndicatorData: [(StockAggregate, IndicatorData)] = []
     
+    init() {
+        loadSPYAggregate()
+    }
+    
     func backtestCurrentChartedStock() {
         
         guard let aggregate = ChartManager.shared.currentAggregate else {
@@ -88,8 +92,56 @@ class BacktestController {
         
         ChartManager.shared.currentStockView?.setColoredFullHeightBars(bars: buyBars)
     }
-    
+
     func backtestAllStocks() {
+        let decoder = JSONDecoder()
+        TerminalManager.shared.addText("Getting All Stocks From Libary")
+        let allStocks = AllTickersController.shared.getAllTickers()
+        
+        var stockDataArray = Array(repeating: nil as (StockAggregate, IndicatorData)?, count: allStocks.count)
+        
+        let queue = DispatchQueue(label: "stockLoadingQueue", attributes: .concurrent)
+        let group = DispatchGroup()
+        
+        let start = DispatchTime.now()
+        
+        for (index, stock) in allStocks.enumerated() {
+            group.enter()
+            queue.async {
+                guard let aggregateData = SharedFileManager.shared.getDataFromFile("/historicalData/\(stock.symbol).json") else {
+                    group.leave()
+                    return
+                }
+                guard let indicatorData = SharedFileManager.shared.getDataFromFile("/indicatorData/\(stock.symbol).json") else {
+                    group.leave()
+                    return
+                }
+                do {
+                    let aggregate = try decoder.decode(StockAggregate.self, from: aggregateData)
+                    let indicator = try decoder.decode(IndicatorData.self, from: indicatorData)
+                    stockDataArray[index] = (aggregate, indicator)
+                    group.leave()
+                } catch {
+                    fatalError("Could not decode for ticker: \(stock.name)")
+                }
+            }
+        }
+        group.notify(queue: .main) {
+            
+            for data in stockDataArray {
+                if data != nil {
+                    self.allAggregatesAndIndicatorData.append(data!)
+                }
+            }
+            
+            let end = DispatchTime.now()
+            let seconds = Float((end.uptimeNanoseconds - start.uptimeNanoseconds) / 1000000000)
+            TerminalManager.shared.addText("Loaded: Data in \(seconds.toRoundedString(precision: 2)) seconds")
+            self.runBacktest()
+        }
+    }
+    
+    func loadSPYAggregate() {
         guard let spyAggregateData = SharedFileManager.shared.getDataFromFile("/historicalData/VOO.json") else {
             TerminalManager.shared.addText("VOO aggregate File does not exist", type: .error)
             return
@@ -101,50 +153,43 @@ class BacktestController {
             TerminalManager.shared.addText("Unable to decode VOO", type: .error)
             return
         }
-        let getAllStockGroup = DispatchGroup()
-        TerminalManager.shared.addText("Getting All Stocks From Libary")
-        let allStocks = AllTickersController.shared.getAllTickers()
-        for stock in allStocks {
-            DispatchQueue.global().async(group: getAllStockGroup) {
-                guard let aggregateData = SharedFileManager.shared.getDataFromFile("/historicalData/\(stock.symbol).json") else {
-                    return
-                }
-                guard let indicatorData = SharedFileManager.shared.getDataFromFile("/indicatorData/\(stock.symbol).json") else {
-                    return
-                }
-                do {
-                    let aggregate = try decoder.decode(StockAggregate.self, from: aggregateData)
-                    let indicator = try decoder.decode(IndicatorData.self, from: indicatorData)
-                    self.allAggregatesAndIndicatorData.append((aggregate, indicator))
-                } catch {
-                    fatalError("Could not decode for ticker: \(stock.name)")
-                }
-            }
+    }
+    
+    private func runBacktest() {
+        if spyAggregate == nil {loadSPYAggregate()}
+        if spyAggregate == nil {
+            TerminalManager.shared.addText("VOO data not found. Cancelling backtest", type: .error)
+            return
         }
-        getAllStockGroup.notify(queue: .main) {
-            TerminalManager.shared.addText("Loaded: \(self.allAggregatesAndIndicatorData.count) aggregates")
+        scores = []
+        for candleIndex in 0..<spyAggregate.candles.count {
+            print("SPY Index: \(candleIndex)")
+            addScoresForCandleIndex(index: candleIndex)
         }
-        
-//        var scores: [[BKTestScoreModel]] = []
-        
-        
-        
-//        addScoresForCandleIndex()
-        
-//        guard let aggregate = ChartManager.shared.currentAggregate else {
-//            TerminalManager.shared.addText("No current aggregate", type: .error)
-//            return
-//        }
-//        guard let indicatorData = ChartManager.shared.indicatorData else {
-//            TerminalManager.shared.addText("No current indicatorData", type: .error)
-//            return
-//        }
-        
     }
     
     private func addScoresForCandleIndex(index: Int = 0) {
         let indexDate = spyAggregate.candles[index].timestamp.stripDateToDayMonthYearAndAddOneDay()
-        
+        scores.append([])
+        for e in allAggregatesAndIndicatorData {
+            let start = DispatchTime.now()
+            for (i, candle) in e.0.candles.enumerated() {
+                if candle.timestamp.stripDateToDayMonthYearAndAddOneDay() == indexDate {
+//                    print("Index date match for: \(e.0.name)")
+                    guard let score = MLPredictor1.shared.makePrediction(indicatorData: e.1, index: i, candlesToTarget: 1) else {
+                        fatalError()
+                    }
+                    let end = DispatchTime.now()
+                    let diff = (end.uptimeNanoseconds - start.uptimeNanoseconds)
+                    print("Diff: \(diff)")
+                    let scoreModel = BKTestScoreModel(predictedPercentageGain: score,
+                                                      currentClosingPrice: candle.close,
+                                                      ticker: e.0.symbol,
+                                                      companyName: e.0.name)
+                    scores[index].append(scoreModel)
+                }
+            }
+        }
         
     }
 }

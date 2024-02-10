@@ -95,11 +95,9 @@ class HistoricalDataController {
     }
     
     func calculateIndicatorData() {
+        if BacktestController.shared.spyAggregate == nil {BacktestController.shared.loadSPYAggregate()}
         let fileNames = downloadedStocks
-//        var results = [Float]()
-//        let resultsQueue = DispatchQueue(label: "stockCalculationQueue", attributes: .concurrent)
         let group = DispatchGroup()
-
         
         let jsonDecoder = JSONDecoder()
         
@@ -110,15 +108,18 @@ class HistoricalDataController {
                 
                 if let data = SharedFileManager.shared.getDataFromFile("/historicalData/\(fileName).json") {
                     let aggregate = try! jsonDecoder.decode(StockAggregate.self, from: data)
-                    
-                    if let indicatorData = StockCalculations.GetIndicatorData(aggregate: aggregate) {
+                    if var indicatorData = StockCalculations.GetIndicatorData(aggregate: aggregate) {
+                        var startDateFound = false
+                        let startDate = aggregate.candles.first!.timestamp.stripDateToDayMonthYearAndAddOneDay()
+                        for (i, candle) in BacktestController.shared.spyAggregate.candles.enumerated() {
+                            if startDate == candle.timestamp.stripDateToDayMonthYearAndAddOneDay() {
+                                startDateFound = true
+                                indicatorData.backtestingOffset = i
+                            }
+                        }
+                        if startDateFound == false {fatalError()}
                         SharedFileManager.shared.writeCodableToFileNameInShared(codable: indicatorData, fileName: "/indicatorData/\(aggregate.symbol).json")
                     }
-                    
-//                    resultsQueue.async(flags: .barrier) {
-//                        results.append(result)
-//                        group.leave() // Leave the group when done
-//                    }
                     group.leave()
                 } else {
                     group.leave()
