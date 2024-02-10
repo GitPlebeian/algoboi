@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct BKTestScoreModel {
+struct BKTestScoreModel: Codable {
     let predictedPercentageGain: Float
     let currentClosingPrice:     Float
     let ticker:                  String

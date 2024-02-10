@@ -26,6 +26,7 @@
 		FC39E1722B672B02000C62CA /* GenerateEntireDatasetCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC39E1712B672B02000C62CA /* GenerateEntireDatasetCommand.swift */; };
 		FC39E1752B674AAF000C62CA /* MLPredictor1.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC39E1742B674AAF000C62CA /* MLPredictor1.swift */; };
 		FC39E17B2B674B67000C62CA /* ForcastingModel1.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = FC39E17A2B674B67000C62CA /* ForcastingModel1.mlpackage */; };
+		FC409C972B7718F7006ECE19 /* StrategyTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC409C962B7718F7006ECE19 /* StrategyTester.swift */; };
 		FC583DBE2AF9A79000B7CAAC /* Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC583DBD2AF9A79000B7CAAC /* Text.swift */; };
 		FC82F9E72AC6910C00642210 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC82F9E62AC6910C00642210 /* AppDelegate.swift */; };
 		FC82F9EB2AC6910C00642210 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC82F9EA2AC6910C00642210 /* Assets.xcassets */; };
@@ -91,6 +92,7 @@
 		FC39E1712B672B02000C62CA /* GenerateEntireDatasetCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateEntireDatasetCommand.swift; sourceTree = "<group>"; };
 		FC39E1742B674AAF000C62CA /* MLPredictor1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLPredictor1.swift; sourceTree = "<group>"; };
 		FC39E17A2B674B67000C62CA /* ForcastingModel1.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; name = ForcastingModel1.mlpackage; path = ../../../../../python/bot3/ForcastingModel1.mlpackage; sourceTree = "<group>"; };
+		FC409C962B7718F7006ECE19 /* StrategyTester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrategyTester.swift; sourceTree = "<group>"; };
 		FC583DBD2AF9A79000B7CAAC /* Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Text.swift; sourceTree = "<group>"; };
 		FC64178B2AF285FB006EFC87 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		FC82F9E32AC6910C00642210 /* stockInterface.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = stockInterface.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -262,6 +264,7 @@
 				FCDF76EC2B0BE34200BE28BE /* HistoricalDataController.swift */,
 				5B09D7B42B114734004536C4 /* LabelValueController.swift */,
 				FCC546D72B72DCF000D4AF7D /* BacktestController.swift */,
+				FC409C962B7718F7006ECE19 /* StrategyTester.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -448,6 +451,7 @@
 				5B09D7B52B114734004536C4 /* LabelValueController.swift in Sources */,
 				FC39E1722B672B02000C62CA /* GenerateEntireDatasetCommand.swift in Sources */,
 				FC82FA512AC6EB9200642210 /* Candle.swift in Sources */,
+				FC409C972B7718F7006ECE19 /* StrategyTester.swift in Sources */,
 				FCE09A852B65B62F004ACF20 /* MLDataset1.swift in Sources */,
 				FCDD126D2B0AC24D00DDF4C9 /* MLDatasetOutput.swift in Sources */,
 				5B860BCE2B013BC7002EA088 /* LoadPlayblackCommand.swift in Sources */,

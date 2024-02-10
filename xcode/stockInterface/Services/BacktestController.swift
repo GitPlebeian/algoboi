@@ -24,6 +24,8 @@ class BacktestController {
     var spyAggregate: StockAggregate!
     var allAggregatesAndIndicatorData: [(StockAggregate, IndicatorData)] = []
     
+    var isRunningFullBacktest: Bool = false
+    
     init() {
         loadSPYAggregate()
     }
@@ -38,7 +40,7 @@ class BacktestController {
             TerminalManager.shared.addText("No current indicatorData", type: .error)
             return
         }
-        
+        isRunningFullBacktest = false
         ChartManager.shared.currentStockView?.mouseDelegate = self
         
         let startingPortfolioValues: Float = 1000
@@ -92,8 +94,17 @@ class BacktestController {
         
         ChartManager.shared.currentStockView?.setColoredFullHeightBars(bars: buyBars)
     }
-
+    
     func backtestAllStocks() {
+        
+        if let fileNames = SharedFileManager.shared.getFileNamesFromFolder(path: "scores/") {
+            if fileNames.contains("scores.json") {
+                TerminalManager.shared.addText("Scores file already exists. Loading File.")
+                loadScores()
+                chartAndRunBacktest()
+                return
+            }
+        }
         let decoder = JSONDecoder()
         TerminalManager.shared.addText("Getting All Stocks From Libary")
         let allStocks = AllTickersController.shared.getAllTickers()
@@ -122,7 +133,9 @@ class BacktestController {
                     stockDataArray[index] = (aggregate, indicator)
                     group.leave()
                 } catch {
-                    fatalError("Could not decode for ticker: \(stock.name)")
+                    //                    fatalError("Could not decode for ticker: \(stock.name)")
+                    print("Could not decode for ticker: \(stock.name) \(stock.symbol)")
+                    group.leave()
                 }
             }
         }
@@ -137,7 +150,7 @@ class BacktestController {
             let end = DispatchTime.now()
             let seconds = Float((end.uptimeNanoseconds - start.uptimeNanoseconds) / 1000000000)
             TerminalManager.shared.addText("Loaded: Data in \(seconds.toRoundedString(precision: 2)) seconds")
-            self.runBacktest()
+            self.calculateBacktestingScores()
         }
     }
     
@@ -155,51 +168,146 @@ class BacktestController {
         }
     }
     
-    private func runBacktest() {
+    func loadScores() {
+        guard let scoresData = SharedFileManager.shared.getDataFromFile("/scores/scores.json") else {
+            TerminalManager.shared.addText("Unable to load scores model as it does not yet exist")
+            return
+        }
+        let decoder = JSONDecoder()
+        do {
+            self.scores = try decoder.decode([[BKTestScoreModel]].self, from: scoresData)
+            TerminalManager.shared.addText("Loaded Scores: \(scores.count)")
+        } catch {
+            TerminalManager.shared.addText("Unable to decode scores", type: .error)
+            return
+        }
+    }
+    
+    private func calculateBacktestingScores() {
         if spyAggregate == nil {loadSPYAggregate()}
         if spyAggregate == nil {
             TerminalManager.shared.addText("VOO data not found. Cancelling backtest", type: .error)
             return
         }
-        scores = []
-        for candleIndex in 0..<spyAggregate.candles.count {
-            print("SPY Index: \(candleIndex)")
-            addScoresForCandleIndex(index: candleIndex)
-        }
-    }
-    
-    private func addScoresForCandleIndex(index: Int = 0) {
-        let indexDate = spyAggregate.candles[index].timestamp.stripDateToDayMonthYearAndAddOneDay()
-        scores.append([])
-        for e in allAggregatesAndIndicatorData {
-            let start = DispatchTime.now()
-            for (i, candle) in e.0.candles.enumerated() {
-                if candle.timestamp.stripDateToDayMonthYearAndAddOneDay() == indexDate {
-//                    print("Index date match for: \(e.0.name)")
+        scores = Array(repeating: [], count: spyAggregate.candles.count)
+        //        for candleIndex in 0..<spyAggregate.candles.count {
+        //            addScoresForCandleIndex(index: candleIndex)
+        //        }
+        let queue = DispatchQueue(label: "scoreAssignmentQueue", attributes: .concurrent)
+        let group = DispatchGroup()
+        
+        group.enter()
+        queue.async {
+            var completedCount: Int = 0
+            for e in self.allAggregatesAndIndicatorData {
+                for (i, candle) in e.0.candles.enumerated() {
                     guard let score = MLPredictor1.shared.makePrediction(indicatorData: e.1, index: i, candlesToTarget: 1) else {
                         fatalError()
                     }
-                    let end = DispatchTime.now()
-                    let diff = (end.uptimeNanoseconds - start.uptimeNanoseconds)
-                    print("Diff: \(diff)")
-                    let scoreModel = BKTestScoreModel(predictedPercentageGain: score,
-                                                      currentClosingPrice: candle.close,
-                                                      ticker: e.0.symbol,
-                                                      companyName: e.0.name)
-                    scores[index].append(scoreModel)
+                    let model = BKTestScoreModel(predictedPercentageGain: score, currentClosingPrice: candle.close, ticker: e.0.symbol, companyName: e.0.name)
+                    self.scores[i + e.1.backtestingOffset].append(model)
                 }
+                completedCount += 1
+                print("Completed: \(completedCount) Out Of: \(self.allAggregatesAndIndicatorData.count)")
+                //            group.enter()
+                //            queue.async {
+                //                group.leave()
+                //            }
             }
+            SharedFileManager.shared.writeCodableToFileNameInShared(codable: self.scores, fileName: "scores/scores.json")
+            group.leave()
+        }
+        group.notify(queue: .main) {
+            TerminalManager.shared.addText("Completed Score Assignments")
+            self.chartAndRunBacktest()
+        }
+    }
+    
+    
+    private func chartAndRunBacktest() {
+        let startingPortfolioValues: Float = 1000
+        let startingIndex = StockCalculations.StartAtElement - 1
+        portfolioValueAmounts      = .init(repeating: startingPortfolioValues, count: spyAggregate.candles.count)
+        buyAndHoldPortfolioAmounts = .init(repeating: startingPortfolioValues, count: spyAggregate.candles.count)
+        portfolioValue = startingPortfolioValues
+        buyAndHoldPortfolioValue = startingPortfolioValues
+        
+        var boughtModels: [BKTestScoreModel] = []
+        var cashPositions: [Float] = []
+        print("Starting At Index: \(startingIndex)")
+        for i in startingIndex..<spyAggregate.candles.count {
+            
+            let scores = scores[i]
+            
+            for (boughtIndex, boughtModel) in boughtModels.enumerated() {
+                var foundE = false
+                for e in scores {
+                    if e.ticker == boughtModel.ticker {
+                        foundE = true
+                        let endingPrice = e.currentClosingPrice
+                        let changeMultiplyer = (endingPrice - boughtModel.currentClosingPrice) / boughtModel.currentClosingPrice + 1
+//                        print("Selling for :\(changeMultiplyer)")
+                        cashPositions[boughtIndex] *= changeMultiplyer
+                        break
+                    }
+                }
+                if foundE == false {fatalError()}
+            }
+            if cashPositions.count != 0 {
+                portfolioValue = cashPositions.sum()
+            }
+            
+            let modelsToBuy = StrategyTester.shared.getIndexesToBuy(scores)
+            let divider = Float(modelsToBuy.count)
+            cashPositions = Array(repeating: portfolioValue / divider, count: modelsToBuy.count)
+            boughtModels = modelsToBuy
+            
+            // SPY Stuff
+            if i != startingIndex {
+                let endingPrice = spyAggregate.candles[i].close
+                let startingPrice = spyAggregate.candles[i - 1].close
+                let changeMultiplyer = (endingPrice - startingPrice) / startingPrice + 1
+                buyAndHoldPortfolioValue *= changeMultiplyer
+            }
+            
+            portfolioValueAmounts[i] = portfolioValue
+            buyAndHoldPortfolioAmounts[i] = buyAndHoldPortfolioValue
         }
         
+        guard let indicatorData = SharedFileManager.shared.getDataFromFile("/indicatorData/VOO.json") else {
+            TerminalManager.shared.addText("Indicator File does not exist", type: .error)
+            return
+        }
+        do {
+            let jsonDecoder = JSONDecoder()
+            let indicator = try jsonDecoder.decode(IndicatorData.self, from: indicatorData)
+            
+            let auxSets = StockCalculations.GetAuxSetsForAggregate(aggregate: spyAggregate)
+            
+            ChartManager.shared.chartStock(spyAggregate)
+            ChartManager.shared.setIndicatorData(indicator)
+            ChartManager.shared.setAuxSets(auxSets: auxSets)
+            ChartManager.shared.currentStockView?.mouseDelegate = self
+            self.isRunningFullBacktest = true
+        } catch let e {
+            TerminalManager.shared.addText("Unable to unwrap data into aggregate: \(e)", type: .error)
+        }
     }
 }
-
 extension BacktestController: StockViewMouseDelegate {
     func candleHoverChanged(index: Int) {
         if index < 0 || index >= portfolioValueAmounts.count {return}
-        LabelValueController.shared.setLabelValue(index: 0, label: "Portfolio $", value: portfolioValueAmounts[index].toRoundedString(precision: 2))
-        LabelValueController.shared.setLabelValue(index: 3, label: "Buy Hold Portfolio $", value: buyAndHoldPortfolioAmounts[index].toRoundedString(precision: 2))
-        LabelValueController.shared.setLabelValue(index: 6, label: "Prediction", value: (predictedAmounts[index] * 100).toRoundedString(precision: 2))
-        LabelValueController.shared.setLabelValue(index: 9, label: "Index", value: "\(index)")
+        
+        if isRunningFullBacktest {
+            LabelValueController.shared.setLabelValue(index: 0, label: "Buy Hold Portfolio $", value: buyAndHoldPortfolioAmounts[index].toRoundedString(precision: 2))
+            LabelValueController.shared.setLabelValue(index: 3, label: "Strategy", value: portfolioValueAmounts[index].toRoundedString(precision: 2))
+            LabelValueController.shared.setLabelValue(index: 6, label: "Index", value: "\(index)")
+        } else {
+            LabelValueController.shared.setLabelValue(index: 0, label: "Portfolio $", value: portfolioValueAmounts[index].toRoundedString(precision: 2))
+            LabelValueController.shared.setLabelValue(index: 3, label: "Buy Hold Portfolio $", value: buyAndHoldPortfolioAmounts[index].toRoundedString(precision: 2))
+            LabelValueController.shared.setLabelValue(index: 6, label: "Prediction", value: (predictedAmounts[index] * 100).toRoundedString(precision: 2))
+            LabelValueController.shared.setLabelValue(index: 9, label: "Index", value: "\(index)")
+        }
+        
     }
 }

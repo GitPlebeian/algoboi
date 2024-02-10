@@ -72,7 +72,7 @@ class MLPredictor1 {
         inputArray[7] = indicatorData.slopesOf50DaySMA[index] as NSNumber
         inputArray[8] = indicatorData.slopesOf200DaySMA[index] as NSNumber
         
-        for i in 0..<self.normalizingValues.count {
+        DispatchQueue.concurrentPerform(iterations: inputArray.count) { i in
             let old = Float(truncating: inputArray[i])
             inputArray[i] = normalizeValue(originalValue: old, mean: normalizingValues[i][0], std: normalizingValues[i][1]) as NSNumber
         }

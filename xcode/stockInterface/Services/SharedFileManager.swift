@@ -95,6 +95,19 @@ class SharedFileManager {
         }
     }
     
+    func getFileNamesFromFolder(path: String) -> [String]? {
+        do {
+            var url = FileManager.default.urls(for: .desktopDirectory, in: .userDomainMask).first!
+            url = url.appendingPathComponent("algoboi/shared/")
+            let username = NSUserName()
+            let fileNames = try FileManager.default.contentsOfDirectory(atPath: "/Users/\(username)/Desktop/algoboi/shared/\(path)")
+            return fileNames
+        } catch {
+            print("Error retrieving file names: \(error)")
+            return nil
+        }
+    }
+    
     func getDataFromPlaybackFile(_ fileName: String) -> Data? {
         let urlString = "/Users/\(NSUserName())/Desktop/algoboi/shared/playback/\(fileName)"
         var fileURL: URL
