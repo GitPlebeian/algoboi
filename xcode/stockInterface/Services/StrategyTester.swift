@@ -24,4 +24,16 @@ class StrategyTester {
         
         return returnValues
     }
+    
+    func getIndexsToBuy(stocks: [(StockAggregate, IndicatorData)], scores: [(Int, Float)]) -> [Int] {
+        let sortedScores = scores.sorted { a, b in
+            a.1 > b.1
+        }
+        return [sortedScores[0].0, sortedScores[1].0, sortedScores[2].0]
+    }
+    
+    func isStockGood(index: Int, aggregate: StockAggregate, indicator: IndicatorData) -> Bool {
+        if index - indicator.backtestingOffset < 0 {return false}
+        return true
+    }
 }

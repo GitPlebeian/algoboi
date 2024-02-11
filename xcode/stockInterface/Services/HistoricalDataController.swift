@@ -95,13 +95,15 @@ class HistoricalDataController {
     }
     
     func calculateIndicatorData() {
-        if BacktestController.shared.spyAggregate == nil {BacktestController.shared.loadSPYAggregate()}
         let fileNames = downloadedStocks
         let group = DispatchGroup()
         
         let jsonDecoder = JSONDecoder()
         
         fileNames.forEach { fileName in
+            if fileName == "VOO" {
+                return
+            }
             group.enter() // Enter the group for each file
 
             DispatchQueue.global().async {
@@ -111,13 +113,29 @@ class HistoricalDataController {
                     if var indicatorData = StockCalculations.GetIndicatorData(aggregate: aggregate) {
                         var startDateFound = false
                         let startDate = aggregate.candles.first!.timestamp.stripDateToDayMonthYearAndAddOneDay()
-                        for (i, candle) in BacktestController.shared.spyAggregate.candles.enumerated() {
+                        for (i, candle) in SPYController.shared.spyAggregate.candles.enumerated() {
                             if startDate == candle.timestamp.stripDateToDayMonthYearAndAddOneDay() {
                                 startDateFound = true
                                 indicatorData.backtestingOffset = i
                             }
+                            if startDateFound == true {
+                                if i - indicatorData.backtestingOffset >= aggregate.candles.count {
+                                    indicatorData.gapInDate = true
+                                    print("Dropping: \(aggregate.symbol) for index out of range")
+                                    break
+                                } else if aggregate.candles[i - indicatorData.backtestingOffset].timestamp.stripDateToDayMonthYearAndAddOneDay() != candle.timestamp.stripDateToDayMonthYearAndAddOneDay() {
+                                    indicatorData.gapInDate = true
+                                    print("Dropping: \(aggregate.symbol) for gap in date: \(aggregate.candles[i - indicatorData.backtestingOffset].timestamp.stripDateToDayMonthYearAndAddOneDay())")
+                                    break
+                                }
+                            }
+                        }
+                        if indicatorData.gapInDate == true {
+                            group.leave()
+                            return
                         }
                         if startDateFound == false {fatalError()}
+                        
                         SharedFileManager.shared.writeCodableToFileNameInShared(codable: indicatorData, fileName: "/indicatorData/\(aggregate.symbol).json")
                     }
                     group.leave()

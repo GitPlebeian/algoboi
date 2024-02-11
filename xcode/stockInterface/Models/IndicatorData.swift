@@ -23,6 +23,7 @@ struct IndicatorData: Codable {
     let macdRed:           [Float]
     let percentageChange:  [Float]
     var backtestingOffset: Int = 0
+    var gapInDate:         Bool = false
     // Predicted Values
     var predicted1CandleOut: [Float] = []
     var predicted2CandleOut: [Float] = []

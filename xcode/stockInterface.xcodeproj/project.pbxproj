@@ -44,7 +44,6 @@
 		FC8B8CAF2AE89D360053F5CF /* BrassMono-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FC8B8CAD2AE89D360053F5CF /* BrassMono-Regular.ttf */; settings = {ASSET_TAGS = (New, ); }; };
 		FC97AE8D2B14249300756773 /* StockViewAuxGraphProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC97AE8C2B14249300756773 /* StockViewAuxGraphProperties.swift */; };
 		FCBAF4242ADE497F0075ABEF /* CGColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBAF4232ADE497F0075ABEF /* CGColor.swift */; };
-		FCBAF4262ADE50610075ABEF /* StockAggregateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBAF4252ADE50610075ABEF /* StockAggregateManager.swift */; };
 		FCBAF4282ADE72D20075ABEF /* StockCalculations.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBAF4272ADE72D20075ABEF /* StockCalculations.swift */; };
 		FCBAF42A2ADE73900075ABEF /* FloatingPointArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBAF4292ADE73900075ABEF /* FloatingPointArray.swift */; };
 		FCC144A42B7492D100EF7A65 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC144A32B7492D100EF7A65 /* Date.swift */; };
@@ -70,6 +69,7 @@
 		FCDF76EF2B0BE7E200BE28BE /* Float.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCDF76EE2B0BE7E200BE28BE /* Float.swift */; };
 		FCE09A852B65B62F004ACF20 /* MLDataset1.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE09A842B65B62F004ACF20 /* MLDataset1.swift */; };
 		FCE09A882B65B788004ACF20 /* Guide & Results.md in Resources */ = {isa = PBXBuildFile; fileRef = FCE09A872B65B788004ACF20 /* Guide & Results.md */; };
+		FCE28F242B786FB0000F7274 /* SPYController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCE28F232B786FB0000F7274 /* SPYController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -113,7 +113,6 @@
 		FC8B8CAD2AE89D360053F5CF /* BrassMono-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BrassMono-Regular.ttf"; sourceTree = "<group>"; };
 		FC97AE8C2B14249300756773 /* StockViewAuxGraphProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockViewAuxGraphProperties.swift; sourceTree = "<group>"; };
 		FCBAF4232ADE497F0075ABEF /* CGColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGColor.swift; sourceTree = "<group>"; };
-		FCBAF4252ADE50610075ABEF /* StockAggregateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockAggregateManager.swift; sourceTree = "<group>"; };
 		FCBAF4272ADE72D20075ABEF /* StockCalculations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockCalculations.swift; sourceTree = "<group>"; };
 		FCBAF4292ADE73900075ABEF /* FloatingPointArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingPointArray.swift; sourceTree = "<group>"; };
 		FCC144A32B7492D100EF7A65 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
@@ -139,6 +138,7 @@
 		FCDF76EE2B0BE7E200BE28BE /* Float.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Float.swift; sourceTree = "<group>"; };
 		FCE09A842B65B62F004ACF20 /* MLDataset1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLDataset1.swift; sourceTree = "<group>"; };
 		FCE09A872B65B788004ACF20 /* Guide & Results.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Guide & Results.md"; sourceTree = "<group>"; };
+		FCE28F232B786FB0000F7274 /* SPYController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPYController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -253,7 +253,6 @@
 				FC82FA3B2AC6C12600642210 /* TickerDownload.swift */,
 				5B6D622C2AD9F265003B1D3A /* Style.swift */,
 				5B6D622E2AD9F2B9003B1D3A /* LayoutManager.swift */,
-				FCBAF4252ADE50610075ABEF /* StockAggregateManager.swift */,
 				5B0C78B12ADE5A3500E0EEEB /* SharedFileManager.swift */,
 				FCBAF4272ADE72D20075ABEF /* StockCalculations.swift */,
 				5B860BC02B0072C6002EA088 /* TerminalManager.swift */,
@@ -265,6 +264,7 @@
 				5B09D7B42B114734004536C4 /* LabelValueController.swift */,
 				FCC546D72B72DCF000D4AF7D /* BacktestController.swift */,
 				FC409C962B7718F7006ECE19 /* StrategyTester.swift */,
+				FCE28F232B786FB0000F7274 /* SPYController.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -449,6 +449,7 @@
 				FCC546D82B72DCF000D4AF7D /* BacktestController.swift in Sources */,
 				5B6D622D2AD9F265003B1D3A /* Style.swift in Sources */,
 				5B09D7B52B114734004536C4 /* LabelValueController.swift in Sources */,
+				FCE28F242B786FB0000F7274 /* SPYController.swift in Sources */,
 				FC39E1722B672B02000C62CA /* GenerateEntireDatasetCommand.swift in Sources */,
 				FC82FA512AC6EB9200642210 /* Candle.swift in Sources */,
 				FC409C972B7718F7006ECE19 /* StrategyTester.swift in Sources */,
@@ -473,7 +474,6 @@
 				FCD588172B0C2938001BBECC /* IndicatorData.swift in Sources */,
 				FC82FA532AC6F79200642210 /* StockView.swift in Sources */,
 				FCBAF4242ADE497F0075ABEF /* CGColor.swift in Sources */,
-				FCBAF4262ADE50610075ABEF /* StockAggregateManager.swift in Sources */,
 				FC82FA3C2AC6C12600642210 /* TickerDownload.swift in Sources */,
 				FCC144A62B74971C00EF7A65 /* BKTestScoreModel.swift in Sources */,
 				FC82FA4D2AC6E20000642210 /* StockAggregate.swift in Sources */,

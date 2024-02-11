@@ -20,6 +20,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         AllTickersController.shared.loadFromDisk()
         HistoricalDataController.shared.loadFromDisk()
+        SPYController.shared.loadSPYAggregate()
         
         setupMenu()
         
