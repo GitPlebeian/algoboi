@@ -27,7 +27,12 @@ class SPYController {
             return
         }
         if let indicatorData = SharedFileManager.shared.getDataFromFile("/indicatorData/VOO.json") {
-            self.spyIndicator = try! decoder.decode(IndicatorData.self, from: indicatorData)
+            do {
+                self.spyIndicator = try decoder.decode(IndicatorData.self, from: indicatorData)
+            } catch {
+                self.spyIndicator = StockCalculations.GetIndicatorData(aggregate: spyAggregate)!
+                SharedFileManager.shared.writeCodableToFileNameInShared(codable: spyIndicator, fileName: "/indicatorData/VOO.json")
+            }
         } else {
             self.spyIndicator = StockCalculations.GetIndicatorData(aggregate: spyAggregate)!
             SharedFileManager.shared.writeCodableToFileNameInShared(codable: spyIndicator, fileName: "/indicatorData/VOO.json")

@@ -17,22 +17,31 @@ struct IndicatorData: Codable {
     let sma50:             [Float]
     let ema14:             [Float]
     let ema28:             [Float]
-    let volumeIndicator:   [Float]
+    let volumesTimesClose: [Float]
+    let volumeTCAverage:   [Float]
+    let volumeChange:      [Float]
+    let averageVolume:     [Float]
     let macdDifference:    [Float]
     let macdGreen:         [Float]
     let macdRed:           [Float]
     let percentageChange:  [Float]
+    let standardDeviationForPercentageChange1: [Float]
+    let standardDeviationForPercentageChange2: [Float]
+    let stdDifference: [Float]
+    
+    let htl: [Float]
+    let hto: [Float]
+    let htc: [Float]
+    let ltc: [Float]
+    let lto: [Float]
+    let cto: [Float]
+    
     var backtestingOffset: Int = 0
     var gapInDate:         Bool = false
-    // Predicted Values
-    var predicted1CandleOut: [Float] = []
-    var predicted2CandleOut: [Float] = []
-    var predicted3CandleOut: [Float] = []
-    var predicted4CandleOut: [Float] = []
-    var predicted5CandleOut: [Float] = []
-    // Actual Value
-    var actualPercentagePerCandle: [Float] = []
-    var actualCandlesToTarget: [Float] = []
+    
+    var isBadIndex: [Bool] = []
+    
+    
     // Anything else below is used for the machine learning dataset inputs
     let slopesOf9DayEMA:     [Float]
     let slopesOf25DayEMA:    [Float]

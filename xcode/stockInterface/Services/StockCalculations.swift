@@ -14,20 +14,36 @@ class StockCalculations {
     static func GetIndicatorData(aggregate: StockAggregate) -> IndicatorData? {
         if aggregate.candles.count < StartAtElement {return nil}
         let closes = aggregate.candles.map { $0.close }
+        let high = aggregate.candles.map { $0.high }
+        let low = aggregate.candles.map { $0.low }
+        let open = aggregate.candles.map { $0.open }
         let volumes = aggregate.candles.map { $0.volume }
+        let volumesFloat = aggregate.candles.map{ Float($0.volume) }
         let timestamps = aggregate.candles.map {$0.timestamp}
         let sma200 = GetSMAS(for: closes, period: 200)
         let sma50  = GetSMAS(for: closes, period: 50)
         let ema14  = GetEMAS(for: closes, period: 14)
         let ema28  = GetEMAS(for: closes, period: 28)
-        let volume5 = GetVolumsFromAverage(volumes: volumes, average: closes, period: 5)
+        let volumesTimesClose = GetVolumsFromAverage(volumes: volumes, average: closes, period: 10)
+        let volumeTCAverage = GetEMAS(for: volumesTimesClose, period: 20)
+        let volumesChange = GetPercentageChangeFromMovingAverageNotIncluding(volumesFloat, period: 30, useSMA: true)
         let percentageChanges = GetPercentageChange(closes)
-//        let macdPercentageChanges = GetMACDPercentageDifference(closes: closes)
+        let standardDeviationForPercentageChange1 = StandardDeviation(values: percentageChanges, period: 5)
+        let standardDeviationForPercentageChange2 = StandardDeviation(values: percentageChanges, period: 30)
+        let stdDifference = Minus(values1: standardDeviationForPercentageChange1, values2: standardDeviationForPercentageChange2)
+        let averageVolume = GetSMAS(for: volumesFloat, period: 20)
         
         let macdData = GetImpulseMACD(arr: closes)
         let macdDifference = macdData.0.minus(compare: macdData.1)
         
         // MACD Red is 0 | MACD Green is 1
+        
+        let htl = GetPercentageChange(starting: low, ending: high)
+        let hto = GetPercentageChange(starting: open, ending: high)
+        let htc = GetPercentageChange(starting: closes, ending: high)
+        let ltc = GetPercentageChange(starting: low, ending: closes)
+        let lto = GetPercentageChange(starting: low, ending: open)
+        let cto = GetPercentageChange(starting: open, ending: closes)
         
         // Calculations for Machine Learning dataset inputs
         
@@ -40,18 +56,29 @@ class StockCalculations {
         let macdGreenSlopes = GetAngleBetweenTwoPoints(arr: macdData.1)
         let macdRedSlopes = GetAngleBetweenTwoPoints(arr: macdData.0)
         
-        let result = IndicatorData(ticker: aggregate.symbol,
+        var result = IndicatorData(ticker: aggregate.symbol,
                                    timestamps: timestamps,
                                    sma200: sma200,
                                    sma50: sma50,
                                    ema14: ema14,
                                    ema28: ema28,
-                                   volumeIndicator: volume5,
+                                   volumesTimesClose: volumesTimesClose, 
+                                   volumeTCAverage: volumeTCAverage,
+                                   volumeChange: volumesChange,
+                                   averageVolume: averageVolume,
                                    macdDifference: macdDifference,
                                    macdGreen: macdData.1,
                                    macdRed: macdData.0, 
                                    percentageChange: percentageChanges,
-                                   slopesOf9DayEMA: ema9Slopes,
+                                   standardDeviationForPercentageChange1: standardDeviationForPercentageChange1,
+                                   standardDeviationForPercentageChange2: standardDeviationForPercentageChange2, stdDifference: stdDifference,
+                                   htl: htl,
+                                   hto: hto,
+                                   htc: htc,
+                                   ltc: ltc,
+                                   lto: lto,
+                                   cto: cto,
+                                   isBadIndex: .init(repeating: false, count: closes.count), slopesOf9DayEMA: ema9Slopes,
                                    slopesOf25DayEMA: ema25Slopes,
                                    slopesOf50DaySMA: sma50Slopes,
                                    slopesOf200DaySMA: sma200Slopes,
@@ -59,7 +86,37 @@ class StockCalculations {
                                    macdGreenLineSlopes: macdGreenSlopes,
                                    macdRedLineSlopes: macdRedSlopes,
                                    macdDifferences: macdDifference)
+        
+        CalculateBadIndeces(&result, aggregate)
+        
         return result
+    }
+    
+    static func CalculateBadIndeces(_ model: inout IndicatorData, _ aggregate: StockAggregate) {
+        for i in 0..<aggregate.candles.count {
+            if aggregate.candles[i].close < 3 || aggregate.candles[i].close > 1000 {
+                // Price
+                model.isBadIndex[i] = true
+                continue
+            }
+            if model.volumeTCAverage[i] < 10_000_000 {
+                // Market Cap
+                model.isBadIndex[i] = true
+                continue
+            }
+            if model.volumesTimesClose[i] < 10_000_000 {
+                model.isBadIndex[i] = true
+                continue
+            }
+            if model.averageVolume[i] < 10_000 {
+                model.isBadIndex[i] = true
+                continue
+            }
+            if aggregate.candles[i].volume < 10_000 {
+                model.isBadIndex[i] = true
+                continue
+            }
+        }
     }
     
     static func GetAuxSetsForAggregate(aggregate: StockAggregate) -> [StockViewAuxGraphProperties] {
@@ -140,6 +197,50 @@ class StockCalculations {
         return macdData.1.percentageChanges(compare: macdData.0)
     }
     
+    static func CalculateTrend(values: [Float], periods: [Int]) -> Float {
+        var stdDevs: [Float] = []
+        
+        // Calculate standard deviations for each period
+        for period in periods.sorted() {
+            let stdDev = StandardDeviation(values: values, period: period).last ?? 0
+            stdDevs.append(stdDev)
+        }
+        
+        // Assume periods are sorted and the first one is the shortest
+        guard let shortestPeriodStdDev = stdDevs.first else { return 0 }
+        
+        // Calculate the average of the longer periods' standard deviations
+        let longerPeriodsStdDev = stdDevs.dropFirst() // Removes the shortest period std dev
+        let averageLongerPeriodsStdDev = longerPeriodsStdDev.reduce(0, +) / Float(longerPeriodsStdDev.count)
+        
+        // The trend is the difference between the shortest period std dev and the average of the longer periods
+        let trend = shortestPeriodStdDev - averageLongerPeriodsStdDev
+        
+        return trend
+    }
+    
+    static func StandardDeviation(values: [Float], period: Int) -> [Float] {
+        guard period > 0 else { return [] }
+        var stdDevArray: [Float] = []
+        
+        for i in 0..<values.count {
+            let start = max(0, i - period + 1)
+            let end = i + 1
+            let subset = Array(values[start..<end])
+            let stdDev = StandardDeviation(subset)
+            stdDevArray.append(stdDev)
+        }
+        
+        return stdDevArray
+    }
+    
+    static func StandardDeviation(_ values: [Float]) -> Float {
+        let mean = values.reduce(0, +) / Float(values.count)
+        let variance = values.reduce(0) { $0 + pow($1 - mean, 2) } / Float(values.count)
+        return sqrt(variance)
+    }
+
+    
     static func Normalize(_ inputArray: [Float]) -> [Float] {
 
         // Calculate the mean
@@ -163,7 +264,21 @@ class StockCalculations {
     }
     
     static func GetVolumsFromAverage(volumes: [Int64], average: [Float], period: Int) -> [Float] {
-        return []
+        var values: [Float] = []
+        
+        for i in 0..<volumes.count {
+            let start = max(0, i - period + 1)
+            let end = i + 1
+            let subset = Array(volumes[start..<end])
+            let closeSubset = Array(average[start..<end])
+            var total: Int64 = 0
+            for e in subset {
+                total += e
+            }
+            total /= Int64(period)
+            values.append(Float(total) * closeSubset.avg())
+        }
+        return values
     }
     
     static func GetEMAS(for values: [Float], period: Int) -> [Float] {
@@ -218,6 +333,14 @@ class StockCalculations {
         return results
     }
     
+    static func GetPercentageChange(starting: [Float], ending: [Float]) -> [Float] {
+        var results: [Float] = []
+        for i in 0..<starting.count {
+            results.append((ending[i] - starting[i]) / starting[i])
+        }
+        return results
+    }
+    
     static func GetPercentageChange(_ arr: [Float]) -> [Float] {
         var results: [Float] = [0]
 
@@ -226,6 +349,14 @@ class StockCalculations {
         }
         
         return results
+    }
+    
+    static func Minus(values1: [Float], values2: [Float]) -> [Float] {
+        var value: [Float] = []
+        for i in 0..<values1.count {
+            value.append(values1[i] - values2[i])
+        }
+        return value
     }
     
     static func GetAngleBetweenTwoPoints(start: Float, end: Float) -> Float {
