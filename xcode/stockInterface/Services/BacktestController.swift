@@ -12,10 +12,13 @@ class BacktestController {
     static let shared = BacktestController()
     
     private var portfolioValue:           Float = 1000
+    private var previousDayPortfolioValue: Float = 1000
     private var buyAndHoldPortfolioValue: Float = 1000
     
     var portfolioValueAmounts: [Float] = []
     var buyAndHoldPortfolioAmounts: [Float] = []
+    var predictedAmounts: [Float] = []
+    var portfolioPercentageChangeAmounts: [Float] = []
     
     // All Backtest
     
@@ -27,6 +30,10 @@ class BacktestController {
     var cashPositions: [(Int, Float)] = []
     
     var isRunningFullBacktest: Bool = false
+    
+    // UI Shit
+    
+    var coloredBars: [(Int, NSColor)] = []
     
     init() {
         self.backtestIndex = StockCalculations.StartAtElement - 1
@@ -60,6 +67,7 @@ class BacktestController {
         var buyBars: [(Int, NSColor)] = []
         portfolioValueAmounts      = .init(repeating: startingPortfolioValues, count: aggregate.candles.count)
         buyAndHoldPortfolioAmounts = .init(repeating: startingPortfolioValues, count: aggregate.candles.count)
+        portfolioPercentageChangeAmounts = .init(repeating: 0, count: aggregate.candles.count)
         predictedAmounts = .init(repeating: startingPortfolioValues, count: aggregate.candles.count)
         
         var boughtPrice: Float? = nil
@@ -106,7 +114,9 @@ class BacktestController {
                 let startingValue: Float = 1000
                 portfolioValueAmounts          = .init(repeating: startingValue, count: SPYController.shared.spyAggregate.candles.count)
                 buyAndHoldPortfolioAmounts     = .init(repeating: startingValue, count: SPYController.shared.spyAggregate.candles.count)
+                portfolioPercentageChangeAmounts     = .init(repeating: 0, count: SPYController.shared.spyAggregate.candles.count)
                 portfolioValue = startingValue
+                previousDayPortfolioValue = startingValue
                 buyAndHoldPortfolioValue = startingValue
             }
             guard let indicatorData = SharedFileManager.shared.getDataFromFile("/indicatorData/VOO.json") else {
@@ -138,12 +148,14 @@ class BacktestController {
     func backtestIndex(index: Int) {
         DispatchQueue.global().async {
             if self.shouldContinueBacktesting == false {return}
-            print("Index: \(index)")
+            self.previousDayPortfolioValue = self.portfolioValue
             // Sell All Current Positions
+            print("--Selling-- | Date: \(SPYController.shared.spyAggregate.candles[index].timestamp.stripDateToDayMonthYearAndAddOneDay())")
             for (i, e) in self.cashPositions.enumerated() {
                 let startingPrice = self.allAggregatesAndIndicatorData[e.0].0.candles[index - 1].close
                 let endingPrice   = self.allAggregatesAndIndicatorData[e.0].0.candles[index].close
                 let changeMultiplyer = (endingPrice - startingPrice) / startingPrice + 1
+                print("\(i) \(self.allAggregatesAndIndicatorData[e.0].1.backtestingOffset) \(self.allAggregatesAndIndicatorData[e.0].0.symbol): \(changeMultiplyer) | Date: \(self.allAggregatesAndIndicatorData[e.0].0.candles[index - self.allAggregatesAndIndicatorData[e.0].1.backtestingOffset].timestamp.stripDateToDayMonthYearAndAddOneDay())")
                 self.cashPositions[i].1 *= changeMultiplyer
             }
             if self.cashPositions.count != 0 {
@@ -178,6 +190,13 @@ class BacktestController {
                 }
             }
             
+            print("\n\n")
+            print("Index: \(index) | Date: \(SPYController.shared.spyAggregate.candles[index].timestamp.stripDateToDayMonthYearAndAddOneDay())")
+            print("--Buying--")
+            for (i, e) in indexesToBuy.enumerated() {
+                print("\(i): \(self.allAggregatesAndIndicatorData[e].0.symbol) | \(predictions[e].1)")
+            }
+            
             // SPY Stuff
             if index != StockCalculations.StartAtElement - 1 {
                 let endingPrice = SPYController.shared.spyAggregate.candles[index].close
@@ -186,8 +205,26 @@ class BacktestController {
                 self.buyAndHoldPortfolioValue *= changeMultiplyer
             }
             
+            // Previous Day
+            let portfolioPercentageChange = (self.portfolioValue - self.previousDayPortfolioValue) / self.previousDayPortfolioValue
+            // Colored Bar Calculation
+//            let colorCut
+            if portfolioPercentageChange < 0 { // Red
+                let colorMultiplier = CGFloat(portfolioPercentageChange * -1) / 0.05
+                let color = NSColor(red: 1, green: 0, blue: 0, alpha: colorMultiplier * 0.3)
+                self.coloredBars.append((index, color))
+            } else { // Green
+                let colorMultiplier = CGFloat(portfolioPercentageChange) / 0.05
+                let color = NSColor(red: 0, green: 1, blue: 0, alpha: colorMultiplier * 0.3)
+                self.coloredBars.append((index, color))
+            }
+            DispatchQueue.main.async {
+                ChartManager.shared.currentStockView?.setColoredFullHeightBars(bars: self.coloredBars)
+            }
+            
             self.portfolioValueAmounts[index] = self.portfolioValue
             self.buyAndHoldPortfolioAmounts[index] = self.buyAndHoldPortfolioValue
+            self.portfolioPercentageChangeAmounts[index] = portfolioPercentageChange
             
             self.backtestIndex += 1
             self.backtestIndex(index: self.backtestIndex)
@@ -436,6 +473,7 @@ extension BacktestController: StockViewMouseDelegate {
         if isRunningFullBacktest {
             LabelValueController.shared.setLabelValue(index: 0, label: "Buy Hold Portfolio $", value: buyAndHoldPortfolioAmounts[index].toRoundedString(precision: 2))
             LabelValueController.shared.setLabelValue(index: 3, label: "Strategy", value: portfolioValueAmounts[index].toRoundedString(precision: 2))
+            LabelValueController.shared.setLabelValue(index: 4, label: "Strategy %", value: "\((portfolioPercentageChangeAmounts[index] * 100).toRoundedString(precision: 2))%")
             LabelValueController.shared.setLabelValue(index: 6, label: "Index", value: "\(index)")
         } else {
             LabelValueController.shared.setLabelValue(index: 0, label: "Portfolio $", value: portfolioValueAmounts[index].toRoundedString(precision: 2))

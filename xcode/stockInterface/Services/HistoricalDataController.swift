@@ -104,6 +104,7 @@ class HistoricalDataController {
             if fileName == "VOO" {
                 return
             }
+//            if fileName != "MULN" {return}
             group.enter() // Enter the group for each file
 
             DispatchQueue.global().async {
