@@ -13,7 +13,7 @@ class GenerateEntireDatasetCommand: Command {
 
     func execute(with arguments: [String]) {
 
-        var dataSets: [MLDatasetInputOutputCombined1] = []
+        var dataSets: [MLDatasetInputOutputCombined2] = []
         let dataSetsLock = NSLock()
         
         var droppedNoIndicatorDataCount: Int = 0
@@ -53,11 +53,12 @@ class GenerateEntireDatasetCommand: Command {
                         group.leave()
                         return
                     }
-                    var threadLocalDataset: [MLDatasetInputOutputCombined1] = []
+                    var threadLocalDataset: [MLDatasetInputOutputCombined2] = []
                     for i in (StockCalculations.StartAtElement - 1)..<aggregate.candles.count {
                         if let datasetOutput = MLDatasetGenerator.shared.calculateTotalPercentageChangeForXChandlesToTarget(index: i, aggregate: aggregate, candlesToTarget: 1) {
-                            let datasetInput = MLDatasetInput1(indicatorData: indicator, index: i, candlesToTarget: Float(1))
-                            threadLocalDataset.append(MLDatasetInputOutputCombined1(input: datasetInput, output: datasetOutput))
+                            if indicator.isBadIndex[i] {continue}
+                            let datasetInput = MLDatasetInput2(indicatorData: indicator, index: i, candlesToTarget: Float(1))
+                            threadLocalDataset.append(MLDatasetInputOutputCombined2(input: datasetInput, output: datasetOutput))
                             
                         } else {break}
                     }
@@ -73,7 +74,7 @@ class GenerateEntireDatasetCommand: Command {
         group.notify(queue: DispatchQueue.main) {
 //            TerminalManager.shared.addText("All Files Proccessed")
             print("DONE")
-            MLDatasetInputOutputCombined1.Write(dataSets: dataSets)
+            MLDatasetInputOutputCombined2.Write(dataSets: dataSets)
             TerminalManager.shared.addText("Saved \(dataSets.count) training data", type: .normal)
             TerminalManager.shared.addText("Dropped \(droppedNoIndicatorDataCount) becuase no indicator data", type: .normal)
             TerminalManager.shared.addText("Dropped \(droppedNoEnoughLengthCount) becuase not long enough", type: .normal)

@@ -143,11 +143,16 @@ class BacktestController {
     
     func stopFullBacktest() {
         shouldContinueBacktesting = false
+        print(getOutputStringForStopping())
     }
     
     func backtestIndex(index: Int) {
         DispatchQueue.global().async {
             if self.shouldContinueBacktesting == false {return}
+            if self.backtestIndex >= 600 {
+                print(self.getOutputStringForStopping())
+                return
+            }
             self.previousDayPortfolioValue = self.portfolioValue
             // Sell All Current Positions
             print("--Selling-- | Date: \(SPYController.shared.spyAggregate.candles[index].timestamp.stripDateToDayMonthYearAndAddOneDay())")
@@ -178,7 +183,7 @@ class BacktestController {
                     predictions.append((i, -999))
                     continue
                 }
-                let prediction = MLPredictor1.shared.makePrediction(indicatorData: e.1, index: index - e.1.backtestingOffset, candlesToTarget: 1)!
+                let prediction = MLPredictor2.shared.makePrediction(indicatorData: e.1, index: index - e.1.backtestingOffset, candlesToTarget: 1)!
                 predictions.append((i, prediction))
             }
             
@@ -281,191 +286,44 @@ class BacktestController {
         }
     }
     
-//    func backtestAllStocks() {
-//        
-//        if let fileNames = SharedFileManager.shared.getFileNamesFromFolder(path: "scores/") {
-//            if fileNames.contains("scores.json") {
-//                TerminalManager.shared.addText("Scores file already exists. Loading File.")
-//                loadScores()
-//                chartAndRunBacktest()
-//                return
-//            }
-//        }
-//        let decoder = JSONDecoder()
-//        TerminalManager.shared.addText("Getting All Stocks From Libary")
-//        let allStocks = AllTickersController.shared.getAllTickers()
-//        
-//        var stockDataArray = Array(repeating: nil as (StockAggregate, IndicatorData)?, count: allStocks.count)
-//        
-//        let queue = DispatchQueue(label: "stockLoadingQueue", attributes: .concurrent)
-//        let group = DispatchGroup()
-//        
-//        let start = DispatchTime.now()
-//        
-//        for (index, stock) in allStocks.enumerated() {
-//            group.enter()
-//            queue.async {
-//                guard let aggregateData = SharedFileManager.shared.getDataFromFile("/historicalData/\(stock.symbol).json") else {
-//                    group.leave()
-//                    return
-//                }
-//                guard let indicatorData = SharedFileManager.shared.getDataFromFile("/indicatorData/\(stock.symbol).json") else {
-//                    group.leave()
-//                    return
-//                }
-//                do {
-//                    let aggregate = try decoder.decode(StockAggregate.self, from: aggregateData)
-//                    let indicator = try decoder.decode(IndicatorData.self, from: indicatorData)
-//                    stockDataArray[index] = (aggregate, indicator)
-//                    group.leave()
-//                } catch {
-//                    //                    fatalError("Could not decode for ticker: \(stock.name)")
-//                    print("Could not decode for ticker: \(stock.name) \(stock.symbol)")
-//                    group.leave()
-//                }
-//            }
-//        }
-//        group.notify(queue: .main) {
-//            
-//            for data in stockDataArray {
-//                if data != nil {
-//                    self.allAggregatesAndIndicatorData.append(data!)
-//                }
-//            }
-//            
-//            let end = DispatchTime.now()
-//            let seconds = Float((end.uptimeNanoseconds - start.uptimeNanoseconds) / 1000000000)
-//            TerminalManager.shared.addText("Loaded: Data in \(seconds.toRoundedString(precision: 2)) seconds")
-//            self.calculateBacktestingScores()
-//        }
-//    }
+    func getOutputStringForStopping() -> String {
+        var output = "\n"
+        output.append(getStringForMaxDrawdown())
+        return output
+    }
     
-//    func loadScores() {
-//        guard let scoresData = SharedFileManager.shared.getDataFromFile("/scores/scores.json") else {
-//            TerminalManager.shared.addText("Unable to load scores model as it does not yet exist")
-//            return
-//        }
-//        let decoder = JSONDecoder()
-//        do {
-//            self.scores = try decoder.decode([[BKTestScoreModel]].self, from: scoresData)
-//            TerminalManager.shared.addText("Loaded Scores: \(scores.count)")
-//        } catch {
-//            TerminalManager.shared.addText("Unable to decode scores", type: .error)
-//            return
-//        }
-//    }
-//    
-//    private func calculateBacktestingScores() {
-//        if SPYController.shared.spyAggregate == nil {loadSPYAggregate()}
-//        if SPYController.shared.spyAggregate == nil {
-//            TerminalManager.shared.addText("VOO data not found. Cancelling backtest", type: .error)
-//            return
-//        }
-//        scores = Array(repeating: [], count: SPYController.shared.spyAggregate.candles.count)
-//        //        for candleIndex in 0..<SPYController.shared.spyAggregate.candles.count {
-//        //            addScoresForCandleIndex(index: candleIndex)
-//        //        }
-//        let queue = DispatchQueue(label: "scoreAssignmentQueue", attributes: .concurrent)
-//        let group = DispatchGroup()
-//        
-//        group.enter()
-//        queue.async {
-//            var completedCount: Int = 0
-//            for e in self.allAggregatesAndIndicatorData {
-//                for (i, candle) in e.0.candles.enumerated() {
-//                    guard let score = MLPredictor1.shared.makePrediction(indicatorData: e.1, index: i, candlesToTarget: 1) else {
-//                        fatalError()
-//                    }
-//                    let model = BKTestScoreModel(predictedPercentageGain: score, currentClosingPrice: candle.close, ticker: e.0.symbol, companyName: e.0.name)
-//                    self.scores[i + e.1.backtestingOffset].append(model)
-//                }
-//                completedCount += 1
-//                print("Completed: \(completedCount) Out Of: \(self.allAggregatesAndIndicatorData.count)")
-//                //            group.enter()
-//                //            queue.async {
-//                //                group.leave()
-//                //            }
-//            }
-//            SharedFileManager.shared.writeCodableToFileNameInShared(codable: self.scores, fileName: "scores/scores.json")
-//            group.leave()
-//        }
-//        group.notify(queue: .main) {
-//            TerminalManager.shared.addText("Completed Score Assignments")
-//            self.chartAndRunBacktest()
-//        }
-//    }
+    func getStringForMaxDrawdown() -> String {
+        var output = "❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌\n❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌\n❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌\n❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌\n❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌\n❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌\n❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌\n❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌\n❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌\n❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌\n❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌\n❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌\n❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌\n❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌\n❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌\n❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌\n❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌\n❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌\n❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌\n❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌\n❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌\n❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌\n❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌\n❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌\n❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌\n"
+//        var drawdownStarting: Int = StockCalculations.StartAtElement - 1
+//        var shouldContinue
+//        return output
+        
+        return output
+    }
     
     
-//    private func chartAndRunBacktest() {
-//        let startingPortfolioValues: Float = 1000
-//        let startingIndex = StockCalculations.StartAtElement - 1
-//        portfolioValueAmounts      = .init(repeating: startingPortfolioValues, count: SPYController.shared.spyAggregate.candles.count)
-//        buyAndHoldPortfolioAmounts = .init(repeating: startingPortfolioValues, count: SPYController.shared.spyAggregate.candles.count)
-//        portfolioValue = startingPortfolioValues
-//        buyAndHoldPortfolioValue = startingPortfolioValues
-//        
-//        var boughtModels: [BKTestScoreModel] = []
-//        var cashPositions: [Float] = []
-//        print("Starting At Index: \(startingIndex)")
-//        for i in startingIndex..<SPYController.shared.spyAggregate.candles.count {
-//            
-//            let scores = scores[i]
-//            
-//            for (boughtIndex, boughtModel) in boughtModels.enumerated() {
-//                var foundE = false
-//                for e in scores {
-//                    if e.ticker == boughtModel.ticker {
-//                        foundE = true
-//                        let endingPrice = e.currentClosingPrice
-//                        let changeMultiplyer = (endingPrice - boughtModel.currentClosingPrice) / boughtModel.currentClosingPrice + 1
-////                        print("Selling for :\(changeMultiplyer)")
-//                        cashPositions[boughtIndex] *= changeMultiplyer
-//                        break
-//                    }
-//                }
-//                if foundE == false {fatalError()}
-//            }
-//            if cashPositions.count != 0 {
-//                portfolioValue = cashPositions.sum()
-//            }
-//            
-//            let modelsToBuy = StrategyTester.shared.getIndexesToBuy(scores)
-//            let divider = Float(modelsToBuy.count)
-//            cashPositions = Array(repeating: portfolioValue / divider, count: modelsToBuy.count)
-//            boughtModels = modelsToBuy
-//            
-//            // SPY Stuff
-//            if i != startingIndex {
-//                let endingPrice = SPYController.shared.spyAggregate.candles[i].close
-//                let startingPrice = SPYController.shared.spyAggregate.candles[i - 1].close
-//                let changeMultiplyer = (endingPrice - startingPrice) / startingPrice + 1
-//                buyAndHoldPortfolioValue *= changeMultiplyer
-//            }
-//            
-//            portfolioValueAmounts[i] = portfolioValue
-//            buyAndHoldPortfolioAmounts[i] = buyAndHoldPortfolioValue
-//        }
-//        
-//        guard let indicatorData = SharedFileManager.shared.getDataFromFile("/indicatorData/VOO.json") else {
-//            TerminalManager.shared.addText("Indicator File does not exist", type: .error)
-//            return
-//        }
-//        do {
-//            let jsonDecoder = JSONDecoder()
-//            let indicator = try jsonDecoder.decode(IndicatorData.self, from: indicatorData)
-//            
-//            let auxSets = StockCalculations.GetAuxSetsForAggregate(aggregate: SPYController.shared.spyAggregate)
-//            
-//            ChartManager.shared.chartStock(SPYController.shared.spyAggregate)
-//            ChartManager.shared.setIndicatorData(indicator)
-//            ChartManager.shared.setAuxSets(auxSets: auxSets)
-//            ChartManager.shared.currentStockView?.mouseDelegate = self
-//            self.isRunningFullBacktest = true
-//        } catch let e {
-//            TerminalManager.shared.addText("Unable to unwrap data into aggregate: \(e)", type: .error)
-//        }
-//    }
+    func calculateMaxDrawdown(portfolioValues: [Float]) -> Float {
+        var maxDrawdown: Float = 0.0
+        var peak = portfolioValues[0]
+        
+        for i in 1..<portfolioValues.count {
+            let currentValue = portfolioValues[i]
+            
+            if currentValue > peak {
+                peak = currentValue
+            }
+            
+            let drawdown = (peak - currentValue) / peak
+            
+            if drawdown > maxDrawdown {
+                maxDrawdown = drawdown
+            }
+        }
+        return maxDrawdown
+    }
 }
+
+
 extension BacktestController: StockViewMouseDelegate {
     func candleHoverChanged(index: Int) {
         if index < 0 || index >= portfolioValueAmounts.count {return}

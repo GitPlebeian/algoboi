@@ -1,26 +1,27 @@
 //
-//  MLPredictor1.swift
+//  MLPredictor2.swift
 //  stockInterface
 //
-//  Created by CHONK on 1/28/24.
+//  Created by CHONK on 2/11/24.
 //
 
 import CoreML
 
-class MLPredictor1 {
+class MLPredictor2 {
     
-    static let shared = MLPredictor1()
+    static let shared = MLPredictor2()
     
-    private let model: ForcastingModel1
+    private let model: ForcastingModel2
+    private let scalingParametersType: Int = 2
     private var normalizingValues: [[Float]] = []
 
     init() {
-        guard let loadedModel = try? ForcastingModel1(configuration: MLModelConfiguration()) else {
+        guard let loadedModel = try? ForcastingModel2(configuration: MLModelConfiguration()) else {
             fatalError("Couldn't load the model")
         }
         model = loadedModel
         
-        if let stringData = SharedFileManager.shared.getDataFromPythonFile("bot3/ForcastingModel1ScalingParameters.txt") {
+        if let stringData = SharedFileManager.shared.getDataFromPythonFile("bot3/ForcastingModel\(scalingParametersType)ScalingParameters.txt") {
             guard let content = String(data: stringData, encoding: .utf8) else {
                 fatalError()
             }
@@ -57,28 +58,31 @@ class MLPredictor1 {
 
     
     func makePrediction(indicatorData: IndicatorData, index: Int, candlesToTarget: Int) -> Float? {
-        guard let inputArray = try? MLMultiArray(shape: [1, 9], dataType: .float32) else {
+        guard let inputArray = try? MLMultiArray(shape: [1, 20], dataType: .float32) else {
             print("Failed to create input array")
             return nil
         }
         
         inputArray[0] = candlesToTarget as NSNumber
-        inputArray[1] = indicatorData.macdDifferences[index] as NSNumber
-        inputArray[2] = indicatorData.macdGreenLineLevels[index] as NSNumber
-        inputArray[3] = indicatorData.macdGreenLineSlopes[index] as NSNumber
-        inputArray[4] = indicatorData.macdRedLineSlopes[index] as NSNumber
-        inputArray[5] = indicatorData.slopesOf9DayEMA[index] as NSNumber
-        inputArray[6] = indicatorData.slopesOf25DayEMA[index] as NSNumber
-        inputArray[7] = indicatorData.slopesOf50DaySMA[index] as NSNumber
-        inputArray[8] = indicatorData.slopesOf200DaySMA[index] as NSNumber
-        
-        // Percentage Change From Average Volume
-        // Volume * Close Market Cap Average
-        // STD Period 1
-        // STD Period 2
-        // STD Period Difference
-        // Percentage Change
-        // Hight Clow Low Open ratio
+        inputArray[1] = indicatorData.cto[index] as NSNumber
+        inputArray[2] = indicatorData.htc[index] as NSNumber
+        inputArray[3] = indicatorData.htl[index] as NSNumber
+        inputArray[4] = indicatorData.hto[index] as NSNumber
+        inputArray[5] = indicatorData.ltc[index] as NSNumber
+        inputArray[6] = indicatorData.lto[index] as NSNumber
+        inputArray[7] = indicatorData.macdDifferences[index] as NSNumber
+        inputArray[8] = indicatorData.macdGreenLineLevels[index] as NSNumber
+        inputArray[9] = indicatorData.macdGreenLineSlopes[index] as NSNumber
+        inputArray[10] = indicatorData.macdRedLineSlopes[index] as NSNumber
+        inputArray[11] = indicatorData.percentageChange[index] as NSNumber
+        inputArray[12] = indicatorData.slopesOf9DayEMA[index] as NSNumber
+        inputArray[13] = indicatorData.slopesOf25DayEMA[index] as NSNumber
+        inputArray[14] = indicatorData.slopesOf50DaySMA[index] as NSNumber
+        inputArray[15] = indicatorData.slopesOf200DaySMA[index] as NSNumber
+        inputArray[16] = indicatorData.standardDeviationForPercentageChange1[index] as NSNumber
+        inputArray[17] = indicatorData.standardDeviationForPercentageChange2[index] as NSNumber
+        inputArray[18] = indicatorData.stdDifference[index] as NSNumber
+        inputArray[19] = indicatorData.volumeChange[index] as NSNumber
         
         DispatchQueue.concurrentPerform(iterations: inputArray.count) { i in
             let old = Float(truncating: inputArray[i])
@@ -90,7 +94,7 @@ class MLPredictor1 {
         
         
         
-        guard let output = try? model.prediction(input: ForcastingModel1Input(x: inputArray)) else {
+        guard let output = try? model.prediction(input: ForcastingModel2Input(x: inputArray)) else {
             print("Prediction failed")
             return nil
         }

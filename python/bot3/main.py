@@ -45,8 +45,8 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 # Construct the path to the test.json file
 # json_file = os.path.join(current_dir, '..', '..', 'shared', 'datasets', 'set1FullSet.json')
 # json_file = os.path.join(current_dir, '..', '..', 'shared', 'datasets', 'set1TenPercent.json')
-# json_file = os.path.join(current_dir, '..', '..', 'shared', 'datasets', 'set1OnePercent.json')
-json_file = os.path.join(current_dir, '..', '..', 'shared', 'datasets', 'AAASingleSet.json')
+json_file = os.path.join(current_dir, '..', '..', 'shared', 'datasets', 'set1OnePercent.json')
+# json_file = os.path.join(current_dir, '..', '..', 'shared', 'datasets', 'AAASingleSet.json')
 
 data = load_data(json_file, 1)
 X, y = preprocess_data(data)
@@ -57,16 +57,16 @@ X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_st
 # Create DataLoaders
 train_data = TensorDataset(X_train, y_train)
 val_data = TensorDataset(X_val, y_val)
-train_loader = DataLoader(train_data, batch_size=64, shuffle=True)
-val_loader = DataLoader(val_data, batch_size=64, shuffle=False)
+train_loader = DataLoader(train_data, batch_size=1000000, shuffle=True)
+val_loader = DataLoader(val_data, batch_size=1000000, shuffle=False)
 
 # Define the model
 class ForecastingModel(nn.Module):
     def __init__(self):
         super(ForecastingModel, self).__init__()
-        self.fc1 = nn.Linear(9, 64)  # 8 input features
-        self.fc2 = nn.Linear(64, 32)
-        self.fc3 = nn.Linear(32, 1)  # 2 output features
+        self.fc1 = nn.Linear(20, 20)
+        self.fc2 = nn.Linear(20, 20)
+        self.fc3 = nn.Linear(20, 1)
 
     def forward(self, x):
         x = torch.relu(self.fc1(x))
@@ -107,16 +107,16 @@ model = train_model(model, train_loader, val_loader)
 model.eval()
 
 # Convert to Core ML
-traced_model = torch.jit.trace(model, torch.randn(1, 9))  # Example input shape
-coreml_model = ct.convert(traced_model, inputs=[ct.TensorType(shape=(1, 9))])
-coreml_model.save('ForcastingModel1.mlpackage')
+traced_model = torch.jit.trace(model, torch.randn(1, 20))  # Example input shape
+coreml_model = ct.convert(traced_model, inputs=[ct.TensorType(shape=(1, 20))])
+coreml_model.save('ForcastingModel2.mlpackage')
 
 # joblib.dump(scaler, 'scaler.pkl')
 
 means = scaler.mean_
 stds = scaler.scale_
 # Save these parameters to a text or JSON file
-with open('ForcastingModel1ScalingParameters.txt', 'w') as file:
+with open('ForcastingModel2ScalingParameters.txt', 'w') as file:
     for mean, std in zip(means, stds):
         file.write(f"{mean},{std}\n")
 

@@ -328,6 +328,10 @@ class StockCalculations {
         var results: [Float] = [0]
         for index in 1..<values.count {
             let value = (values[index] - movingAverages[index - 1]) / movingAverages[index - 1]
+            if value.isNaN || value.isInfinite {
+                results.append(0)
+                continue
+            }
             results.append(value)
         }
         return results

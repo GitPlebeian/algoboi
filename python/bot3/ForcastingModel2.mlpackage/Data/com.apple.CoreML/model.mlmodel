@@ -1,0 +1,285 @@
+Œ
+
+x
+*
+†ÄR
+linear_2
+*
+†Ä¢°¢3
+#com.github.apple.coremltools.sourcetorch==2.1.2¢+
+$com.github.apple.coremltools.version7.1¢:
++com.github.apple.coremltools.source_dialectTorchScript≤™Ω
+main¥
+
+x
+
+
+CoreML5è
+CoreML5Élinear_2f
+const
+x_to_fp16_dtype_0
+*'
+name
+
+"
+x_to_fp16_dtype_0*
+val
+
+
+"
+fp16ú
+const(
+fc1_weight_to_fp16
+
+
+
+*(
+name 
+
+"
+fc1_weight_to_fp16*?
+val8
+
+
+
+*"
+@model_path/weights/weight.bin@ç
+const 
+fc1_bias_to_fp16
+
+
+
+*&
+name
+
+"
+fc1_bias_to_fp16*:
+val3
+
+
+
+*#
+@model_path/weights/weight.bin¿n
+cast
+
+x
+
+x
+dtype
+
+x_to_fp16_dtype_0
+cast_1
+
+
+
+*
+name
+
+
+"
+cast_1≠
+linear
+x
+
+
+cast_1 
+weight
+
+fc1_weight_to_fp16
+bias
+
+fc1_bias_to_fp16(
+linear_0_cast_fp16
+
+
+
+*(
+name 
+
+"
+linear_0_cast_fp16u
+relu
+x
+
+linear_0_cast_fp16'
+input_1_cast_fp16
+
+
+
+*'
+name
+
+"
+input_1_cast_fp16ù
+const(
+fc2_weight_to_fp16
+
+
+
+*(
+name 
+
+"
+fc2_weight_to_fp16*@
+val9
+
+
+
+*#
+@model_path/weights/weight.bin¿ç
+const 
+fc2_bias_to_fp16
+
+
+
+*&
+name
+
+"
+fc2_bias_to_fp16*:
+val3
+
+
+
+*#
+@model_path/weights/weight.bin¿∏
+linear
+x
+
+input_1_cast_fp16 
+weight
+
+fc2_weight_to_fp16
+bias
+
+fc2_bias_to_fp16(
+linear_1_cast_fp16
+
+
+
+*(
+name 
+
+"
+linear_1_cast_fp16q
+relu
+x
+
+linear_1_cast_fp16%
+input_cast_fp16
+
+
+
+*%
+name
+
+"
+input_cast_fp16ù
+const(
+fc3_weight_to_fp16
+
+
+
+*(
+name 
+
+"
+fc3_weight_to_fp16*@
+val9
+
+
+
+*#
+@model_path/weights/weight.bin¿r
+const 
+fc3_bias_to_fp16
+
+
+
+*&
+name
+
+"
+fc3_bias_to_fp16*
+val
+
+
+
+
+:
+¬)∂
+linear
+x
+
+input_cast_fp16 
+weight
+
+fc3_weight_to_fp16
+bias
+
+fc3_bias_to_fp16(
+linear_2_cast_fp16
+
+
+
+*(
+name 
+
+"
+linear_2_cast_fp16à
+const*
+"linear_2_cast_fp16_to_fp32_dtype_0
+*8
+name0
+(
+&"$
+"linear_2_cast_fp16_to_fp32_dtype_0*
+val
+
+
+"
+fp32í
+cast
+x
+
+linear_2_cast_fp16/
+dtype&
+$
+"linear_2_cast_fp16_to_fp32_dtype_0
+linear_2
+
+
+*
+name
+
+
+"
+cast_0"Â
+	buildInfo◊"
+
+
+ƒ"¡
+6
+!
+
+"
+coremltools-version
+	
+"
+7.1
+@
+)
+!
+"
+coremltools-component-torch
+
+	"
+2.1.2
+E
+(
+ 
+"
+coremltools-source-dialect
+
+"
+TorchScript

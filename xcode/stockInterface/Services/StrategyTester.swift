@@ -29,11 +29,17 @@ class StrategyTester {
         let sortedScores = scores.sorted { a, b in
             a.1 > b.1
         }
-        return [sortedScores[0].0, sortedScores[1].0, sortedScores[2].0]
+//        return [sortedScores[0].0, sortedScores[1].0, sortedScores[2].0]
+        var result: [Int] = []
+        for i in 0..<10 {
+            result.append(sortedScores[i].0)
+        }
+        return result
     }
     
     func isStockGood(index: Int, aggregate: StockAggregate, indicator: IndicatorData) -> Bool {
         if index - indicator.backtestingOffset < 0 {return false}
+        if indicator.isBadIndex[index - indicator.backtestingOffset] == true { return false}
         return true
     }
 }

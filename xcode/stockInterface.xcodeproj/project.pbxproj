@@ -42,6 +42,9 @@
 		FC8B8CAA2AE8972D0053F5CF /* ScrollingTerminalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC8B8CA92AE8972D0053F5CF /* ScrollingTerminalView.swift */; };
 		FC8B8CAE2AE89D360053F5CF /* BrassMono-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FC8B8CAC2AE89D360053F5CF /* BrassMono-Bold.ttf */; settings = {ASSET_TAGS = (New, ); }; };
 		FC8B8CAF2AE89D360053F5CF /* BrassMono-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FC8B8CAD2AE89D360053F5CF /* BrassMono-Regular.ttf */; settings = {ASSET_TAGS = (New, ); }; };
+		FC8DFA9C2B79618400AFA74D /* MLDataset2.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC8DFA9B2B79618400AFA74D /* MLDataset2.swift */; };
+		FC8DFA9F2B79660F00AFA74D /* MLPredictor2.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC8DFA9E2B79660F00AFA74D /* MLPredictor2.swift */; };
+		FC8DFAA12B79689E00AFA74D /* ForcastingModel2.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = FC8DFAA02B79689E00AFA74D /* ForcastingModel2.mlpackage */; };
 		FC97AE8D2B14249300756773 /* StockViewAuxGraphProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC97AE8C2B14249300756773 /* StockViewAuxGraphProperties.swift */; };
 		FCBAF4242ADE497F0075ABEF /* CGColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBAF4232ADE497F0075ABEF /* CGColor.swift */; };
 		FCBAF4282ADE72D20075ABEF /* StockCalculations.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCBAF4272ADE72D20075ABEF /* StockCalculations.swift */; };
@@ -111,6 +114,9 @@
 		FC8B8CA92AE8972D0053F5CF /* ScrollingTerminalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollingTerminalView.swift; sourceTree = "<group>"; };
 		FC8B8CAC2AE89D360053F5CF /* BrassMono-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BrassMono-Bold.ttf"; sourceTree = "<group>"; };
 		FC8B8CAD2AE89D360053F5CF /* BrassMono-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BrassMono-Regular.ttf"; sourceTree = "<group>"; };
+		FC8DFA9B2B79618400AFA74D /* MLDataset2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLDataset2.swift; sourceTree = "<group>"; };
+		FC8DFA9E2B79660F00AFA74D /* MLPredictor2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLPredictor2.swift; sourceTree = "<group>"; };
+		FC8DFAA02B79689E00AFA74D /* ForcastingModel2.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; name = ForcastingModel2.mlpackage; path = ../../../../../python/bot3/ForcastingModel2.mlpackage; sourceTree = "<group>"; };
 		FC97AE8C2B14249300756773 /* StockViewAuxGraphProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockViewAuxGraphProperties.swift; sourceTree = "<group>"; };
 		FCBAF4232ADE497F0075ABEF /* CGColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGColor.swift; sourceTree = "<group>"; };
 		FCBAF4272ADE72D20075ABEF /* StockCalculations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockCalculations.swift; sourceTree = "<group>"; };
@@ -319,6 +325,15 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
+		FC8DFA9D2B7965C500AFA74D /* 2 */ = {
+			isa = PBXGroup;
+			children = (
+				FC8DFA9E2B79660F00AFA74D /* MLPredictor2.swift */,
+				FC8DFAA02B79689E00AFA74D /* ForcastingModel2.mlpackage */,
+			);
+			path = 2;
+			sourceTree = "<group>";
+		};
 		FCE09A7F2B65B4E3004ACF20 /* ML Outputs */ = {
 			isa = PBXGroup;
 			children = (
@@ -332,6 +347,7 @@
 			children = (
 				FCE09A872B65B788004ACF20 /* Guide & Results.md */,
 				FCE09A842B65B62F004ACF20 /* MLDataset1.swift */,
+				FC8DFA9B2B79618400AFA74D /* MLDataset2.swift */,
 			);
 			path = "ML Inputs";
 			sourceTree = "<group>";
@@ -340,6 +356,7 @@
 			isa = PBXGroup;
 			children = (
 				FC39E1732B674A97000C62CA /* 1 */,
+				FC8DFA9D2B7965C500AFA74D /* 2 */,
 			);
 			path = MLPredictors;
 			sourceTree = "<group>";
@@ -429,6 +446,7 @@
 				FCDD12692B0AC00300DDF4C9 /* InputOutputGenerationCommand.swift in Sources */,
 				FCD1D5072ACBDB2200700D4C /* NSWindow.swift in Sources */,
 				5B860BC62B007A02002EA088 /* HelpCommand.swift in Sources */,
+				FC8DFA9F2B79660F00AFA74D /* MLPredictor2.swift in Sources */,
 				FCDF76EB2B0BE22900BE28BE /* DownloadEveryStockCommand.swift in Sources */,
 				5B09D7B32B11360A004536C4 /* TextValueView.swift in Sources */,
 				FC38C5F52AF293D300E29029 /* ScrollingTerminalViewCell.swift in Sources */,
@@ -439,6 +457,7 @@
 				FC137A352B0AF30300061926 /* GetPrelimTickersCommand.swift in Sources */,
 				FC39E17B2B674B67000C62CA /* ForcastingModel1.mlpackage in Sources */,
 				5B860BC42B0079E9002EA088 /* Command.swift in Sources */,
+				FC8DFA9C2B79618400AFA74D /* MLDataset2.swift in Sources */,
 				5B0C78B22ADE5A3500E0EEEB /* SharedFileManager.swift in Sources */,
 				5B860BCC2B013788002EA088 /* SaveCommand.swift in Sources */,
 				FCD588192B0C2F17001BBECC /* ChartLocalCommand.swift in Sources */,
@@ -459,6 +478,7 @@
 				FC82FA582AC6FA4600642210 /* Calculate.swift in Sources */,
 				FC8B8CAA2AE8972D0053F5CF /* ScrollingTerminalView.swift in Sources */,
 				5B860BC82B007B87002EA088 /* ChartCommand.swift in Sources */,
+				FC8DFAA12B79689E00AFA74D /* ForcastingModel2.mlpackage in Sources */,
 				FC583DBE2AF9A79000B7CAAC /* Text.swift in Sources */,
 				5B860BCA2B01367E002EA088 /* ChartManager.swift in Sources */,
 				FCC546DC2B730ECF00D4AF7D /* GenerateGeneralAggregateCommand.swift in Sources */,
