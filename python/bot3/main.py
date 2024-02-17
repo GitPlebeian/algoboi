@@ -64,14 +64,31 @@ val_loader = DataLoader(val_data, batch_size=1000000, shuffle=False)
 class ForecastingModel(nn.Module):
     def __init__(self):
         super(ForecastingModel, self).__init__()
-        self.fc1 = nn.Linear(20, 20)
-        self.fc2 = nn.Linear(20, 20)
-        self.fc3 = nn.Linear(20, 1)
+        # self.fc1 = nn.Linear(20, 20)
+        # self.fc2 = nn.Linear(20, 20)
+        # self.fc3 = nn.Linear(20, 1)
+        self.fc1 = nn.Linear(20, 128)
+        self.bn1 = nn.BatchNorm1d(128)
+        self.dropout1 = nn.Dropout(0.3)
+        self.fc2 = nn.Linear(128, 64)
+        self.bn2 = nn.BatchNorm1d(64)
+        self.dropout2 = nn.Dropout(0.3)
+        # Add more layers if necessary
+        self.fc3 = nn.Linear(64, 32)
+        self.fc4 = nn.Linear(32, 1)  # Output layer
 
     def forward(self, x):
-        x = torch.relu(self.fc1(x))
-        x = torch.relu(self.fc2(x))
-        x = self.fc3(x)
+        # x = torch.relu(self.fc1(x))
+        # x = torch.relu(self.fc2(x))
+        # x = self.fc3(x)
+        x = torch.relu(self.bn1(self.fc1(x)))
+        x = self.dropout1(x)
+        x = torch.relu(self.bn2(self.fc2(x)))
+        x = self.dropout2(x)
+        # Continue through all layers similarly
+        x = torch.relu(self.fc3(x))
+        x = self.fc4(x)
+
         return x
 
 model = ForecastingModel()

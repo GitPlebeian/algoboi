@@ -102,6 +102,6 @@ class MLPredictor2 {
 //        let firstValue = output.output[0].floatValue
 //        let secondValue = output.output[1].floatValue
 //        let firstValue = output.
-        return output.linear_2[0].floatValue
+        return output.linear_3[0].floatValue
     }
 }

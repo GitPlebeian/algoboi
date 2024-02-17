@@ -31,7 +31,7 @@ class StrategyTester {
         }
 //        return [sortedScores[0].0, sortedScores[1].0, sortedScores[2].0]
         var result: [Int] = []
-        for i in 0..<10 {
+        for i in 0..<2 {
             result.append(sortedScores[i].0)
         }
         return result
