@@ -24,8 +24,6 @@
 		FC137A352B0AF30300061926 /* GetPrelimTickersCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC137A342B0AF30300061926 /* GetPrelimTickersCommand.swift */; };
 		FC38C5F52AF293D300E29029 /* ScrollingTerminalViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC38C5F42AF293D300E29029 /* ScrollingTerminalViewCell.swift */; };
 		FC39E1722B672B02000C62CA /* GenerateEntireDatasetCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC39E1712B672B02000C62CA /* GenerateEntireDatasetCommand.swift */; };
-		FC39E1752B674AAF000C62CA /* MLPredictor1.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC39E1742B674AAF000C62CA /* MLPredictor1.swift */; };
-		FC39E17B2B674B67000C62CA /* ForcastingModel1.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = FC39E17A2B674B67000C62CA /* ForcastingModel1.mlpackage */; };
 		FC409C972B7718F7006ECE19 /* StrategyTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC409C962B7718F7006ECE19 /* StrategyTester.swift */; };
 		FC5257572E0F860400BB74CC /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5257562E0F860400BB74CC /* Array.swift */; };
 		FC583DBE2AF9A79000B7CAAC /* Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC583DBD2AF9A79000B7CAAC /* Text.swift */; };
@@ -94,8 +92,6 @@
 		FC137A342B0AF30300061926 /* GetPrelimTickersCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPrelimTickersCommand.swift; sourceTree = "<group>"; };
 		FC38C5F42AF293D300E29029 /* ScrollingTerminalViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollingTerminalViewCell.swift; sourceTree = "<group>"; };
 		FC39E1712B672B02000C62CA /* GenerateEntireDatasetCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateEntireDatasetCommand.swift; sourceTree = "<group>"; };
-		FC39E1742B674AAF000C62CA /* MLPredictor1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLPredictor1.swift; sourceTree = "<group>"; };
-		FC39E17A2B674B67000C62CA /* ForcastingModel1.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; name = ForcastingModel1.mlpackage; path = ../../../../../python/bot3/ForcastingModel1.mlpackage; sourceTree = "<group>"; };
 		FC409C962B7718F7006ECE19 /* StrategyTester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrategyTester.swift; sourceTree = "<group>"; };
 		FC5257562E0F860400BB74CC /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		FC583DBD2AF9A79000B7CAAC /* Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Text.swift; sourceTree = "<group>"; };
@@ -195,8 +191,6 @@
 		FC39E1732B674A97000C62CA /* 1 */ = {
 			isa = PBXGroup;
 			children = (
-				FC39E1742B674AAF000C62CA /* MLPredictor1.swift */,
-				FC39E17A2B674B67000C62CA /* ForcastingModel1.mlpackage */,
 			);
 			path = 1;
 			sourceTree = "<group>";
@@ -456,10 +450,8 @@
 				FC38C5F52AF293D300E29029 /* ScrollingTerminalViewCell.swift in Sources */,
 				FCC8D86D2AE87637004D10F0 /* MLPlayback.swift in Sources */,
 				5B860BC12B0072C6002EA088 /* TerminalManager.swift in Sources */,
-				FC39E1752B674AAF000C62CA /* MLPredictor1.swift in Sources */,
 				FCC144A42B7492D100EF7A65 /* Date.swift in Sources */,
 				FC137A352B0AF30300061926 /* GetPrelimTickersCommand.swift in Sources */,
-				FC39E17B2B674B67000C62CA /* ForcastingModel1.mlpackage in Sources */,
 				5B860BC42B0079E9002EA088 /* Command.swift in Sources */,
 				FC8DFA9C2B79618400AFA74D /* MLDataset2.swift in Sources */,
 				5B0C78B22ADE5A3500E0EEEB /* SharedFileManager.swift in Sources */,

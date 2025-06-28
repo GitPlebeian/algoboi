@@ -11,8 +11,21 @@ class ChartLocalCommand: Command {
     var name: String { "c" }
 
     func execute(with arguments: [String]) {
-
-        let ticker = arguments[0].uppercased()
+        var tickerOptional: String?
+        if let firstArgument = arguments.first {
+            tickerOptional = firstArgument
+        } else {
+            tickerOptional = AllTickersController.shared.getAllTickers().randomElement()?.symbol
+            if tickerOptional == nil {
+                TerminalManager.shared.addText("Unable to chart random ticker as there are no ticker elements", type: .error)
+                return
+            }
+            TerminalManager.shared.addText("Charting random ticker: \(tickerOptional!)")
+        }
+        guard let ticker = tickerOptional else {
+            TerminalManager.shared.addText("Unable to set ticker: No arguments provided", type: .error)
+            return
+        }
         guard let aggregateData = SharedFileManager.shared.getDataFromFile("/historicalData/\(ticker).json") else {
             TerminalManager.shared.addText("Aggregate File does not exist", type: .error)
             return

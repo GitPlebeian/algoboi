@@ -1,139 +1,139 @@
 import torch
 import json
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
-from torch.utils.data import DataLoader, TensorDataset
+import random
 import os
 import torch.nn as nn
 import torch.optim as optim
 import coremltools as ct
-import joblib
-import random
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from torch.utils.data import DataLoader, TensorDataset
 
-# Load JSON data
-# def load_data(json_file):
-#     with open(json_file, 'r') as file:
-#         data = json.load(file)
-#     return data
+# ─── CONFIG & HELPERS ───────────────────────────────────────────────────────────
+
+random.seed(42)
+torch.manual_seed(42)
 
 def load_data(json_file, dataset_multiplier=1.0):
-    with open(json_file, 'r') as file:
-        data = json.load(file)
-    # Randomly sample a fraction of the data
-    data_sampled = random.sample(data, int(len(data) * dataset_multiplier))
-    print(f"Number of sampled data points: {len(data_sampled)}")
-    return data_sampled
+    with open(json_file, 'r') as f:
+        data = json.load(f)
+    n = int(len(data) * dataset_multiplier)
+    sampled = random.sample(data, n)
+    print(f"Loaded {len(data)} rows, sampled {n}")
+    return sampled
 
-scaler = StandardScaler()
+def compute_feature_importance(model, X_val, y_val, feature_names, criterion):
+    model.eval()
+    with torch.no_grad():
+        baseline = criterion(model(X_val), y_val).item()
+    importances = {}
+    for i, name in enumerate(feature_names):
+        Xp = X_val.clone()
+        Xp[:, i] = Xp[torch.randperm(Xp.size(0)), i]
+        with torch.no_grad():
+            loss = criterion(model(Xp), y_val).item()
+        importances[name] = loss - baseline
+    print("\nFeature importances (ΔMSE):")
+    for name, imp in sorted(importances.items(), key=lambda kv: kv[1], reverse=True):
+        print(f"  {name:20s}: {imp:.6f}")
 
-def preprocess_data(data):
-    inputs = [d['input'] for d in data]
-    outputs = [d['output'] for d in data]
-
-    X = [list(inp.values()) for inp in inputs]
-    y = [list(out.values()) for out in outputs]
-
-    # Normalize inputs
-    
-    X_normalized = scaler.fit_transform(X)
-
-    return torch.tensor(X_normalized, dtype=torch.float32), torch.tensor(y, dtype=torch.float32)
-
+# ─── LOAD & PREPROCESS ─────────────────────────────────────────────────────────
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
+json_file = os.path.join(current_dir, '..', '..', 'shared', 'datasets', 'AAASingleSet.json')
 
-# Construct the path to the test.json file
-# json_file = os.path.join(current_dir, '..', '..', 'shared', 'datasets', 'set1FullSet.json')
-# json_file = os.path.join(current_dir, '..', '..', 'shared', 'datasets', 'set1TenPercent.json')
-json_file = os.path.join(current_dir, '..', '..', 'shared', 'datasets', 'set1OnePercent.json')
-# json_file = os.path.join(current_dir, '..', '..', 'shared', 'datasets', 'AAASingleSet.json')
+data = load_data(json_file, dataset_multiplier=1.0)
 
-data = load_data(json_file, 1)
-X, y = preprocess_data(data)
+# fixed ordering of features
+feature_names = list(data[0]['input'].keys())
 
-# Split data into training and validation sets
+# extract and build X, y
+X_raw = []
+y_raw = []
+for row in data:
+    inp = row['input']
+    out = row['output']
+    X_raw.append([inp[name] for name in feature_names])
+    # assume single-output regression
+    y_raw.append([v for v in out.values()])
+
+scaler = StandardScaler()
+X = torch.tensor(scaler.fit_transform(X_raw), dtype=torch.float32)
+y = torch.tensor(y_raw, dtype=torch.float32)
+
+# train/val split
 X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_state=42)
 
-# Create DataLoaders
-train_data = TensorDataset(X_train, y_train)
-val_data = TensorDataset(X_val, y_val)
-train_loader = DataLoader(train_data, batch_size=1000000, shuffle=True)
-val_loader = DataLoader(val_data, batch_size=1000000, shuffle=False)
+train_loader = DataLoader(TensorDataset(X_train, y_train), batch_size=1024, shuffle=True)
+val_loader   = DataLoader(TensorDataset(X_val,   y_val),   batch_size=1024, shuffle=False)
 
-# Define the model
+# ─── MODEL ─────────────────────────────────────────────────────────────────────
+
 class ForecastingModel(nn.Module):
-    def __init__(self):
-        super(ForecastingModel, self).__init__()
-        # self.fc1 = nn.Linear(20, 20)
-        # self.fc2 = nn.Linear(20, 20)
-        # self.fc3 = nn.Linear(20, 1)
-        self.fc1 = nn.Linear(20, 128)
+    def __init__(self, input_dim):
+        super().__init__()
+        self.fc1 = nn.Linear(input_dim, 128)
         self.bn1 = nn.BatchNorm1d(128)
-        self.dropout1 = nn.Dropout(0.3)
+        self.do1 = nn.Dropout(0.3)
         self.fc2 = nn.Linear(128, 64)
         self.bn2 = nn.BatchNorm1d(64)
-        self.dropout2 = nn.Dropout(0.3)
-        # Add more layers if necessary
+        self.do2 = nn.Dropout(0.3)
         self.fc3 = nn.Linear(64, 32)
-        self.fc4 = nn.Linear(32, 1)  # Output layer
+        self.fc4 = nn.Linear(32, 1)
 
     def forward(self, x):
-        # x = torch.relu(self.fc1(x))
-        # x = torch.relu(self.fc2(x))
-        # x = self.fc3(x)
         x = torch.relu(self.bn1(self.fc1(x)))
-        x = self.dropout1(x)
+        x = self.do1(x)
         x = torch.relu(self.bn2(self.fc2(x)))
-        x = self.dropout2(x)
-        # Continue through all layers similarly
+        x = self.do2(x)
         x = torch.relu(self.fc3(x))
-        x = self.fc4(x)
+        return self.fc4(x)
 
-        return x
+model = ForecastingModel(input_dim=X_train.shape[1])
 
-model = ForecastingModel()
+# ─── TRAIN ─────────────────────────────────────────────────────────────────────
 
-# Training loop
-def train_model(model, train_loader, val_loader, num_epochs=300):
+def train_model(model, train_loader, val_loader, epochs=300):
     criterion = nn.MSELoss()
-    optimizer = optim.Adam(model.parameters(), lr=0.0001)
-
-    for epoch in range(num_epochs):
+    optim_ = optim.Adam(model.parameters(), lr=1e-4)
+    best_val = float('inf')
+    for ep in range(1, epochs+1):
         model.train()
-        for inputs, targets in train_loader:
-            optimizer.zero_grad()
-            outputs = model(inputs)
-            loss = criterion(outputs, targets)
+        for xb, yb in train_loader:
+            optim_.zero_grad()
+            loss = criterion(model(xb), yb)
             loss.backward()
-            optimizer.step()
-
+            optim_.step()
         model.eval()
         with torch.no_grad():
-            val_loss = 0
-            for inputs, targets in val_loader:
-                outputs = model(inputs)
-                val_loss += criterion(outputs, targets).item()
-            val_loss /= len(val_loader)
-        print(f"Epoch {epoch+1}/{num_epochs}, Loss: {loss.item()}, Validation Loss: {val_loss}")
-
+            val_loss = sum(criterion(model(xv), yv).item() for xv, yv in val_loader) / len(val_loader)
+        if val_loss < best_val:
+            best_val = val_loss
+            torch.save(model.state_dict(), 'best_model.pt')
+        if ep % 50 == 0 or ep == 1:
+            print(f"Epoch {ep:3d}  train_loss={loss.item():.6f}  val_loss={val_loss:.6f}")
+    model.load_state_dict(torch.load('best_model.pt'))
     return model
 
-# Train the model
 model = train_model(model, train_loader, val_loader)
 
-model.eval()
+# ─── FEATURE IMPORTANCE ────────────────────────────────────────────────────────
 
-# Convert to Core ML
-traced_model = torch.jit.trace(model, torch.randn(1, 20))  # Example input shape
-coreml_model = ct.convert(traced_model, inputs=[ct.TensorType(shape=(1, 20))])
+compute_feature_importance(
+    model, X_val, y_val, feature_names, 
+    criterion=nn.MSELoss()
+)
+
+# ─── EXPORT ───────────────────────────────────────────────────────────────────
+
+model.eval()
+example_input = torch.randn(1, X_train.shape[1])
+traced = torch.jit.trace(model, example_input)
+coreml_model = ct.convert(
+    traced,
+    inputs=[ct.TensorType(shape=(1, X_train.shape[1]))]
+)
 coreml_model.save('ForcastingModel2.mlpackage')
 
-# joblib.dump(scaler, 'scaler.pkl')
-
-means = scaler.mean_
-stds = scaler.scale_
-# Save these parameters to a text or JSON file
-with open('ForcastingModel2ScalingParameters.txt', 'w') as file:
-    for mean, std in zip(means, stds):
-        file.write(f"{mean},{std}\n")
-
+# persist scaler
+joblib.dump(scaler, 'scaler.pkl')

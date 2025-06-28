@@ -96,26 +96,28 @@ class StockCalculations {
         for i in 0..<aggregate.candles.count {
             if aggregate.candles[i].close < 3 || aggregate.candles[i].close > 1000 {
                 // Price
-                print("Bad Price: \(aggregate.candles[i].close)")
+//                print("Bad Price: \(aggregate.candles[i].close)")
                 model.isBadIndex[i] = true
                 continue
             }
             if model.volumeTCAverage[i] < 10_000_000 {
                 // Market Cap
-                print("Bad Market Cap: \(model.volumeTCAverage[i])")
+//                print("Bad Market Cap: \(model.volumeTCAverage[i])")
                 model.isBadIndex[i] = true
                 continue
             }
             if model.volumesTimesClose[i] < 10_000_000 {
-                print("Current Market VolumeCap: \(model.volumesTimesClose[i])")
+//                print("Current Market VolumeCap: \(model.volumesTimesClose[i])")
                 model.isBadIndex[i] = true
                 continue
             }
             if model.averageVolume[i] < 10_000 {
+//                print("Average Volue: \(model.averageVolume[i])")
                 model.isBadIndex[i] = true
                 continue
             }
             if aggregate.candles[i].volume < 10_000 {
+//                print("Volume: \(aggregate.candles[i].volume)")
                 model.isBadIndex[i] = true
                 continue
             }
