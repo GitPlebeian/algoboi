@@ -19,8 +19,26 @@ class GenerateEntireDatasetCommand: Command {
         var droppedNoIndicatorDataCount: Int = 0
         var droppedNoEnoughLengthCount: Int = 0
         
-        let allTickers = AllTickersController.shared.getAllTickers()
-        
+        var allTickers = AllTickersController.shared.getAllTickers()
+
+        let tickersToProcess: [TickerNameModel]
+        if let param = arguments.first {
+            if let count = Int(param) {
+                // integer → sample that many
+                tickersToProcess = allTickers.randomSample(count)
+            } else if let fraction = Double(param) {
+                // fraction 0.0…1.0 → sample that fraction
+                tickersToProcess = allTickers.randomSample(fraction: fraction)
+            } else {
+                print("Invalid argument '\(param)'; use an integer or a fraction 0.0–1.0")
+                return
+            }
+        } else {
+            // no args → use all tickers
+            tickersToProcess = allTickers
+        }
+        allTickers = tickersToProcess
+
         let group = DispatchGroup()
 
         let jsonDecoder = JSONDecoder()
@@ -30,12 +48,13 @@ class GenerateEntireDatasetCommand: Command {
 
             DispatchQueue.global().async {
                 let ticker = tickerElement.symbol
-                guard let aggregateData = SharedFileManager.shared.getDataFromFile("/historicalData/\(ticker).json") else {
+                guard let aggregateData = SharedFileManager.shared.getDataFromFile("historicalData/\(ticker).json") else {
 //                    TerminalManager.shared.addText("Aggregate File does not exist", type: .error)
                     print("Aggregate file does not exists")
+                    group.leave()
                     return
                 }
-                guard let indicatorData = SharedFileManager.shared.getDataFromFile("/indicatorData/\(ticker).json") else {
+                guard let indicatorData = SharedFileManager.shared.getDataFromFile("indicatorData/\(ticker).json") else {
     //                TerminalManager.shared.addText("Indicator File does not exist", type: .error)
                     droppedNoIndicatorDataCount += 1
                     group.leave()
@@ -56,14 +75,22 @@ class GenerateEntireDatasetCommand: Command {
                     var threadLocalDataset: [MLDatasetInputOutputCombined2] = []
                     for i in (StockCalculations.StartAtElement - 1)..<aggregate.candles.count {
                         if let datasetOutput = MLDatasetGenerator.shared.calculateTotalPercentageChangeForXChandlesToTarget(index: i, aggregate: aggregate, candlesToTarget: 1) {
-                            if indicator.isBadIndex[i] {continue}
+                            if indicator.isBadIndex[i] {
+                                print("Ticker: \(ticker): Skipping bad index: \(i)")
+                                continue
+                            }
                             let datasetInput = MLDatasetInput2(indicatorData: indicator, index: i, candlesToTarget: Float(1))
                             threadLocalDataset.append(MLDatasetInputOutputCombined2(input: datasetInput, output: datasetOutput))
                             
-                        } else {break}
+                        } else {
+                            print("Ticker: \(ticker): No Dataset output")
+                            break
+                        }
                     }
+                    print("Ticker: \(ticker) \(threadLocalDataset.count)")
                     dataSetsLock.lock()
                     dataSets.append(contentsOf: threadLocalDataset)
+                    print(dataSets.count)
                     dataSetsLock.unlock()
                 } catch let e {
                     fatalError(e.localizedDescription)

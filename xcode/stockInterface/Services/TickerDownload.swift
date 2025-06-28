@@ -214,7 +214,6 @@ class TickerDownload {
                 completionHandler("Error during request", nil)
                 return
             }
-            
             guard let data = data else {
                 completionHandler("Data returned == nil", nil)
                 return
@@ -232,6 +231,11 @@ class TickerDownload {
             }
             guard let stockAggregate = StockAggregate(data: data) else {
                 completionHandler("Could not decode data during StockAggregate Initialization", nil)
+                guard let dataString = String(data: data, encoding: .utf8) else {
+                    print("Could not get string form data value")
+                    return
+                }
+                print("Could not decode data during StockAggregate Initialization: \(dataString)")
                 return
             }
             completionHandler("Success", stockAggregate)

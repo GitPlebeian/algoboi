@@ -36,6 +36,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 //        window = NSWindow(contentRect: contentRect, styleMask: [.borderless, .resizable], backing: .buffered, defer: false)
         window = NSWindow(contentRect: contentRect, styleMask: [.titled, .resizable], backing: .buffered, defer: false)
         window.hasShadow = true
+        window.setFrameAutosaveName("stockInterfaceMainWindow")
+        window.setFrameUsingName("stockInterfaceMainWindow")
         window.isMovableByWindowBackground = true
         window.isMovable = true
         window.isOpaque = false
@@ -47,7 +49,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 //        window.setFrame(contentRect, display: true)
         window.backgroundColor = .clear
         window.makeKeyAndOrderFront(nil)
-        window.center()
+//        window.center()
 
 //        window.makeKeyAndOrderFront(nil)
     }

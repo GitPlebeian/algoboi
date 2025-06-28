@@ -27,6 +27,7 @@
 		FC39E1752B674AAF000C62CA /* MLPredictor1.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC39E1742B674AAF000C62CA /* MLPredictor1.swift */; };
 		FC39E17B2B674B67000C62CA /* ForcastingModel1.mlpackage in Sources */ = {isa = PBXBuildFile; fileRef = FC39E17A2B674B67000C62CA /* ForcastingModel1.mlpackage */; };
 		FC409C972B7718F7006ECE19 /* StrategyTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC409C962B7718F7006ECE19 /* StrategyTester.swift */; };
+		FC5257572E0F860400BB74CC /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC5257562E0F860400BB74CC /* Array.swift */; };
 		FC583DBE2AF9A79000B7CAAC /* Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC583DBD2AF9A79000B7CAAC /* Text.swift */; };
 		FC82F9E72AC6910C00642210 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC82F9E62AC6910C00642210 /* AppDelegate.swift */; };
 		FC82F9EB2AC6910C00642210 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC82F9EA2AC6910C00642210 /* Assets.xcassets */; };
@@ -96,6 +97,7 @@
 		FC39E1742B674AAF000C62CA /* MLPredictor1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLPredictor1.swift; sourceTree = "<group>"; };
 		FC39E17A2B674B67000C62CA /* ForcastingModel1.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; name = ForcastingModel1.mlpackage; path = ../../../../../python/bot3/ForcastingModel1.mlpackage; sourceTree = "<group>"; };
 		FC409C962B7718F7006ECE19 /* StrategyTester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrategyTester.swift; sourceTree = "<group>"; };
+		FC5257562E0F860400BB74CC /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		FC583DBD2AF9A79000B7CAAC /* Text.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Text.swift; sourceTree = "<group>"; };
 		FC64178B2AF285FB006EFC87 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		FC82F9E32AC6910C00642210 /* stockInterface.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = stockInterface.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -302,6 +304,7 @@
 				FC583DBD2AF9A79000B7CAAC /* Text.swift */,
 				FCDF76EE2B0BE7E200BE28BE /* Float.swift */,
 				FCC144A32B7492D100EF7A65 /* Date.swift */,
+				FC5257562E0F860400BB74CC /* Array.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -445,6 +448,7 @@
 				FCD588152B0C1F5F001BBECC /* BulkIndicatorDataCommand.swift in Sources */,
 				FCDD12692B0AC00300DDF4C9 /* InputOutputGenerationCommand.swift in Sources */,
 				FCD1D5072ACBDB2200700D4C /* NSWindow.swift in Sources */,
+				FC5257572E0F860400BB74CC /* Array.swift in Sources */,
 				5B860BC62B007A02002EA088 /* HelpCommand.swift in Sources */,
 				FC8DFA9F2B79660F00AFA74D /* MLPredictor2.swift in Sources */,
 				FCDF76EB2B0BE22900BE28BE /* DownloadEveryStockCommand.swift in Sources */,
