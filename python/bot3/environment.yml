@@ -1,11 +1,15 @@
 name: bot3
 channels:
-  - pytorch
+  - conda-forge
   - defaults
 dependencies:
   - python=3.8
-  - pytorch
   - scikit-learn
   - numpy
-  - pandas 
-  - coremltools
+  - pandas
+  - joblib
+  - pip
+  - pip:
+      - torch
+      - torchvision
+      - coremltools

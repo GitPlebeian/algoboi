@@ -23,6 +23,10 @@ class AllTickersController {
         allTickers.append(contentsOf: arr)
     }
     
+    func insertTickerAtFront (_ ticker: TickerNameModel) {
+        allTickers.insert(ticker, at: 0)
+    }
+    
     func getCount() -> Int {return allTickers.count}
     
     func getAllTickers() -> [TickerNameModel] {return allTickers}

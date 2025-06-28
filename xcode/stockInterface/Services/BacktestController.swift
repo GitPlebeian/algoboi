@@ -73,10 +73,11 @@ class BacktestController {
         var boughtPrice: Float? = nil
         
         for i in startingIndex..<aggregate.candles.count {
-            guard let prediction = MLPredictor1.shared.makePrediction(indicatorData: indicatorData, index: i, candlesToTarget: 1) else {
-                TerminalManager.shared.addText("No prediciton available....", type: .error)
-                return
-            }
+            let prediction: Float = 5
+//            guard let prediction = MLPredictor1.shared.makePrediction(indicatorData: indicatorData, index: i, candlesToTarget: 1) else {
+//                TerminalManager.shared.addText("No prediciton available....", type: .error)
+//                return
+//            }
             
             if boughtPrice != nil {
                 let endingPrice = aggregate.candles[i].close

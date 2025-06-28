@@ -17,6 +17,7 @@ class SaveCommand: Command {
             TerminalManager.shared.addText("No charted stock. Please run the \"chart\" command", type: .error)
             return
         }
+        
         guard let indicatorData = ChartManager.shared.indicatorData else {
             TerminalManager.shared.addText("No indicator data for the current charted stock.", type: .error)
             return
